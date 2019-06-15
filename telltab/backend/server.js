@@ -3,7 +3,7 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const Data = require('./data');
+const Database = require('./database');
 
 const API_PORT = 3001;
 const app = express();
@@ -33,7 +33,35 @@ app.use(logger('dev'));
 // this is our get method
 // this method fetches all available data in our database
 router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
+  Database.Data.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.get('/getFeedback', (req, res) => {
+  Database.Feedback.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.get('/getGroup', (req, res) => {
+  Database.Group.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.get('/getComment', (req, res) => {
+  Database.Comment.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.get('/getCompany', (req, res) => {
+  Database.Company.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
@@ -62,9 +90,10 @@ router.delete('/deleteData', (req, res) => {
 // this is our create methid
 // this method adds new data in our database
 router.post('/putData', (req, res) => {
-  let data = new Data();
+  let data = new Database.Data();
 
   const { id, message } = req.body;
+  console.log(req)
 
   if ((!id && id !== 0) || !message) {
     return res.json({
@@ -74,6 +103,35 @@ router.post('/putData', (req, res) => {
   }
   data.message = message;
   data.id = id;
+  data.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/putFeedback', (req, res) => {
+  let data = new Database.Feedback();
+
+  const { content, votes, progress, admin, category, tags,
+    priority, visibility, resolved } = req.body;
+  console.log(req.body)
+
+  if (!content) {
+    return res.json({
+      success: false,
+      error: 'INVALID INPUTS',
+    });
+  }
+  data.feedbackId = Database.ObjectId;
+  data.content = content;
+  data.votes = votes;
+  data.progress = progress;
+  data.admin = admin;
+  data.category = category;
+  data.tags = tags;
+  data.priority = priority;
+  data.visibility = visibility;
+  data.resolved = resolved;
   data.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });

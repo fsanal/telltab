@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const { ObjectId } = Schema.Types
 
 var bucketSchema = new Schema({
-    bucketID: { ObjectId, index: true},
-    created: Date,
-    name: String,
-    boardID: { type: ObjectId, index: true },
-    numPosts: Number,
+    boardID: {type: ObjectId, required: true},
+    created: {type: Date, required: true},
+    name: {type: String, required: true},
+    numPosts: {type: Number, required: true},
     url: String
 });
 

@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const { ObjectId } = Schema.Types
 
 var boardSchema = new Schema({
-    boardID: ObjectId,
-    created: Date,
-    name: String,
-    roadmapIDs: { type: [ObjectId], index: true },
+    created: {type: Date, required: true},
+    name: {type: String, required: true},
+    roadmapIDs: {type: [ObjectId], index: true},
     numPosts: Number,
     url: String
 });

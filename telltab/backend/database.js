@@ -1,7 +1,7 @@
 // /backend/data.js
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const ObjectId = Schema.Types.ObjectId
 
 // this will be our data base's data structure
 const DataSchema = new Schema(

@@ -1,0 +1,6 @@
+
+#ignore node_modules in backend
+telltab/backend/node_modules/*
+
+#ignore node_modules in frontend
+telltab/frontend/node_modules/*

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var boardSchema = new Schema({
-    created: {type: Date, required: true},
+    created: Date,
     name: {type: String, required: true},
     roadmapIDs: {type: [ObjectId], index: true},
     numPosts: Number,

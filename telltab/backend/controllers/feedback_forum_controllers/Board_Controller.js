@@ -10,13 +10,8 @@ createBoard = (req, res) => {
             numPosts: 0
         }
     );
-    if (roadmapIDs !== undefined) {
-        board.roadmapIDs = roadmapIDs;
-    }
-    if (url !== undefined) {
-        board.url = url;
-    }
-
+    if (roadmapIDs !== undefined) board.roadmapIDs = roadmapIDs;
+    if (url !== undefined) board.url = url;
     board.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
@@ -24,7 +19,7 @@ createBoard = (req, res) => {
 }
 
 getBoard = (req, res) => {
-    Board.findById(req.query.boardID, (err, board) => {
+    Board.findById(req.param.boardID, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });
@@ -34,7 +29,7 @@ editBoard = (req, res) => {
     const { boardName, boardID } = req.body;
     let update = {};
     if (boardName) update.boardName = boardName; 
-    Board.findByIdAndUpdate(req.query.boardID, {$set: update}, {new: true}, (err, board) => {
+    Board.findByIdAndUpdate(boardID, {$set: update}, {new: true}, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });
@@ -49,22 +44,20 @@ deleteBoard = (req, res) => {
 }
 
 addRoadMap = (req, res) => {
-    const { boardID } = req.param;
-    const { roadmapID } = req.query.roadmapID;
+    const { boardID, roadmapID } = req.body;
     let update = {};
     if (roadmapID) update.roadmapIDs = roadmapID;
-    Board.findByIdAndUpdate(req.query.boardID, {$push: update}, {new: true}, (err, board) => {
+    Board.findByIdAndUpdate(boardID, {$push: update}, {new: true}, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });
 }
 
 deleteRoadMap = (req, res) => {
-    const { boardID } = req.param;
-    const { roadmapID } = req.query.roadmapID;
+    const { boardID, roadmapID } = req.body;
     let update = {};
     if (roadmapID) update.roadmapIDs = roadmapID;
-    Board.findByIdAndUpdate(req.query.boardID, {$pull: update}, {new: true}, (err, board) => {
+    Board.findByIdAndUpdate(boardID, {$pull: update}, {new: true}, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });

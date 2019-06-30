@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types;
 
 var voteSchema = new Schema({
-    userID: {type: ObjectId, required: true},
+    userID: ObjectId,
     postID: ObjectId,
     commentID: ObjectId,
-    created: {type: Date, required: true},
+    created: Date,
     url: String
 });
 

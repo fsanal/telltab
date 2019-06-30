@@ -4,15 +4,15 @@ const { Mixed, ObjectId} = Schema.Types
 
 
 var postSchema = new Schema({
-    boardID: {type: ObjectId, required: true},
+    boardID: ObjectId,
     bucketID: ObjectId,
     personaID: ObjectId,
-    authorID: {type: ObjectId, required: true},
+    authorID: ObjectId,
     visibilityIDs: { type: [ObjectId], index: true},
     requirementIDs: { type: [ObjectId], index: true},
     tagIDs: { type: [ObjectId], index: true},
-    created: {type: Date, required: true},
-    title: {type: String, required: true},
+    created: Date,
+    title: String,
     body: String,
     value: Number,
     progress: String,

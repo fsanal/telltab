@@ -4,12 +4,12 @@ const { ObjectId } = Schema.Types
 
 var newReleaseSchema = new Schema({
     requirementID: ObjectId,
-    boardID: {type: ObjectId, required: true},
-    userID: {type: ObjectId, required: true},
+    boardID: ObjectId,
+    authorID: ObjectId,
     title: String,
     body: String,
     formID: ObjectId,
-    created: {type: Date, required: true},
+    created: Date,
     url: String
 });
 

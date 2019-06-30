@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var bucketSchema = new Schema({
-    boardID: {type: ObjectId, required: true},
-    created: {type: Date, required: true},
+    boardID: ObjectId,
+    created: Date,
     name: {type: String, required: true},
-    numPosts: {type: Number, required: true},
+    numPosts: Number,
     url: String
 });
 

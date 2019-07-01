@@ -6,9 +6,9 @@ createPost = (req, res) => {
         title, body, progress, requirementIDs, url, customFields } = req.body;
     let post = new Post(
         {
-            title: title,
-            boardID: boardID,
-            authorID: authorID,
+            title,
+            boardID,
+            authorID,
             created: new Date(),
             numComments: 0,
             numVotes: 0

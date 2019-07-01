@@ -6,7 +6,7 @@ createBucket = (req, res) => {
     let bucket = new Bucket(
         {
             name: bucketName,
-            boardID: boardID,
+            boardID,
             created: new Date(),
             numPosts: 0
         }

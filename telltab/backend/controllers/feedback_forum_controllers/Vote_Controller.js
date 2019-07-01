@@ -7,7 +7,7 @@ createVote = (req, res) => {
     const { userID, postID, commentID, url } = req.body;
     let vote = new Vote(
         {
-            userID: userID,
+            userID,
             created: new Date()
         }
     );

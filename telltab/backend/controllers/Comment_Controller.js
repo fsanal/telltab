@@ -1,19 +1,20 @@
 const Comment = require('../models/Comment');
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 createComment = (req, res) => {
 	const { requirementID, postID, newReleaseID, parentID, authorID, content } = req.body
 	let comment = new Comment({
-		authorID,
+		author: ObjectId(authorID),
 		created: new Date(),
 		content
 	})
-	if (postID) { comment.postID = postID } else if (parentID) {
-		comment.parentID = parentID;
+	if (postID) { comment.post = ObjectId(postID) } else if (parentID) {
+		comment.parent = ObjectId(parentID);
 	} else if (requirementID) {
-		comment.requirementID = requirementID;
+		comment.requirement = ObjectId(requirement);
 	} else if (newReleaseID) {
-		comment.newReleaseID = newReleaseID;
+		comment.newRelease = ObjectId(newReleaseID);
 	}
 	comment.save((err) => {
 		if (err) return res.json({success: false, error: err})
@@ -22,24 +23,24 @@ createComment = (req, res) => {
 }
 
 getComment  = (req, res) => {
-	Comment.findById(req.params.commentID, (err, comment) => {
+	Comment.findById(req.params.id, (err, comment) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(comment)
 	});
 }
 
 editComment = (req, res) => {
-	const { content, commentID } = req.body;
+	const { content, id } = req.body;
 	let update = {};
 	if (content) update.content = content;
-	Comment.findByIdAndUpdate ( commentID, { $set: update }, { new: true }, ( err, comment) => {
+	Comment.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, comment) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(comment)
 	});
 }
 
 deleteComment = (req, res) => {
-	Comment.findByIdAndRemove ( req.params.commentID, ( err, comment) => {
+	Comment.findByIdAndRemove ( req.params.id, ( err, comment) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(comment)
 	});

@@ -1,15 +1,15 @@
 const Tag = require('../models/Tag');
 var mongoose = require('mongoose')
+const { ObjectId } = productID;
 
 createTag = (req, res) => {
-	const { productID, name, url, customFields, } = req.body
+	const { productID, name, url } = req.body
 	let tag = new Tag({
-		productID,
+		product: ObjectId(productID),
 		name,
 		created: new Date()
 	})
 	if (url) tag.url = url;
-	if (customFields) tag.customFields = customFields;
 	tag.save((err) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(tag)

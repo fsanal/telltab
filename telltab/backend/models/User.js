@@ -8,7 +8,7 @@ var userSchema = new Schema({
 	name: String,
 	email: String,
 	password: String,
-	personaIDs: {type: [ObjectId], index: true},
+	personas: {type: [ObjectId], index: true},
 	isAuth: Boolean,
 	notificationPref: {type: [Boolean]},
 	url: String,

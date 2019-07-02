@@ -4,12 +4,12 @@ const { ObjectId } = Schema.Types;
 
 var commentSchema = new Schema({
 	created: Date,
-	postID: ObjectId,
-	requirementID: ObjectId,
-	newReleaseID: ObjectId,
-	parentID: ObjectId,
+	post: ObjectId,
+	requirement: ObjectId,
+	newRelease: ObjectId,
+	parent: ObjectId,
 	numVotes: Number,
-	authorID: ObjectId,
+	author: ObjectId,
 	content: String
 });
 

@@ -1,26 +1,20 @@
 const Persona = require('../models/Persona');
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 createPersona = (req, res) => {
-	const { flair, description, isPM, isAdmin, tagIDs, roadMapConfig, customFields } = req.body
+	const { flair, description, isPM, isAdmin, productID, tagIDs, roadMapConfig, customFields } = req.body
 	let persona = new Persona({
+		product: ObjectId(productID),
 		flair,
 		created: new Date(),
 	})
 	if (description) persona.description = description;
-	if (tagIDs) persona.tagIDs = tagIDs;
+	if (tagIDs) persona.tags = tagIDs.map(tagID => ObjectId(tagID));
 	if (roadMapConfig) persona.roadMapConfig = roadMapConfig;
 	if (customFields) persona.customFields = customFields;
-    if (isPM) {
-		persona.isPM = isPM;
-	} else {
-		persona.isPM = false;
-	}
-    if (isAdmin) {
-		persona.isAdmin = isAdmin;
-	} else {
-		persona.isAdmin = false;
-	}
+    isPM ? persona.isPM = isPM : persona.isPM = false;
+    isAdmin ? persona.isAdmin = isAdmin : persona.isAdmin = false;
 	persona.save((err) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)
@@ -28,48 +22,48 @@ createPersona = (req, res) => {
 }
 
 getPersona = (req, res) => {
-	Persona.findById(req.params.personaID, (err, persona) => {
+	Persona.findById(req.params.id, (err, persona) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)
 	});
 }
 
 editPersona = (req, res) => {
-	const { personaID, description, flair, isPM, roadMapConfig, isAdmin } = req.body;
+	const { id, description, flair, isPM, roadMapConfig, isAdmin } = req.body;
 	let update = {};
 	if (description) update.description = description;
 	if (flair) update.flair = flair;
 	if (isPM) update.isPM = isPM;
 	if (roadMapConfig) update.roadMapConfig = roadMapConfig;
 	if (isAdmin) update.isAdmin = isAdmin;
-	Persona.findByIdAndUpdate ( personaID, { $set: update }, { new: true }, ( err, persona) => {
+	Persona.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, persona) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)
 	});
 }
 
 deletePersona = (req, res) => {
-	Persona.findByIdAndRemove ( req.params.personaID, ( err, persona) => {
+	Persona.findByIdAndRemove ( req.params.id, ( err, persona) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)
 	});
 }
 
 addTag = (req, res) => {
-	const { personaID, tagID } = req.body
-	update = {}
-	update.tagIDs = tagID
-    Persona.findByIdAndUpdate ( personaID, { $push: update }, { new: true }, ( err, persona) => {
+	const { id, tagID } = req.body;
+	update = {};
+	update.tags = ObjectId(tagID);
+    Persona.findByIdAndUpdate ( id, { $push: update }, { new: true }, ( err, persona) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)
 	});
 }
 
 deleteTag = (req, res) => {
-	const { personaID, tagID } = req.body
-	update = {}
-	update.tagIDs = tagID
-    Persona.findByIdAndUpdate ( personaID, { $pull: update }, { new: true }, ( err, persona) => {
+	const { id, tagID } = req.body;
+	update = {};
+	update.tagIDs = ObjectId(tagID)
+    Persona.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, persona) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)
 	});

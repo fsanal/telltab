@@ -5,7 +5,7 @@ const { ObjectId, Mixed } = Schema.Types;
 var tagSchema = new Schema({
 	created: Date,
 	name: String,
-	productID: String,
+	product: String,
 	numPosts: Number,
 	numReqs: Number,
 	url: String,

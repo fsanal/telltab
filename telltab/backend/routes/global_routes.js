@@ -3,12 +3,11 @@ const router = express.Router();
 
 
 const comment_controller = require('../controllers/Comment_Controller');
-/*
 router.get('/comment/get/:id', comment_controller.getComment);
 router.post('/comment/create', comment_controller.createComment);
 router.put('/comment/edit', comment_controller.editComment);
 router.delete('/comment/delete/:id', comment_controller.deleteComment);
-*/
+
 
 const notification_controller = require('../controllers/Notification_Controller');
 router.get('/notification/get/:id', notification_controller.getNotification);
@@ -33,14 +32,14 @@ router.get('/user/get/:id', user_controller.getUser);
 router.post('/user/create', user_controller.createUser);
 router.put('/user/edit', user_controller.editUser);
 router.delete('/user/delete/:id', user_controller.deleteUser);
-router.post('/user/add_persona', user_controller.addPersona);
-router.delete('/user/delete_persona', user_controller.deletePersona);
+router.put('/user/add_persona', user_controller.addPersona);
+router.put('/user/delete_persona', user_controller.deletePersona);
 
 const product_controller = require('../controllers/Product_Controller');
 router.get('/product/get/:id', product_controller.getProduct);
-router.post('/user/create', product_controller.createProduct);
-router.put('/user/edit', product_controller.editProduct);
-router.delete('/user/delete/:id', product_controller.deleteProduct);
+router.post('/product/create', product_controller.createProduct);
+router.put('/product/edit', product_controller.editProduct);
+router.delete('/product/delete/:id', product_controller.deleteProduct);
 
 // Export API routes
 module.exports = router;

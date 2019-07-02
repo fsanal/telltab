@@ -4,7 +4,7 @@ const { ObjectId, Mixed } = Schema.Types;
 
 var userSchema = new Schema({
 	created: Date,
-	externalID: ObjectId,
+	externalID: String,
 	name: String,
 	email: String,
 	password: String,

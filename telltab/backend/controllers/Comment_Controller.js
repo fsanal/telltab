@@ -13,7 +13,7 @@ createComment = (req, res) => {
 	if (postID) { comment.post = ObjectId(postID) } else if (parentID) {
 		comment.parent = ObjectId(parentID);
 	} else if (requirementID) {
-		comment.requirement = ObjectId(requirement);
+		comment.requirement = ObjectId(requirementID);
 	} else if (newReleaseID) {
 		comment.newRelease = ObjectId(newReleaseID);
 	}

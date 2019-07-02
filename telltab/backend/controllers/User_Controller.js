@@ -12,9 +12,8 @@ createUser = (req, res) => {
 	if (externalID) user.externalID = externalID;
     if (email) user.email = email;
     if (password) user.password = password;
-    if (personas) user.personas = personas;
     if (isAuth) { user.isAuth = isAuth; } else { user.isAuth = false; }
-    if (personas) user.personas = personaIDs.map(personaID => ObjectId(personaID));
+    if (personaIDs) user.personas = personaIDs.map(personaID => ObjectId(personaID));
     if (notificationPref) user.notificationPref = notificationPref;
     if (url) user.url = url;
     if (imageUrl) user.imageUrl = imageUrl;
@@ -55,7 +54,7 @@ deleteUser = (req, res) => {
 addPersona = (req, res) => {
 	const { id, personaID } = req.body
 	update = {}
-	update.personaIDs = ObjectId(personaID)
+	update.personas = ObjectId(personaID)
     User.findByIdAndUpdate ( id, { $push: update }, { new: true }, ( err, user) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(user)
@@ -65,7 +64,7 @@ addPersona = (req, res) => {
 deletePersona = (req, res) => {
 	const { id, personaID } = req.body
 	update = {}
-	update.personaIDs = ObjectId(personaID)
+	update.personas = ObjectId(personaID)
     User.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, user) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(user)

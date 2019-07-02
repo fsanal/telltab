@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 createPersona = (req, res) => {
-	const { flair, description, isPM, isAdmin, productID, tagIDs, roadMapConfig, customFields } = req.body
+	const { flair, description, isPM, isAdmin, 
+		productID, tagIDs, roadMapConfig, customFields } = req.body
 	let persona = new Persona({
 		product: ObjectId(productID),
 		flair,
@@ -12,7 +13,6 @@ createPersona = (req, res) => {
 	if (description) persona.description = description;
 	if (tagIDs) persona.tags = tagIDs.map(tagID => ObjectId(tagID));
 	if (roadMapConfig) persona.roadMapConfig = roadMapConfig;
-	if (customFields) persona.customFields = customFields;
     isPM ? persona.isPM = isPM : persona.isPM = false;
     isAdmin ? persona.isAdmin = isAdmin : persona.isAdmin = false;
 	persona.save((err) => {
@@ -61,8 +61,9 @@ addTag = (req, res) => {
 
 deleteTag = (req, res) => {
 	const { id, tagID } = req.body;
+	console.log(tagID);
 	update = {};
-	update.tagIDs = ObjectId(tagID)
+	update.tags = ObjectId(tagID)
     Persona.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, persona) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona)

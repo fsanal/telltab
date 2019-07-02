@@ -38,7 +38,7 @@ var forumRoutes = require("./routes/forum_routes");
 var globalRoutes = require("./routes/global_routes");
 
 app.use('/api', forumRoutes);
-//app.use('/api', globalRoutes);
+app.use('/api', globalRoutes);
 
 
 // append /api for our http requests

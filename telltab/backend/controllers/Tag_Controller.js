@@ -17,14 +17,14 @@ createTag = (req, res) => {
 }
 
 getTag  = (req, res) => {
-	Tag.findById(req.params.tagID, (err, tag) => {
+	Tag.findById(req.params.id, (err, tag) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(tag)
 	});
 }
 
 deleteTag = (req, res) => {
-	Tag.findByIdAndRemove ( req.params.tagID, ( err, tag) => {
+	Tag.findByIdAndRemove ( req.params.id, ( err, tag) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(tag)
 	});

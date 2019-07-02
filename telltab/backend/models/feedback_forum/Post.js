@@ -4,7 +4,7 @@ const { Mixed, ObjectId} = Schema.Types
 
 
 var postSchema = new Schema({
-    board: ObjectId,
+    forum: ObjectId,
     bucket: ObjectId,
     persona: ObjectId,
     author: ObjectId,

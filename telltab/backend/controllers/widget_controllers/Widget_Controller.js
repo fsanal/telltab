@@ -3,11 +3,11 @@ var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 createWidget = (req, res) => {
-    const { boardID, type, embeddableIDs, orientation, 
+    const { forumID, type, embeddableIDs, orientation, 
         height, width, color, backgroundColor, font, formID } = req.body;
     let widget = new Widget({
         created: new Date(),
-        board: ObjectId(boardID),
+        forum: ObjectId(forumID),
         type,
         form: ObjectId(formID)
     });
@@ -34,7 +34,7 @@ getWidget = (req, res) => {
 }
 
 editWidget = (req, res) => {
-    const { id, boardID, orientation, 
+    const { id, forumID, orientation, 
         height, width, color, 
         backgroundColor, font, formID } = req.body;
     let update = {};
@@ -44,7 +44,7 @@ editWidget = (req, res) => {
     if (font) update.font = font;
     if (color) update.color = color;
     if (formID) update.form = ObjectId(formID);
-    if (boardID) update.board = ObjectId(boardID);
+    if (forumID) update.forum = ObjectId(forumID);
     if (orientation) update.orientation = orientation;
     Widget.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, widget) => {

@@ -4,7 +4,7 @@ const { ObjectId } = Schema.Types;
 
 var widgetSchema = new Schema({
     created: Date,
-    board: ObjectId,
+    forum: ObjectId,
     embeddables: {type: [ObjectId], index: true},
     form: ObjectId,
     type: String,

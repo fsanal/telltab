@@ -3,12 +3,12 @@ var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
 
 createPost = (req, res) => {
-    const { boardID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
+    const { forumID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
         title, body, progress, requirementIDs, url } = req.body;
     let post = new Post(
         {
             title,
-            board: ObjectId(boardID),
+            forum: ObjectId(forumID),
             author: ObjectId(authorID),
             created: new Date(),
             numComments: 0,
@@ -45,15 +45,15 @@ getPost = (req, res) => {
     });
 }
 
-/// What if the bucket is not in the boardID specified?
+/// What if the bucket is not in the forumID specified?
 
 editPost = (req, res) => {
-    const { title, body, progress, id, boardID, bucketID, personaID, url } = req.body;
+    const { title, body, progress, id, forumID, bucketID, personaID, url } = req.body;
     let update = {};
     if (title) update.title = title;
     if (body) update.body = body;
     if (progress) update.progress = progress;
-    if (boardID) update.board = ObjectId(boardID);
+    if (forumID) update.forum = ObjectId(forumID);
     if (bucketID) update.bucket = ObjectId(bucketID); 
     if (personaID) update.persona = ObjectId(personaID);
     if (url) update.url = url

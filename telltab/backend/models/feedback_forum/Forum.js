@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
-var boardSchema = new Schema({
+var forumSchema = new Schema({
     created: Date,
     name: {type: String, required: true},
     product: ObjectId,
@@ -10,6 +10,6 @@ var boardSchema = new Schema({
     url: String
 });
 
-var Board = mongoose.model("Board", boardSchema);
+var Forum = mongoose.model("Forum", forumSchema);
 
-module.exports = Board; 
+module.exports = Forum; 

@@ -3,11 +3,11 @@ var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
 
 createBucket = (req, res) => {
-    const { name, boardID, url } = req.body;
+    const { name, forumID, url } = req.body;
     let bucket = new Bucket(
         {
             name: name,
-            board: ObjectId(boardID),
+            forum: ObjectId(forumID),
             created: new Date(),
             numPosts: 0
         }

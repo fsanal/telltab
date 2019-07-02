@@ -1,50 +1,50 @@
-const Board = require('../../models/feedback_forum/Board');
+const Forum = require('../../models/feedback_forum/Forum');
 var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 
-createBoard = (req, res) => {
+createForum = (req, res) => {
     const { name, productID, url } = req.body;
-    let board = new Board(
+    let forum = new Forum(
         {
             name,
             created: new Date(),
             numPosts: 0
         }
     );
-    if (productID) board.product = ObjectId(productID) 
-    if (url) board.url = url;
-    board.save((err) => {
+    if (productID) forum.product = ObjectId(productID) 
+    if (url) forum.url = url;
+    forum.save((err) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(board);
+        return res.json(forum);
     });
 }
 
-getBoard = (req, res) => {
-    Board.findById(req.params.id, (err, board) => {
+getForum = (req, res) => {
+    Forum.findById(req.params.id, (err, forum) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(board);
+        return res.json(forum);
     });
 }
 
-editBoard = (req, res) => {
+editForum = (req, res) => {
     const { name, productID, id } = req.body;
     let update = {};
     if (name) update.name = name; 
     if (productID) update.product = ObjectId(productID);
-    Board.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, board) => {
+    Forum.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, forum) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(board);
+        return res.json(forum);
     });
 }
 
-deleteBoard = (req, res) => {
+deleteForum = (req, res) => {
     const { id } = req.params;
-    Board.findByIdAndRemove(id, (err, board) => {
+    Forum.findByIdAndRemove(id, (err, forum) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(board);
+        return res.json(forum);
     });
 }
 
 
 
-module.exports = {createBoard, getBoard, editBoard, deleteBoard}
+module.exports = {createForum, getForum, editForum, deleteForum}

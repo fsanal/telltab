@@ -3,12 +3,12 @@ var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
 
 createNewRelease = (req, res) => {
-    const { boardID, bucketID, requirementID, authorID, formID, title, body, url } = req.body;
+    const { forumID, bucketID, requirementID, authorID, formID, title, body, url } = req.body;
     let newRelease = new NewRelease(
         {
             title, 
             body,
-            board: ObjectId(boardID),
+            forum: ObjectId(forumID),
             requirement: ObjectId(requirementID),
             author: ObjectId(authorID),
             created: new Date(),
@@ -31,13 +31,13 @@ getNewRelease = (req, res) => {
 }
 
 editNewRelease = (req, res) => {
-    const { id, title, body, formID, boardID, bucketID, url } = req.body;
+    const { id, title, body, formID, forumID, bucketID, url } = req.body;
     let update = {};
     if (title) update.title = title;
     if (body) update.body = body;
     if (bucketID) update.bucket = ObjectId(bucketID);
     if (formID) update.form = ObjectId(formID);
-    if (boardID) update.board = ObjectId(boardID); 
+    if (forumID) update.forum = ObjectId(forumID); 
     if (url) update.url = url
     NewRelease.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, newRelease) => {
         if (err) return res.json({ success: false, error: err });

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const board_controller = require('../controllers/feedback_forum_controllers/Board_Controller');
-router.get('/board/get/:id', board_controller.getBoard);
-router.post('/board/create', board_controller.createBoard);
-router.put('/board/edit', board_controller.editBoard);
-router.delete('/board/delete/:id', board_controller.deleteBoard);
+const forum_controller = require('../controllers/feedback_forum_controllers/Forum_Controller');
+router.get('/forum/get/:id', forum_controller.getForum);
+router.post('/forum/create', forum_controller.createForum);
+router.put('/forum/edit', forum_controller.editForum);
+router.delete('/forum/delete/:id', forum_controller.deleteForum);
 
 const bucket_controller = require('../controllers/feedback_forum_controllers/Bucket_Controller');
 router.get('/bucket/get/:id', bucket_controller.getBucket);

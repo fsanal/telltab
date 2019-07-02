@@ -4,7 +4,7 @@ const { ObjectId } = Schema.Types
 
 var newReleaseSchema = new Schema({
     requirement: ObjectId,
-    board: ObjectId,
+    forum: ObjectId,
     author: ObjectId,
     form: ObjectId,
     title: String,

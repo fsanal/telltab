@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 
 createBoard = (req, res) => {
     const { boardName, roadmapIDs, url } = req.body;
+    console.log("HERE");
     let board = new Board(
         {
             name: boardName,

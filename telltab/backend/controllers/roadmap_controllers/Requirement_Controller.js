@@ -1,11 +1,8 @@
 const Requirement = require('../../models/roadmap/Requirement');
-const Initiative = require('../../models/roadmap/Initiative');
-const TimeBlock = require('../../models/roadmap/TimeBlock');
-const Persona = require('../../models/Persona')
 var mongoose = require('mongoose');
 
 getRequirement = (req, res) => {
-    const id = req.params.id;
+    const id = req.params.reqID;
     let requirement = Requirement.findById(id) = () => {
         if (err) {
             res.json({success: false, error: err});
@@ -15,18 +12,18 @@ getRequirement = (req, res) => {
 }
 
 createRequirement = (req, res) => {
-    const { Initiative, beginDate, endDate, purpose, TimeBlock, priority, value, Persona,
-    title, body, visibility, tags, author, assignments, customFields } = req.body;
+    const { initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
+    title, body, visibilityIDs, tagIDs, author, assignmentIDs, customFields } = req.body;
     let requirement = new Requirement(
         {
             created: new Date(),
             purpose: purpose,
-            TimeBlock: TimeBlock,
+            timeblockID: timeblockID,
             author: author
         }
     );
-    if (Initiative !== undefined) {
-        requirement.Initiative = Initiative;
+    if (initiativeID !== undefined) {
+        requirement.initiativeID = initiativeID;
     }
     if (beginDate !== undefined) {
         requirement.beginDate = beginDate;
@@ -40,8 +37,8 @@ createRequirement = (req, res) => {
     if (value !== undefined) {
         requirement.value = value;
     }
-    if (Persona !== undefined) {
-        requirement.Persona = Persona;
+    if (personaID !== undefined) {
+        requirement.personaID = personaID;
     }
     if (title !== undefined) {
         requirement.title = title;
@@ -49,14 +46,14 @@ createRequirement = (req, res) => {
     if (body !== undefined) {
         requirement.body = body;
     }
-    if (visibility !== undefined) {
-        requirement.visibility = visibility;
+    if (visibilityIDs !== undefined) {
+        requirement.visibilityIDs = visibilityIDs;
     }
-    if (tags !== undefined) {
-        requirement.tags = tags;
+    if (tagIDs !== undefined) {
+        requirement.tagIDs = tagIDs;
     }
-    if (assignments !== undefined) {
-        requirement.assignments = assignments;
+    if (assignmentIDs !== undefined) {
+        requirement.assignmentIDs = assignmentIDs;
     }
     if (customFields !== undefined) {
         requirement.customFields = customFields;
@@ -69,25 +66,33 @@ createRequirement = (req, res) => {
 }
 
 editRequirement = (req, res) => {
-    const { Initiative, beginDate, endDate, purpose, TimeBlock, priority, value, Persona,
-        title, body, visibility, tags, author, assignments, customFields } = req.body;
+    const { initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
+        title, body, visibilityIDs, tagIDs, author, assignmentIDs, customFields } = req.body;
     let update = {};
-    if (Initiative) update.Initiative = Initiative; 
+    if (initiativeID) update.initiativeID = initiativeID; 
     if (beginDate) update.beginDate = beginDate;
     if (endDate) update.endDate = endDate;
     if (purpose) update.purpose = purpose;
-    if (TimeBlock) update.TimeBlock = TimeBlock;
+    if (timeblockID) update.timeblockID = timeblockID;
     if (priority) update.priority = priority;
     if (value) update.value = value;
-    if (Persona) update.Persona = Persona;
+    if (personaID) update.personaID = personaID;
     if (title) update.title = title;
     if (body) update.body = body;
-    if (visibility) update.visibility = visibility;
-    if (tags) update.tags = tags;
+    if (visibilityIDs) update.visibilityIDs = visibilityIDs;
+    if (tagIDs) update.tagIDs = tagIDs;
     if (author) update.author = author;
-    if (assignments) update.assignments = assignments;
+    if (assignmentIDs) update.assignmentIDs = assignmentIDs;
     if (customFields) update.customFields = customFields;
     Requirement.findByIdAndUpdate(req.query.requirementID, {$set: update}, {new: true}, (err, requirement) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(requirement);
+    });
+}
+
+deleteRequirement = (req, res) => {
+    const { reqID } = req.param;
+    Requirement.findByIdAndRemove(reqID, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
     });

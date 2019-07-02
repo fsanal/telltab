@@ -1,9 +1,10 @@
-const Comment = require('../models/Comment');
+const Comment = require('../models/Comment')
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 createComment = (req, res) => {
-	const { requirementID, postID, newReleaseID, parentID, authorID, content } = req.body
+	const { requirementID, postID, newReleaseID,
+		 parentID, authorID, content } = req.body
 	let comment = new Comment({
 		author: ObjectId(authorID),
 		created: new Date(),

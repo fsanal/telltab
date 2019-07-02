@@ -1,5 +1,6 @@
 const User = require('../models/User');
 var mongoose = require('mongoose')
+const { ObjectId } = mongoose.Types;
 
 createUser = (req, res) => {
     const { externalID, name, email, password, personaIDs, 

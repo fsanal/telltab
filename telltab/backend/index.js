@@ -35,7 +35,11 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 
 var forumRoutes = require("./routes/forum_routes");
+var globalRoutes = require("./routes/global_routes");
+
 app.use('/api', forumRoutes);
+//app.use('/api', globalRoutes);
+
 
 // append /api for our http requests
 //app.use('/api', router);

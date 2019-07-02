@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+
 const comment_controller = require('../controllers/Comment_Controller');
+/*
 router.get('/comment/get/:id', comment_controller.getComment);
 router.post('/comment/create', comment_controller.createComment);
 router.put('/comment/edit', comment_controller.editComment);
 router.delete('/comment/delete/:id', comment_controller.deleteComment);
+*/
 
 const notification_controller = require('../controllers/Notification_Controller');
 router.get('/notification/get/:id', notification_controller.getNotification);

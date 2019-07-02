@@ -1,14 +1,15 @@
 const Widget = require('../../models/widget/Widget');
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 createWidget = (req, res) => {
     const { boardID, type, embeddableIDs, orientation, 
         height, width, color, backgroundColor, font, formID } = req.body;
     let widget = new Widget({
         created: new Date(),
-        boardID,
+        board: ObjectId(boardID),
         type,
-        formID
+        form: ObjectId(formID)
     });
     if (orientation) { widget.orientation = orientation } else {
         widget.orientation = "left";
@@ -16,12 +17,9 @@ createWidget = (req, res) => {
     if (width) { widget.width = width } else widget.width = 50;
     if (height) { widget.height = height } else widget.height = 100;
     if (font) widget.font = font;
-    if (backgroundColor) {widget.backgroundColor = backgroundColor} 
-    else {
-        widget.backgroundColor = "white";
-    }
+    if (backgroundColor) widget.backgroundColor = backgroundColor;
     if (color) widget.color = color;
-    if (embeddableIDs) widget.embeddableIDs = embeddableIDs;
+    if (embeddableIDs) widget.embeddables = embeddableIDs.map(embeddableID => ObjectId(embeddableID));
     widget.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
@@ -29,14 +27,14 @@ createWidget = (req, res) => {
 }
 
 getWidget = (req, res) => {
-    Widget.findById(req.param.widgetID, (err, widget) => {
+    Widget.findById(req.params.id, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
     });
 }
 
 editWidget = (req, res) => {
-    const { widgetID, boardID, orientation, 
+    const { id, boardID, orientation, 
         height, width, color, 
         backgroundColor, font, formID } = req.body;
     let update = {};
@@ -45,10 +43,10 @@ editWidget = (req, res) => {
     if (backgroundColor) update.backgroundColor = backgroundColor;
     if (font) update.font = font;
     if (color) update.color = color;
-    if (formID) update.formID = formID;
-    if (boardID) update.boardID = boardID;
+    if (formID) update.form = ObjectId(formID);
+    if (boardID) update.board = ObjectId(boardID);
     if (orientation) update.orientation = orientation;
-    Widget.findByIdAndUpdate(widgetID, {$set: update}, 
+    Widget.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
@@ -56,8 +54,8 @@ editWidget = (req, res) => {
 }
 
 deleteWidget = (req, res) => {
-    const { widgetID } = req.param;
-    Widget.findByIdAndRemove(widgetID, 
+    const { id } = req.params;
+    Widget.findByIdAndRemove(id, 
         (err, widget) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
@@ -65,10 +63,10 @@ deleteWidget = (req, res) => {
 }
 
 addEmbeddable = (req, res) => {
-    const { widgetID, embeddableID } = req.body;
+    const { id, embeddableID } = req.body;
     let update = {};
-    if (embeddableID) update.embeddableIDs = embeddableID;
-    Widget.findByIdAndUpdate(widgetID, {$push: update}, 
+    if (embeddableID) update.embeddableIDs = ObjectId(embeddableID);
+    Widget.findByIdAndUpdate(id, {$push: update}, 
         {new: true}, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
@@ -76,10 +74,10 @@ addEmbeddable = (req, res) => {
 }
 
 deleteEmbeddable = (req, res) => {
-    const { widgetID, embeddableID } = req.body;
+    const { id, embeddableID } = req.body;
     let update = {};
-    if (embeddableID) update.embeddableIDs = embeddableID;
-    Widget.findByIdAndUpdate(widgetID, {$pull: update}, 
+    if (embeddableID) update.embeddableIDs = ObjectId(embeddableID);
+    Widget.findByIdAndUpdate(id, {$pull: update}, 
         {new: true}, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);

@@ -1,38 +1,38 @@
 const Vote = require('../../models/feedback_forum/Vote');
 var mongoose = require('mongoose')
-
+const { ObjectId } = mongoose.Types
 
 // how to make sure vote doesnt have both post and comment ID
 createVote = (req, res) => {
-    const { userID, postID, commentID, url } = req.body;
+    let { userID, postID, commentID, url } = req.body;
     let vote = new Vote(
         {
-            userID,
+            user: ObjectId(userID),
             created: new Date()
         }
     );
-    if (url !== undefined) vote.url = url;
-    if (postID !== undefined) {
-        vote.postID = postID
-    } else if (commentID !== undefined) {
-        vote.commentID = commentID
+    if (url) vote.url = url;
+    if (postID) {
+        vote.post = ObjectId(postID)
+    } else if (commentID) {
+        vote.comment = ObjectId(commentID)
     }
     vote.save((err) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(vot);
+        return res.json(vote);
     });
 }
 
 getVote = (req, res) => {
-    Vote.findById(req.param.voteID, (err, vote) => {
+    Vote.findById(req.params.id, (err, vote) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(vote);
     });
 }
 
 deleteVote = (req, res) => {
-    const { voteID } = req.param;
-    Vot.findByIdAndRemove(voteID, (err, vote) => {
+    const { id } = req.params;
+    Vote.findByIdAndRemove(id, (err, vote) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(vote);
     });

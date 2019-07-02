@@ -1,18 +1,17 @@
 const RoadMap = require('../../models/roadmap/RoadMap');
 var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 getRoadMap = (req, res) => {
-    const id = req.params.id;
-    let roadmap = RoadMap.findById(id) = () => {
-        if (err) {
-            return res.json({success: false, error: err});
-        }
-    }
-    return res.json(roadmap);
+    const { id } = req.params;
+    RoadMap.findById(id, (err, roadmap) => {
+        if (err) return res.json({success: false, error: err});
+        return res.json(roadmap);
+    })
 }
 
 createRoadMap = (req, res) => {
-    const { name, numReqs, url } = req.body;
+    const { name, productID, url } = req.body;
     let roadmap = new RoadMap(
         {
             created: new Date(),
@@ -20,9 +19,8 @@ createRoadMap = (req, res) => {
             numReqs: 0,
         }
     );
-    if (url !== undefined) {
-        roadmap.url = url;
-    }
+    if (url) roadmap.url = url;
+    if (productID) roadmap.product = ObjectId(productID);
     roadmap.save((err) => {
         if (err) return res.json({success: false, error: err});
         return res.json(roadmap);
@@ -30,12 +28,12 @@ createRoadMap = (req, res) => {
 }
 
 editRoadMap = (req, res) => {
-    const { roadmapID, name, numReqs, url } = req.body;
+    const { id, name, productID, url } = req.body;
     let update = {};
     if (name) update.name = name; 
-    if (numReqs) update.numReqs = numReqs;
     if (url) update.url = url;
-    RoadMap.findByIdAndUpdate(roadmapID, {$set: update}, {new: true}, (err, roadmap) => {
+    if (productID) update.product = ObjectId(productID);
+    RoadMap.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, roadmap) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(roadmap);
     });

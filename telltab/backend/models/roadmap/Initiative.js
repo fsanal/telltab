@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var initiativeSchema = new Schema({
+    roadmap: ObjectId,
     created: {type: Date, required: true},
     title: {type: String, required: true},
-    numReqs: Number,
-    roadmapID: ObjectId
+    numReqs: Number
 });
 
 var Initiative = mongoose.model("Initiative", initiativeSchema);

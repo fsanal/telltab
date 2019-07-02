@@ -1,30 +1,26 @@
 const TimeBlock = require('../../models/roadmap/TimeBlock');
 var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 getTimeBlock = (req, res) => {
     const id = req.params.id;
-    let timeblock = TimeBlock.findById(id) = () => {
-        if (err) {
-            return res.json({success: false, error: err});
-        }
-    }
-    res.json(timeblock)
+    let timeblock = TimeBlock.findById(id, (err, timeblock) => {
+        if (err) return res.json({success: false, error: err});
+        return res.json(timeblock);
+    })
 }
 
 createTimeBlock = (req, res) => {
-    const { title, beginDate, endDate } = req.body;
+    const { title, roadmapID, beginDate, endDate } = req.body;
     let timeblock = new TimeBlock(
         {
             created: new Date(),
             title: title,
+            roadmap: ObjectId(roadmapID)
         }
     );
-    if (beginDate !== undefined) {
-        roadmap.beginDate = beginDate;
-    }
-    if (endDate !== undefined) {
-        roadmap.endDate = endDate;
-    }
+    if (beginDate) roadmap.beginDate = beginDate;
+    if (endDate) roadmap.endDate = endDate;
     timeblock.save((err) => {
         if (err) return res.json({success: false, error: err});
         return res.json(timeblock);
@@ -32,12 +28,12 @@ createTimeBlock = (req, res) => {
 }
 
 editTimeBlock = (req, res) => {
-    const { timeblockID, title, beginDate, endDate } = req.body;
+    const { id, title, beginDate, endDate } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (beginDate) update.beginDate = beginDate;
     if (endDate) update.endDate = endDate;
-    TimeBlock.findByIdAndUpdate(timeblockID, {$set: update}, {new: true}, (err, timeblock) => {
+    TimeBlock.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, timeblock) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(timeblock);
     });

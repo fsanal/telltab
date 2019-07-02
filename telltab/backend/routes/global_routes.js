@@ -33,5 +33,11 @@ router.delete('/user/delete', user_controller.deleteUser);
 router.post('/user/add_persona', user_controller.addPersona);
 router.delete('/user/delete_persona', user_controller.deletePersona);
 
+const product_controller = require('../controllers/Product_Controller');
+router.get('/product/get/:id', product_controller.getProduct);
+router.post('/user/create', product_controller.createProduct);
+router.put('/user/edit', product_controller.editProduct);
+router.delete('/user/delete/:id', product_controller.deleteProduct);
+
 // Export API routes
 module.exports = router;

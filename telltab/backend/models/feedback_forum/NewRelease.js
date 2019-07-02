@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var newReleaseSchema = new Schema({
-    requirementID: ObjectId,
-    boardID: ObjectId,
-    authorID: ObjectId,
+    requirement: ObjectId,
+    board: ObjectId,
+    author: ObjectId,
+    form: ObjectId,
     title: String,
     body: String,
-    formID: ObjectId,
     created: Date,
     url: String
 });

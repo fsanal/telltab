@@ -1,5 +1,6 @@
 const Form = require('../../models/widget/Form');
 var mongoose = require('mongoose')
+const { ObjectId } = mongoose.Types;
 
 createForm = (req, res) => {
     const { width, height, font, color, 
@@ -10,12 +11,10 @@ createForm = (req, res) => {
     if (width) { form.width = width } else form.width = 50;
     if (height) { form.height = height } else form.height = 100;
     if (font) form.font = font;
-    if (backgroundColor) {form.backgroundColor = backgroundColor} 
-    else {
-        form.backgroundColor = "white";
-    }
+    if (backgroundColor) form.backgroundColor = backgroundColor;
     if (color) form.color = color;
-    if (formElementIDs) form.formElementIDs = formElementIDs;
+    if (formElementIDs) form.formElements = formElementIDs.map(formElementID => 
+        ObjectId(formElementID));
     form.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
@@ -23,21 +22,21 @@ createForm = (req, res) => {
 }
 
 getForm = (req, res) => {
-    Form.findById(req.param.formID, (err, form) => {
+    Form.findById(req.params.id, (err, form) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
     });
 }
 
 editForm = (req, res) => {
-    const { formID, width, height, font, color, backgroundColor } = req.body;
+    const { id, width, height, font, color, backgroundColor } = req.body;
     let update = {};
     if (width) update.width = width; 
     if (height) update.height = height;
     if (backgroundColor) update.backgroundColor = backgroundColor;
     if (font) update.font = font;
     if (color) update.color = color;
-    Form.findByIdAndUpdate(formID, {$set: update}, 
+    Form.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, form) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
@@ -45,8 +44,8 @@ editForm = (req, res) => {
 }
 
 deleteForm = (req, res) => {
-    const { formID } = req.param;
-    Form.findByIdAndRemove(formID, 
+    const { id } = req.params;
+    Form.findByIdAndRemove(id, 
         (err, form) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
@@ -54,10 +53,10 @@ deleteForm = (req, res) => {
 }
 
 addFormElement = (req, res) => {
-    const { formID, formElementID } = req.body;
+    const { id, formElementID } = req.body;
     let update = {};
-    if (formElementID) update.formElementIDs = formElementID;
-    Form.findByIdAndUpdate(formID, {$push: update}, 
+    if (formElementID) update.formElements = ObjectId(formElementID);
+    Form.findByIdAndUpdate(id, {$push: update}, 
         {new: true}, (err, form) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
@@ -65,10 +64,10 @@ addFormElement = (req, res) => {
 }
 
 deleteFormElement = (req, res) => {
-    const { formID, formElementID } = req.body;
+    const { id, formElementID } = req.body;
     let update = {};
-    if (formElementID) update.formElementIDs = formElementID;
-    Form.findByIdAndUpdate(formID, {$pull: update}, 
+    if (formElementID) update.formElements = ObjectId(formElementID);
+    Form.findByIdAndUpdate(id, {$pull: update}, 
         {new: true}, (err, form) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);

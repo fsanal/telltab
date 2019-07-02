@@ -1,9 +1,10 @@
 const FormElement = require('../../models/widget/FormElement');
 var mongoose = require('mongoose')
 
+
 createFormElement = (req, res) => {
     const { width, height, type, text, font, fontSize, color, 
-        backgroundColor, alignment, order, customFields } = req.body;
+        backgroundColor, alignment, order } = req.body;
     let formElement = new FormElement({
         type,
         created: new Date()
@@ -21,7 +22,6 @@ createFormElement = (req, res) => {
         formElement.order = 0;
     }
     if (text) formElement.text = text;
-    if (customFields) formElement.customFields = customFields;
     formElement.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(formElement);
@@ -29,14 +29,14 @@ createFormElement = (req, res) => {
 }
 
 getFormElement = (req, res) => {
-    FormElement.findById(req.param.formElementID, (err, formElement) => {
+    FormElement.findById(req.params.id, (err, formElement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(formElement);
     });
 }
 
 editFormElement = (req, res) => {
-    const { formElementID, width, height, font, fontSize, color, 
+    const { id, width, height, font, fontSize, color, 
         backgroundColor, alignment, order } = req.body;
     let update = {};
     if (width) update.width = width; 
@@ -47,7 +47,7 @@ editFormElement = (req, res) => {
     if (fontSize) update.fontSize = fontSize;
     if (alignment) update.alignment = alignment;
     if (order) update.order = order;
-    FormElement.findByIdAndUpdate(formElementID, {$set: update}, 
+    FormElement.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, formElement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(formElement);
@@ -55,8 +55,8 @@ editFormElement = (req, res) => {
 }
 
 deleteFormElement = (req, res) => {
-    const { formElementID } = req.param;
-    FormElement.findByIdAndRemove(formElementID, 
+    const { id } = req.params;
+    FormElement.findByIdAndRemove(id, 
         (err, formElement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(formElement);

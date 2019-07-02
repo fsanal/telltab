@@ -1,17 +1,18 @@
 const Bucket = require('../../models/feedback_forum/Bucket');
 var mongoose = require('mongoose')
+const { ObjectId } = mongoose.Types;
 
 createBucket = (req, res) => {
-    const { bucketName, boardID, url } = req.body;
+    const { name, boardID, url } = req.body;
     let bucket = new Bucket(
         {
-            name: bucketName,
-            boardID,
+            name: name,
+            board: ObjectId(boardID),
             created: new Date(),
             numPosts: 0
         }
     );
-    if (url !== undefined) bucket.url = url;
+    if (url) bucket.url = url;
     bucket.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(bucket);
@@ -20,26 +21,26 @@ createBucket = (req, res) => {
 
 
 getBucket = (req, res) => {
-    Bucket.findById(req.param.bucketID, (err, bucket) => {
+    Bucket.findById(req.params.id, (err, bucket) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(bucket);
     });
 }
 
 editBucket = (req, res) => {
-    const { bucketName, bucketID, url } = req.body;
+    const { name, id, url } = req.body;
     let update = {};
-    if (bucketName) update.bucketName = bucketName; 
+    if (bucketName) update.name = name; 
     if (url) update.url = url
-    Bucket.findByIdAndUpdate(bucketID, {$set: update}, {new: true}, (err, bucket) => {
+    Bucket.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, bucket) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(bucket);
     });
 }
 
 deleteBucket = (req, res) => {
-    const { bucketID } = req.param;
-    Bucket.findByIdAndRemove(bucketID, (err, bucket) => {
+    const { id } = req.params;
+    Bucket.findByIdAndRemove(id, (err, bucket) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(bucket);
     });

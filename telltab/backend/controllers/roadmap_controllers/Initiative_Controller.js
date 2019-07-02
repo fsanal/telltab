@@ -1,14 +1,14 @@
 const Initiative = require('../../models/roadmap/Initiative');
 var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
+
 
 getInitiative = (req, res) => {
     const id = req.params.id;
-    let initiative = Initiative.findById(id) = () => {
-        if (err) {
-            return res.json({success: false, error: err});
-        }
-    }
-    return res.json(initiative);
+    Initiative.findById(id, (err, initiative) => {
+        if (err) return res.json({success: false, error: err});
+        return res.json(initiative);
+    });
 }
 
 createInitiative = (req, res) => {
@@ -18,7 +18,7 @@ createInitiative = (req, res) => {
             created: new Date(),
             title: title,
             numReqs: 0,
-            roadmapID: roadmapID
+            roadmap: ObjectId(roadmapID)
         }
     );
     initiative.save((err) => {
@@ -28,12 +28,12 @@ createInitiative = (req, res) => {
 }
 
 editInitiative = (req, res) => {
-    const { initiativeID, title, numReqs, roadmapID } = req.body;
+    const { id, title, numReqs, roadmapID } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (numReqs) update.numReqs = numReqs;
-    if (roadmapID) update.roadmapID = roadmapID;
-    Initiative.findByIdAndUpdate(initiativeID, {$set: update}, {new: true}, (err, initiative) => {
+    if (roadmapID) update.roadmap = ObjectId(roadmapID);
+    Initiative.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, initiative) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(initiative);
     });

@@ -23,7 +23,7 @@ createEmbeddable = (req, res) => {
 }
 
 getEmbeddable = (req, res) => {
-    Embeddable.findById(req.param.embeddableID, 
+    Embeddable.findById(req.params.id, 
         (err, embeddable) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(embeddable);
@@ -31,7 +31,7 @@ getEmbeddable = (req, res) => {
 }
 
 editEmbeddable = (req, res) => {
-    const { embeddableID, type, order, fontSize, font, color, imageUrl, url } = req.body;
+    const { id, type, order, fontSize, font, color, imageUrl, url } = req.body;
     let update = {};
     if (type) update.type = type; 
     if (order) update.order = order;
@@ -40,7 +40,7 @@ editEmbeddable = (req, res) => {
     if (color) update.color = color;
     if (imageUrl) update.imageUrl = imageUrl;
     if (url) update.url = url;
-    Embeddable.findByIdAndUpdate(embeddableID, {$set: update}, 
+    Embeddable.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, embeddable) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(embeddable);
@@ -48,8 +48,8 @@ editEmbeddable = (req, res) => {
 }
 
 deleteEmbeddable = (req, res) => {
-    const { embeddableID } = req.param;
-    Embeddable.findByIdAndRemove(embeddableID, 
+    const { id } = req.params;
+    Embeddable.findByIdAndRemove(id, 
         (err, embeddable) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(embeddable);

@@ -1,18 +1,18 @@
 const Board = require('../../models/feedback_forum/Board');
 var mongoose = require('mongoose')
+const { ObjectId } = mongoose.Types
 
 createBoard = (req, res) => {
-    const { boardName, roadmapIDs, url } = req.body;
-    console.log("HERE");
+    const { name, productID, url } = req.body;
     let board = new Board(
         {
-            name: boardName,
+            name,
             created: new Date(),
             numPosts: 0
         }
     );
-    if (roadmapIDs !== undefined) board.roadmapIDs = roadmapIDs;
-    if (url !== undefined) board.url = url;
+    if (productID) board.product = ObjectId(productID) 
+    if (url) board.url = url;
     board.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
@@ -20,49 +20,31 @@ createBoard = (req, res) => {
 }
 
 getBoard = (req, res) => {
-    Board.findById(req.param.boardID, (err, board) => {
+    Board.findById(req.params.id, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });
 }
 
 editBoard = (req, res) => {
-    const { boardName, boardID } = req.body;
+    const { name, productID, id } = req.body;
     let update = {};
-    if (boardName) update.boardName = boardName; 
-    Board.findByIdAndUpdate(boardID, {$set: update}, {new: true}, (err, board) => {
+    if (name) update.name = name; 
+    if (productID) update.product = ObjectId(productID);
+    Board.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });
 }
 
 deleteBoard = (req, res) => {
-    const { boardID } = req.param;
-    Board.findByIdAndRemove(boardID, (err, board) => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json(board);
-    });
-}
-
-addRoadMap = (req, res) => {
-    const { boardID, roadmapID } = req.body;
-    let update = {};
-    if (roadmapID) update.roadmapIDs = roadmapID;
-    Board.findByIdAndUpdate(boardID, {$push: update}, {new: true}, (err, board) => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json(board);
-    });
-}
-
-deleteRoadMap = (req, res) => {
-    const { boardID, roadmapID } = req.body;
-    let update = {};
-    if (roadmapID) update.roadmapIDs = roadmapID;
-    Board.findByIdAndUpdate(boardID, {$pull: update}, {new: true}, (err, board) => {
+    const { id } = req.params;
+    Board.findByIdAndRemove(id, (err, board) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(board);
     });
 }
 
 
-module.exports = {createBoard, getBoard, editBoard, deleteBoard, addRoadMap, deleteRoadMap}
+
+module.exports = {createBoard, getBoard, editBoard, deleteBoard}

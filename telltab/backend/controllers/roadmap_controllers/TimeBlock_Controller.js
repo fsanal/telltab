@@ -5,7 +5,7 @@ getTimeBlock = (req, res) => {
     const id = req.params.id;
     let timeblock = TimeBlock.findById(id) = () => {
         if (err) {
-            res.json({success: false, error: err});
+            return res.json({success: false, error: err});
         }
     }
     res.json(timeblock)
@@ -17,8 +17,6 @@ createTimeBlock = (req, res) => {
         {
             created: new Date(),
             title: title,
-            beginDate: beginDate,
-            endDate: endDate
         }
     );
     if (beginDate !== undefined) {
@@ -27,20 +25,19 @@ createTimeBlock = (req, res) => {
     if (endDate !== undefined) {
         roadmap.endDate = endDate;
     }
-
     timeblock.save((err) => {
-        if (err) res.json({success: false, error: err});
-        res.json(timeblock);
+        if (err) return res.json({success: false, error: err});
+        return res.json(timeblock);
     });
 }
 
 editTimeBlock = (req, res) => {
-    const { title, beginDate, endDate } = req.body;
+    const { timeblockID, title, beginDate, endDate } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (beginDate) update.beginDate = beginDate;
     if (endDate) update.endDate = endDate;
-    TimeBlock.findByIdAndUpdate(req.query.timeblockID, {$set: update}, {new: true}, (err, timeblock) => {
+    TimeBlock.findByIdAndUpdate(timeblockID, {$set: update}, {new: true}, (err, timeblock) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(timeblock);
     });
@@ -48,9 +45,9 @@ editTimeBlock = (req, res) => {
 
 deleteTimeBlock = (req, res) => {
     const id = req.params.id;
-    TimeBlock.findByIdAndRemove(id, (err) => {
-        if (err) res.send(err);
-        res.json({sucess: true});
+    TimeBlock.findByIdAndRemove(id, (err, timeblock) => {
+        if (err) return res.send(err);
+        return res.json(timeblock);
     });
 }
 

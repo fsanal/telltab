@@ -30,6 +30,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
+var forumRoutes = require("./routes/forum_routes");
+app.use('/api', forumRoutes);
+
+// append /api for our http requests
+//app.use('/api', router);
+
+// launch our backend into a port
+app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+
+/*
 // this is our get method
 // this method fetches all available data in our database
 router.get('/getData', (req, res) => {
@@ -275,9 +285,4 @@ router.post('/putCompany', (req, res) => {
     return res.json({ success: true });
   });
 });
-
-// append /api for our http requests
-app.use('/api', router);
-
-// launch our backend into a port
-app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+*/

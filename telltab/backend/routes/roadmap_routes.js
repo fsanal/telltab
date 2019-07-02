@@ -2,34 +2,34 @@ const express = require('express');
 const router = express.Router();
 
 const initiative_controller = require('../controllers/roadmap_controllers/Initiative_Controller');
-router.get('/getinitiative', initiative_controller.getInitiative);
-router.post('/createinitiative', initiative_controller.createInitiative);
-router.put('/editinitiative', initiative_controller.editInitiative);
-router.delete('/deleteinitiative', initiative_controller.deleteInitiative);
+router.get('/initiative/get', initiative_controller.getInitiative);
+router.post('/initiative/create', initiative_controller.createInitiative);
+router.put('/initiative/edit', initiative_controller.editInitiative);
+router.delete('/initiative/delete', initiative_controller.deleteInitiative);
 
 const requirement_controller = require('../controllers/roadmap_controllers/Requirement_Controller');
-router.get('/getrequirement', requirement_controller.getInitiative);
-router.post('/createrequirement', requirement_controller.createInitiative);
-router.put('/editrequirement', requirement_controller.editInitiative);
-router.delete('/deleterequirement', requirement_controller.deleteInitiative);
-router.get('/addvisibility', requirement_controller.addVisibility);
-router.get('/removevisibility', requirement_controller.removeVisibility);
-router.get('/addtag', requirement_controller.addTag);
-router.get('/deletetag', requirement_controller.deleteTag);
-router.get('/addassignment', requirement_controller.addAssignment);
-router.get('/deleteassignment', requirement_controller.deleteAssignment);
+router.get('/requirement/get', requirement_controller.getInitiative);
+router.post('/requirement/create', requirement_controller.createInitiative);
+router.put('/requirement/edit', requirement_controller.editInitiative);
+router.delete('/requirement/delete', requirement_controller.deleteInitiative);
+router.get('/requirement/add_visibility', requirement_controller.addVisibility);
+router.get('/requirement/remove_visibility', requirement_controller.removeVisibility);
+router.get('/requirement/add_tag', requirement_controller.addTag);
+router.get('/requirement/delete_tag', requirement_controller.deleteTag);
+router.get('/requirement/add_assignment', requirement_controller.addAssignment);
+router.get('/requirement/delete_assignment', requirement_controller.deleteAssignment);
 
 const roadmap_controller = require('../controllers/roadmap_controllers/RoadMap_Controller');
-router.get('/getroadmap', roadmap_controller.getRoadMap);
-router.post('/createroadmap', roadmap_controller.createRoadMap);
-router.put('/editroadmap', roadmap_controller.editRoadMap);
-router.delete('/deleteroadmap', roadmap_controller.deleteRoadMap);
+router.get('/roadmap/get', roadmap_controller.getRoadMap);
+router.post('/roadmap/create', roadmap_controller.createRoadMap);
+router.put('/roadmap/edit', roadmap_controller.editRoadMap);
+router.delete('/roadmap/delete', roadmap_controller.deleteRoadMap);
 
 const timeblock_controller = require('../controllers/roadmap_controllers/TimeBlock_Controller');
-router.get('/gettimeblock', timeblock_controller.getTimeBlock);
-router.post('/createtimeblock', timeblock_controller.createTimeBlock);
-router.put('/edittimeblock', timeblock_controller.editTimeBlock);
-router.delete('/deletetimeblock', timeblock_controller.deleteTimeBlock);
+router.get('/timeblock/get', timeblock_controller.getTimeBlock);
+router.post('/timeblock/create', timeblock_controller.createTimeBlock);
+router.put('/timeblock/edit', timeblock_controller.editTimeBlock);
+router.delete('/timeblock/delete', timeblock_controller.deleteTimeBlock);
 
 // Export API routes
 module.exports = router;

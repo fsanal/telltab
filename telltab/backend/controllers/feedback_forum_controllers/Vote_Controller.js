@@ -37,3 +37,5 @@ deleteVote = (req, res) => {
         return res.json(vote);
     });
 }
+
+module.exports = { createVote, getVote, deleteVote }

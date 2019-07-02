@@ -12,12 +12,12 @@ router.get('/requirement/get', requirement_controller.getInitiative);
 router.post('/requirement/create', requirement_controller.createInitiative);
 router.put('/requirement/edit', requirement_controller.editInitiative);
 router.delete('/requirement/delete', requirement_controller.deleteInitiative);
-router.get('/requirement/add_visibility', requirement_controller.addVisibility);
-router.get('/requirement/remove_visibility', requirement_controller.removeVisibility);
-router.get('/requirement/add_tag', requirement_controller.addTag);
-router.get('/requirement/delete_tag', requirement_controller.deleteTag);
-router.get('/requirement/add_assignment', requirement_controller.addAssignment);
-router.get('/requirement/delete_assignment', requirement_controller.deleteAssignment);
+router.post('/requirement/add_visibility', requirement_controller.addVisibility);
+router.delete('/requirement/remove_visibility', requirement_controller.removeVisibility);
+router.post('/requirement/add_tag', requirement_controller.addTag);
+router.delete('/requirement/delete_tag', requirement_controller.deleteTag);
+router.post('/requirement/add_assignment', requirement_controller.addAssignment);
+router.delete('/requirement/delete_assignment', requirement_controller.deleteAssignment);
 
 const roadmap_controller = require('../controllers/roadmap_controllers/RoadMap_Controller');
 router.get('/roadmap/get', roadmap_controller.getRoadMap);

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { ObjectId } = Schema.Types;
+const { ObjectId, Mixed } = Schema.Types;
 
 var formElementSchema = new Schema({
     created: Date,
@@ -14,7 +14,7 @@ var formElementSchema = new Schema({
     backgroundColor: String,
     color: String,
     alignment: String,
-    customFields: {type: Map, of: String}
+    customFields: {type: Map, of: Mixed}
 });
 
 var FormElement = mongoose.model("FormElement", formElementSchema);

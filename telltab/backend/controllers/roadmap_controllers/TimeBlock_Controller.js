@@ -19,8 +19,8 @@ createTimeBlock = (req, res) => {
             roadmap: ObjectId(roadmapID)
         }
     );
-    if (beginDate) roadmap.beginDate = beginDate;
-    if (endDate) roadmap.endDate = endDate;
+    if (beginDate) timeblock.beginDate = beginDate;
+    if (endDate) timeblock.endDate = endDate;
     timeblock.save((err) => {
         if (err) return res.json({success: false, error: err});
         return res.json(timeblock);

@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { ObjectId } = Schema.Types
+const { ObjectId, Mixed } = Schema.Types
 
 var requirementSchema = new Schema({
     initiative: ObjectId,
-    timeBlock: ObjectId,
+    timeblock: ObjectId,
     persona: ObjectId,
     author: ObjectId,
     created: {type: Date, required: true},

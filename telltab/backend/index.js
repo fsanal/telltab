@@ -36,7 +36,11 @@ app.use(logger('dev'));
 
 var forumRoutes = require("./routes/forum_routes");
 var globalRoutes = require("./routes/global_routes");
+var widgetRoutes = require("./routes/widget_routes");
+var roadmapRoutes = require("./routes/roadmap_routes")
 
+app.use('/api', roadmapRoutes)
+app.use('/api', widgetRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', globalRoutes);
 

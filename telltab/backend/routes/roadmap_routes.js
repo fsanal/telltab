@@ -8,10 +8,10 @@ router.put('/initiative/edit', initiative_controller.editInitiative);
 router.delete('/initiative/delete/:id', initiative_controller.deleteInitiative);
 
 const requirement_controller = require('../controllers/roadmap_controllers/Requirement_Controller');
-router.get('/requirement/get/:id', requirement_controller.getInitiative);
-router.post('/requirement/create', requirement_controller.createInitiative);
-router.put('/requirement/edit', requirement_controller.editInitiative);
-router.delete('/requirement/delete/:id', requirement_controller.deleteInitiative);
+router.get('/requirement/get/:id', requirement_controller.getRequirement);
+router.post('/requirement/create', requirement_controller.createRequirement);
+router.put('/requirement/edit', requirement_controller.editRequirement);
+router.delete('/requirement/delete/:id', requirement_controller.deleteRequirement);
 router.put('/requirement/add_visibility', requirement_controller.addVisibility);
 router.put('/requirement/remove_visibility', requirement_controller.removeVisibility);
 router.put('/requirement/add_tag', requirement_controller.addTag);

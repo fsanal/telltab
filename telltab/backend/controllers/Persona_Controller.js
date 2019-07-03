@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 
 createPersona = (req, res) => {
 	const { flair, description, isPM, isAdmin, 
-		productID, tagIDs, roadMapConfig, customFields } = req.body
+		productID, tagIDs, roadMapConfig  } = req.body
 	let persona = new Persona({
 		product: ObjectId(productID),
 		flair,

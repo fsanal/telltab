@@ -8,7 +8,7 @@ var personaSchema = new Schema({
 	description: String,
 	isPM: Boolean,
 	isAdmin: Boolean,
-	tags: {type: [ObjectId], index: true},
+	tags: [{type: ObjectId, index: true, ref: 'Tag'}],
 	product: ObjectId,
 	roadMapConfig: String,
 	customFields: {type: Map, of: Mixed}

@@ -22,9 +22,9 @@ createPersona = (req, res) => {
 }
 
 getPersona = (req, res) => {
-	Persona.findById(req.params.id, (err, persona) => {
+	Persona.findById(req.params.id).populate('tags').exec(function(err, persona) {
 		if (err) return res.json({success: false, error: err})
-		return res.json(persona)
+		return res.json(persona);
 	});
 }
 

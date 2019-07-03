@@ -8,7 +8,6 @@ router.post('/comment/create', comment_controller.createComment);
 router.put('/comment/edit', comment_controller.editComment);
 router.delete('/comment/delete/:id', comment_controller.deleteComment);
 
-
 const notification_controller = require('../controllers/Notification_Controller');
 router.get('/notification/get/:id', notification_controller.getNotification);
 router.post('/notification/create', notification_controller.createNotification);

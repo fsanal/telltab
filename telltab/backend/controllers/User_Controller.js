@@ -24,7 +24,7 @@ createUser = (req, res) => {
 }
 
 getUser = (req, res) => {
-	User.findById(req.params.id, (err, user) => {
+	User.findById(req.params.id).populate('personas').exec(function(err, user) {
 		if (err) return res.json({success: false, error: err})
 		return res.json(user)
 	});

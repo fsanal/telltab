@@ -15,9 +15,9 @@ var requirementSchema = new Schema({
     value: Number,
     title: String,
     body: String,
-    visibility: { type: [ObjectId], index: true}, //Persona
-    tags: { type: [ObjectId], index: true}, //Tag
-    assignments: { type: [ObjectId], index: true}, //User
+    visibility: [{ type: ObjectId, index: true, ref: 'Persona'}], //Persona
+    tags: [{ type: ObjectId, index: true, ref: 'Tag'}], //Tag
+    assignments: [{ type: ObjectId, index: true, ref: 'User'}], //User
     customFields: {type: Map, of: Mixed}
 });
 

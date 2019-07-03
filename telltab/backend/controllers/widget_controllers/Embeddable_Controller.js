@@ -31,7 +31,8 @@ getEmbeddable = (req, res) => {
 }
 
 editEmbeddable = (req, res) => {
-    const { id, type, order, fontSize, font, color, imageUrl, url } = req.body;
+    const { id } = req.params;
+    const { type, order, fontSize, font, color, imageUrl, url } = req.body;
     let update = {};
     if (type) update.type = type; 
     if (order) update.order = order;

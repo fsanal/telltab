@@ -28,7 +28,8 @@ createTimeBlock = (req, res) => {
 }
 
 editTimeBlock = (req, res) => {
-    const { id, title, beginDate, endDate } = req.body;
+    const { id } = req.params;
+    const { title, beginDate, endDate } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (beginDate) update.beginDate = beginDate;

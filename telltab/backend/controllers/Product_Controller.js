@@ -25,7 +25,8 @@ getProduct = (req, res) => {
 }
 
 editProduct = (req, res) => {
-    const { id, name } = req.body;
+    const { id } = req.params;
+    const { name } = req.body;
     let update = {};
     if (name) update.name = name; 
     Product.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, product) => {

@@ -36,7 +36,8 @@ getFormElement = (req, res) => {
 }
 
 editFormElement = (req, res) => {
-    const { id, width, height, font, fontSize, color, 
+    const { id } = req.params;
+    const { width, height, font, fontSize, color, 
         backgroundColor, alignment, order } = req.body;
     let update = {};
     if (width) update.width = width; 

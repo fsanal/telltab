@@ -46,7 +46,8 @@ createRequirement = (req, res) => {
 }
 
 editRequirement = (req, res) => {
-    const { id, initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
+    const { id } = req.params;
+    const { initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
         title, body, authorID } = req.body;
     let update = {};
     if (initiativeID) update.initiative = ObjectId(initiativeID); 
@@ -75,7 +76,8 @@ deleteRequirement = (req, res) => {
 }
 
 addVisibility = (req, res) => {
-    const { id, visibilityID } = req.body;
+    const { id } = req.params;
+    const { visibilityID } = req.body;
     let update = {};
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
@@ -85,7 +87,8 @@ addVisibility = (req, res) => {
 }
 
 removeVisibility = (req, res) => {
-    const { id, visibilityID } = req.body;
+    const { id } = req.params;
+    const { visibilityID } = req.body;
     let update = {};
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
@@ -95,7 +98,8 @@ removeVisibility = (req, res) => {
 }
 
 addTag = (req, res) => {
-    const { id, tagID } = req.body;
+    const { id } = req.params;
+    const { tagID } = req.body;
     let update = {};
     if (tagID) update.tags = ObjectId(tagID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
@@ -105,7 +109,8 @@ addTag = (req, res) => {
 }
 
 deleteTag = (req, res) => {
-    const { id, tagID } = req.body;
+    const { id } = req.params;
+    const { tagID } = req.body;
     let update = {};
     if (tagID) update.tags = ObjectId(tagID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
@@ -115,7 +120,8 @@ deleteTag = (req, res) => {
 }
 
 addAssignment = (req, res) => {
-    const { id, assignmentID } = req.body;
+    const { id } = req.params;
+    const { assignmentID } = req.body;
     let update = {};
     if (assignmentID) update.assignments = ObjectId(assignmentID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
@@ -125,7 +131,8 @@ addAssignment = (req, res) => {
 }
 
 deleteAssignment = (req, res) => {
-    const { id, assignmentID } = req.body;
+    const { id } = req.params;
+    const { assignmentID } = req.body;
     let update = {};
     if (assignmentID) update.assignments = ObjectId(assignmentID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {

@@ -29,7 +29,8 @@ getForm = (req, res) => {
 }
 
 editForm = (req, res) => {
-    const { id, width, height, font, color, backgroundColor } = req.body;
+    const { id } = req.params;
+    const { width, height, font, color, backgroundColor } = req.body;
     let update = {};
     if (width) update.width = width; 
     if (height) update.height = height;
@@ -53,7 +54,8 @@ deleteForm = (req, res) => {
 }
 
 addFormElement = (req, res) => {
-    const { id, formElementID } = req.body;
+    const { id } = req.params;
+    const { formElementID } = req.body;
     let update = {};
     if (formElementID) update.formElements = ObjectId(formElementID);
     Form.findByIdAndUpdate(id, {$push: update}, 
@@ -64,7 +66,8 @@ addFormElement = (req, res) => {
 }
 
 deleteFormElement = (req, res) => {
-    const { id, formElementID } = req.body;
+    const { id } = req.params;
+    const { formElementID } = req.body;
     let update = {};
     if (formElementID) update.formElements = ObjectId(formElementID);
     Form.findByIdAndUpdate(id, {$pull: update}, 

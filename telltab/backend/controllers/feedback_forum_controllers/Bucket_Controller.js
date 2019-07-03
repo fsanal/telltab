@@ -28,7 +28,8 @@ getBucket = (req, res) => {
 }
 
 editBucket = (req, res) => {
-    const { name, id, url } = req.body;
+    const { id } = req.params;
+    const { name, url } = req.body;
     let update = {};
     if (bucketName) update.name = name; 
     if (url) update.url = url

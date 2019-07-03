@@ -29,7 +29,8 @@ getPersona = (req, res) => {
 }
 
 editPersona = (req, res) => {
-	const { id, description, flair, isPM, roadMapConfig, isAdmin } = req.body;
+	const { id } = req.params;
+	const { description, flair, isPM, roadMapConfig, isAdmin } = req.body;
 	let update = {};
 	if (description) update.description = description;
 	if (flair) update.flair = flair;
@@ -50,7 +51,8 @@ deletePersona = (req, res) => {
 }
 
 addTag = (req, res) => {
-	const { id, tagID } = req.body;
+	const { id } = req.params;
+	const { tagID } = req.body;
 	update = {};
 	update.tags = ObjectId(tagID);
     Persona.findByIdAndUpdate ( id, { $push: update }, { new: true }, ( err, persona) => {
@@ -60,7 +62,8 @@ addTag = (req, res) => {
 }
 
 deleteTag = (req, res) => {
-	const { id, tagID } = req.body;
+	const { id } = req.params;
+	const { tagID } = req.body;
 	console.log(tagID);
 	update = {};
 	update.tags = ObjectId(tagID)

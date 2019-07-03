@@ -31,7 +31,8 @@ getComment  = (req, res) => {
 }
 
 editComment = (req, res) => {
-	const { content, id } = req.body;
+	const { id } = req.params;
+	const { content } = req.body;
 	let update = {};
 	if (content) update.content = content;
 	Comment.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, comment) => {

@@ -24,14 +24,15 @@ createUser = (req, res) => {
 }
 
 getUser = (req, res) => {
-	User.findById(req.params.id, (err, user) => {
+	User.findById(req.params.id).populate('personas').exec(function(err, user) {
 		if (err) return res.json({success: false, error: err})
 		return res.json(user)
 	});
 }
 
 editUser = (req, res) => {
-	const { id, name, email, url, imageUrl, password, notificationPref } = req.body;
+	const { id } = req.params;
+	const { name, email, url, imageUrl, password, notificationPref } = req.body;
 	let update = {};
 	if (name) update.name = name;
 	if (email) update.email = email;
@@ -52,7 +53,8 @@ deleteUser = (req, res) => {
 }
 
 addPersona = (req, res) => {
-	const { id, personaID } = req.body
+	const { id } = req.params;
+	const { personaID } = req.body
 	update = {}
 	update.personas = ObjectId(personaID)
     User.findByIdAndUpdate ( id, { $push: update }, { new: true }, ( err, user) => {
@@ -62,7 +64,8 @@ addPersona = (req, res) => {
 }
 
 deletePersona = (req, res) => {
-	const { id, personaID } = req.body
+	const { id } = req.params;
+	const { personaID } = req.body
 	update = {}
 	update.personas = ObjectId(personaID)
     User.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, user) => {

@@ -9,7 +9,7 @@ var formSchema = new Schema({
     font: String,
     color: String,
     backgroundColor: String,
-    formElements: {type: [ObjectId], index: true}
+    formElements: [{type: ObjectId, index: true, ref: 'FormElement'}]
 });
 
 var Form = mongoose.model("Form", formSchema);

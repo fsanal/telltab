@@ -27,14 +27,15 @@ createWidget = (req, res) => {
 }
 
 getWidget = (req, res) => {
-    Widget.findById(req.params.id, (err, widget) => {
+    Widget.findById(req.params.id).populate('embeddables').exec(function(err, widget) {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
     });
 }
 
 editWidget = (req, res) => {
-    const { id, forumID, orientation, 
+    const { id } = req.params;
+    const { forumID, orientation, 
         height, width, color, 
         backgroundColor, font, formID } = req.body;
     let update = {};
@@ -63,7 +64,8 @@ deleteWidget = (req, res) => {
 }
 
 addEmbeddable = (req, res) => {
-    const { id, embeddableID } = req.body;
+    const { id } = req.params;
+    const { embeddableID } = req.body;
     let update = {};
     if (embeddableID) update.embeddableIDs = ObjectId(embeddableID);
     Widget.findByIdAndUpdate(id, {$push: update}, 
@@ -74,7 +76,8 @@ addEmbeddable = (req, res) => {
 }
 
 deleteEmbeddable = (req, res) => {
-    const { id, embeddableID } = req.body;
+    const { id } = req.params;
+    const { embeddableID } = req.body;
     let update = {};
     if (embeddableID) update.embeddableIDs = ObjectId(embeddableID);
     Widget.findByIdAndUpdate(id, {$pull: update}, 

@@ -31,7 +31,8 @@ getNewRelease = (req, res) => {
 }
 
 editNewRelease = (req, res) => {
-    const { id, title, body, formID, forumID, bucketID, url } = req.body;
+    const { id } = req.params;
+    const { title, body, formID, forumID, bucketID, url } = req.body;
     let update = {};
     if (title) update.title = title;
     if (body) update.body = body;

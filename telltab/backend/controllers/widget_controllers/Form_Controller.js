@@ -22,14 +22,15 @@ createForm = (req, res) => {
 }
 
 getForm = (req, res) => {
-    Form.findById(req.params.id, (err, form) => {
+    Form.findById(req.params.id).populate('formElements').exec(function(err, form) {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
     });
 }
 
 editForm = (req, res) => {
-    const { id, width, height, font, color, backgroundColor } = req.body;
+    const { id } = req.params;
+    const { width, height, font, color, backgroundColor } = req.body;
     let update = {};
     if (width) update.width = width; 
     if (height) update.height = height;
@@ -53,7 +54,8 @@ deleteForm = (req, res) => {
 }
 
 addFormElement = (req, res) => {
-    const { id, formElementID } = req.body;
+    const { id } = req.params;
+    const { formElementID } = req.body;
     let update = {};
     if (formElementID) update.formElements = ObjectId(formElementID);
     Form.findByIdAndUpdate(id, {$push: update}, 
@@ -64,7 +66,8 @@ addFormElement = (req, res) => {
 }
 
 deleteFormElement = (req, res) => {
-    const { id, formElementID } = req.body;
+    const { id } = req.params;
+    const { formElementID } = req.body;
     let update = {};
     if (formElementID) update.formElements = ObjectId(formElementID);
     Form.findByIdAndUpdate(id, {$pull: update}, 

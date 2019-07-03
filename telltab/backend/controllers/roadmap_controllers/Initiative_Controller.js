@@ -28,7 +28,8 @@ createInitiative = (req, res) => {
 }
 
 editInitiative = (req, res) => {
-    const { id, title, numReqs, roadmapID } = req.body;
+    const { id } = req.params;
+    const { title, numReqs, roadmapID } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (numReqs) update.numReqs = numReqs;

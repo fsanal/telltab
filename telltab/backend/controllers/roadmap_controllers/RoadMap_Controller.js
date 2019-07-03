@@ -28,7 +28,8 @@ createRoadMap = (req, res) => {
 }
 
 editRoadMap = (req, res) => {
-    const { id, name, productID, url } = req.body;
+    const { id } = req.params;
+    const { name, productID, url } = req.body;
     let update = {};
     if (name) update.name = name; 
     if (url) update.url = url;

@@ -12,7 +12,8 @@ getRequirement = (req, res) => {
 
 createRequirement = (req, res) => {
     const { initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
-    title, body, visibilityIDs, tagIDs, authorID, assignmentIDs, customFields } = req.body;
+    title, body, visibilityIDs, tagIDs, authorID, assignmentIDs } = req.body;
+    console.log(timeblockID);
     let requirement = new Requirement(
         {
             created: new Date(),
@@ -24,7 +25,7 @@ createRequirement = (req, res) => {
     if (initiativeID) requirement.initiative = initiativeID;
     if (beginDate) requirement.beginDate = beginDate; 
     if (endDate) requirement.endDate = endDate;
-    if (priority) requirement.priority = priority;
+    (priority) ? requirement.priority = priority : requirement.priority = 0;
     if (value) requirement.value = value;
     if (personaID) requirement.persona = ObjectId(personaID);
     if (title) requirement.title = title;
@@ -36,7 +37,7 @@ createRequirement = (req, res) => {
         requirement.tags = tagIDs.map(tagID => ObjectId(tagID));
     }
     if (assignmentIDs) {
-        requirement.assignmentss = assignmentIDs.map(assignmentID => ObjectId(assignmentID));
+        requirement.assignments = assignmentIDs.map(assignmentID => ObjectId(assignmentID));
     }
     requirement.save((err) => {
         if (err) res.json({success: false, error: err});
@@ -45,7 +46,8 @@ createRequirement = (req, res) => {
 }
 
 editRequirement = (req, res) => {
-    const { id, initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
+    const { id } = req.params;
+    const { initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
         title, body, authorID } = req.body;
     let update = {};
     if (initiativeID) update.initiative = ObjectId(initiativeID); 
@@ -58,7 +60,7 @@ editRequirement = (req, res) => {
     if (personaID) update.persona = ObjectId(personaID);
     if (title) update.title = title;
     if (body) update.body = body;
-    if (author) update.author = ObjectId(authorID);
+    if (authorID) update.author = ObjectId(authorID);
     Requirement.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
@@ -74,9 +76,10 @@ deleteRequirement = (req, res) => {
 }
 
 addVisibility = (req, res) => {
-    const { id, visibilityID } = req.body;
+    const { id } = req.params;
+    const { visibilityID } = req.body;
     let update = {};
-    if (visibilityID) update.visibilityIDs = ObjectId(visibilityID);
+    if (visibilityID) update.visibility = ObjectId(visibilityID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
@@ -84,9 +87,10 @@ addVisibility = (req, res) => {
 }
 
 removeVisibility = (req, res) => {
-    const { id, visibilityID } = req.body;
+    const { id } = req.params;
+    const { visibilityID } = req.body;
     let update = {};
-    if (visibilityID) update.visibilityIDs = ObjectId(visibilityID);
+    if (visibilityID) update.visibility = ObjectId(visibilityID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
@@ -94,9 +98,10 @@ removeVisibility = (req, res) => {
 }
 
 addTag = (req, res) => {
-    const { id, tagID } = req.body;
+    const { id } = req.params;
+    const { tagID } = req.body;
     let update = {};
-    if (tagID) update.tagIDs = ObjectId(tagID);
+    if (tagID) update.tags = ObjectId(tagID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
@@ -104,9 +109,10 @@ addTag = (req, res) => {
 }
 
 deleteTag = (req, res) => {
-    const { id, tagID } = req.body;
+    const { id } = req.params;
+    const { tagID } = req.body;
     let update = {};
-    if (tagID) update.tagIDs = ObjectId(tagID);
+    if (tagID) update.tags = ObjectId(tagID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
@@ -114,9 +120,10 @@ deleteTag = (req, res) => {
 }
 
 addAssignment = (req, res) => {
-    const { id, assignmentID } = req.body;
+    const { id } = req.params;
+    const { assignmentID } = req.body;
     let update = {};
-    if (assignmentID) update.assignmentIDs = ObjectId(assignmentID);
+    if (assignmentID) update.assignments = ObjectId(assignmentID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);
@@ -124,9 +131,10 @@ addAssignment = (req, res) => {
 }
 
 deleteAssignment = (req, res) => {
-    const { id, assignmentID } = req.body;
+    const { id } = req.params;
+    const { assignmentID } = req.body;
     let update = {};
-    if (assignmentID) update.assignmentIDs = ObjectId(assignmentID);
+    if (assignmentID) update.assignments = ObjectId(assignmentID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(requirement);

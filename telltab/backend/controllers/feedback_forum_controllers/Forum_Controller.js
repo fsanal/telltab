@@ -27,7 +27,8 @@ getForum = (req, res) => {
 }
 
 editForum = (req, res) => {
-    const { name, productID, id } = req.body;
+    const { id } = req.params;
+    const { name, productID } = req.body;
     let update = {};
     if (name) update.name = name; 
     if (productID) update.product = ObjectId(productID);

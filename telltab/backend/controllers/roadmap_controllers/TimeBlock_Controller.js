@@ -19,8 +19,8 @@ createTimeBlock = (req, res) => {
             roadmap: ObjectId(roadmapID)
         }
     );
-    if (beginDate) roadmap.beginDate = beginDate;
-    if (endDate) roadmap.endDate = endDate;
+    if (beginDate) timeblock.beginDate = beginDate;
+    if (endDate) timeblock.endDate = endDate;
     timeblock.save((err) => {
         if (err) return res.json({success: false, error: err});
         return res.json(timeblock);
@@ -28,7 +28,8 @@ createTimeBlock = (req, res) => {
 }
 
 editTimeBlock = (req, res) => {
-    const { id, title, beginDate, endDate } = req.body;
+    const { id } = req.params;
+    const { title, beginDate, endDate } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (beginDate) update.beginDate = beginDate;

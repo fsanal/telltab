@@ -48,7 +48,8 @@ getPost = (req, res) => {
 /// What if the bucket is not in the forumID specified?
 
 editPost = (req, res) => {
-    const { title, body, progress, id, forumID, bucketID, personaID, url } = req.body;
+    const { id } = req.params;
+    const { title, body, progress, forumID, bucketID, personaID, url } = req.body;
     let update = {};
     if (title) update.title = title;
     if (body) update.body = body;
@@ -72,7 +73,8 @@ deletePost = (req, res) => {
 }
 
 addVisibility = (req, res) => {
-    const { id, visibilityID } = req.body;
+    const { id } = req.params;
+    const { visibilityID } = req.body;
     let update = {};
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
@@ -82,7 +84,8 @@ addVisibility = (req, res) => {
 }
 
 removeVisibility = (req, res) => {
-    const { id, visibilityID } = req.body;
+    const { id } = req.params;
+    const { visibilityID } = req.body;
     let update = {};
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
@@ -93,7 +96,8 @@ removeVisibility = (req, res) => {
 
 
 addTag = (req, res) => {
-    const { id, tagID } = req.body;
+    const { id } = req.params;
+    const { tagID } = req.body;
     let update = {};
     if (tagID) update.tags = ObjectId(tagID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
@@ -103,7 +107,8 @@ addTag = (req, res) => {
 }
 
 deleteTag = (req, res) => {
-    const { id, tagID } = req.body;
+    const { id } = req.params;
+    const { tagID } = req.body;
     let update = {};
     if (tagID) update.tags = ObjectId(tagID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
@@ -113,7 +118,8 @@ deleteTag = (req, res) => {
 }
 
 assignPost = (req, res) => {
-    const { id, userID } = req.body;
+    const { id } = req.params;
+    const { userID } = req.body;
     let update = {};
     if (userID) update.assignments = ObjectId(userID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
@@ -123,7 +129,8 @@ assignPost = (req, res) => {
 }
 
 deassignPost = (req, res) => {
-    const { id, userID } = req.body;
+    const { id } = req.params;
+    const { userID } = req.body;
     let update = {};
     if (userID) update.assignments = ObjectId(userID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
@@ -133,7 +140,8 @@ deassignPost = (req, res) => {
 }
 
 addRequirement = (req, res) => {
-    const { id, reqID } = req.body;
+    const { id } = req.params;
+    const { reqID } = req.body;
     let update = {};
     if (reqID) update.requirements = ObjectId(reqID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
@@ -143,7 +151,8 @@ addRequirement = (req, res) => {
 }
 
 deleteRequirement = (req, res) => {
-    const { id, reqID } = req.body;
+    const { id } = req.params;
+    const { reqID } = req.body;
     let update = {};
     if (reqID) update.requirements = ObjectId(reqID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {

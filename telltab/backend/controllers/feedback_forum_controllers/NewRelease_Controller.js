@@ -1,4 +1,4 @@
-const newRelease = require('../../models/feedback_forum/newRelease');
+const NewRelease = require('../../models/feedback_forum/NewRelease');
 var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
 
@@ -47,7 +47,7 @@ editNewRelease = (req, res) => {
 
 deleteNewRelease = (req, res) => {
     const { id } = req.params;
-    Post.findByIdAndRemove(id, (err, newRelease) => {
+    NewRelease.findByIdAndRemove(id, (err, newRelease) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(newRelease);
     });

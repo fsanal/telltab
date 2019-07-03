@@ -24,7 +24,7 @@ router.get('/post/get/:id', post_controller.getPost);
 router.post('/post/create', post_controller.createPost);
 router.put('/post/edit', post_controller.editPost);
 router.delete('/post/delete/:id', post_controller.deletePost);
-router.put('/post/add_visibility', post_controller.addVisibility);
+router.put('/post/add_visibility', post_controller.addVisibility); 
 router.put('/post/remove_visibility', post_controller.removeVisibility);
 router.put('/post/add_tag', post_controller.addTag);
 router.put('/post/delete_tag', post_controller.deleteTag);

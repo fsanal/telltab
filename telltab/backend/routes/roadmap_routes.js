@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+//TESTING ALL
+
 const initiative_controller = require('../controllers/roadmap_controllers/Initiative_Controller');
 router.get('/initiative/get/:id', initiative_controller.getInitiative);
 router.post('/initiative/create', initiative_controller.createInitiative);

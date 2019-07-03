@@ -36,9 +36,11 @@ app.use(logger('dev'));
 
 var forumRoutes = require("./routes/forum_routes");
 var globalRoutes = require("./routes/global_routes");
+var widgetRoutes = require("./routes/widget_routes");
 
 app.use('/api', forumRoutes);
 app.use('/api', globalRoutes);
+app.use('/api', widgetRoutes);
 
 
 // append /api for our http requests

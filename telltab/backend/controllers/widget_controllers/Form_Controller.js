@@ -22,7 +22,7 @@ createForm = (req, res) => {
 }
 
 getForm = (req, res) => {
-    Form.findById(req.params.id, (err, form) => {
+    Form.findById(req.params.id).populate('formElements').exec(function(err, form) {
         if (err) return res.json({ success: false, error: err });
         return res.json(form);
     });

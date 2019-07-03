@@ -27,7 +27,7 @@ createWidget = (req, res) => {
 }
 
 getWidget = (req, res) => {
-    Widget.findById(req.params.id, (err, widget) => {
+    Widget.findById(req.params.id).populate('embeddables').exec(function(err, widget) {
         if (err) return res.json({ success: false, error: err });
         return res.json(widget);
     });

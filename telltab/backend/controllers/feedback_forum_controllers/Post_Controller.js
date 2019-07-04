@@ -82,31 +82,26 @@ retrievePosts = (req, res) => {
     search, personaID, visibilityIDs, tagIDs, assignmentIDs, 
     sort, progress, limit, skip } = req.query;
     let data = { "query": { "query_string" : { "query" : "please" }}};
-    JSON.stringify
-    $.ajax({
-        type: "GET",
-        url: "https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443/posts/_search",
-        data: JSON.stringify(data),
-        success: function(data) {
-          return res.json(data);
-        },
-        dataType: "json"
-    });
-       
     var url = 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443/posts/_search';
     
-
-    fetch(url, {
-    method: 'post', // or 'PUT'
-    body: JSON.stringify(data), // data can be `string` or {object}!
-    headers:{
-        'Content-Type': 'application/json'
-    }
+    fetch(url, {method: 'post', 
+                body: JSON.stringify(data), 
+                headers:{'Content-Type': 'application/json'}
     }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
+    .then((response) => {return console.log('Success:', JSON.stringify(response))})
     .catch(error => console.error('Error:', error));
+    
 
 /*
+ $.ajax({
+      url: {endpoint}/_search,
+      dataType: 'jsonp',
+      success: function(data) {
+        alert('Total results found: ' + data.hits.total)
+      }
+    });
+
+
 $.ajax({
     type: "POST",
     url: "https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:44/posts/_search",

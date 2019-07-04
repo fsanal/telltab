@@ -1,5 +1,5 @@
-const Post = require('../../models/feedback_forum/Post');
-var mongoose = require('mongoose')
+const { Post, esClient } = require('../../models/feedback_forum/Post');
+var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
 const fetch = require('node-fetch');
@@ -81,9 +81,19 @@ retrievePosts = (req, res) => {
     let { forumID, authorID, bucketID,
     search, personaID, visibilityIDs, tagIDs, assignmentIDs, 
     sort, progress, limit, skip } = req.query;
-    let data = { "query": { "query_string" : { "query" : "please" }}};
-    var url = 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443/posts/_search';
-    
+    esClient.search({
+        index: 'posts',
+        body: {
+            query: {
+                match: { "title": "please"}
+            },
+        }
+    }, (err, response, status) => {
+        if (err) return res.json(err);
+        return res.json(response);
+    })
+
+    /*
     fetch(url, {method: 'post', 
                 body: JSON.stringify(data), 
                 headers:{'Content-Type': 'application/json'}
@@ -91,7 +101,7 @@ retrievePosts = (req, res) => {
     .then((response) => {return console.log('Success:', JSON.stringify(response))})
     .catch(error => console.error('Error:', error));
     
-
+*/
 /*
  $.ajax({
       url: {endpoint}/_search,

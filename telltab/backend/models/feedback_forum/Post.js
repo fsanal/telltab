@@ -39,4 +39,4 @@ postSchema.plugin(mongoosastic, { esClient });
 var Post = mongoose.model("Post", postSchema);
 
 
-module.exports = Post; 
+module.exports = { Post, esClient }; 

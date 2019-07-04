@@ -2,6 +2,7 @@ const Post = require('../../models/feedback_forum/Post');
 var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
+const fetch = require('node-fetch');
 
 createPost = (req, res) => {
     const { forumID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
@@ -80,10 +81,58 @@ retrievePosts = (req, res) => {
     let { forumID, authorID, bucketID,
     search, personaID, visibilityIDs, tagIDs, assignmentIDs, 
     sort, progress, limit, skip } = req.query;
-    Post.search({ query_string: { query: search } }, (err,results) => {
+    let data = { "query": { "query_string" : { "query" : "please" }}};
+    JSON.stringify
+    $.ajax({
+        type: "GET",
+        url: "https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443/posts/_search",
+        data: JSON.stringify(data),
+        success: function(data) {
+          return res.json(data);
+        },
+        dataType: "json"
+    });
+       
+    var url = 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443/posts/_search';
+    
+
+    fetch(url, {
+    method: 'post', // or 'PUT'
+    body: JSON.stringify(data), // data can be `string` or {object}!
+    headers:{
+        'Content-Type': 'application/json'
+    }
+    }).then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error));
+
+/*
+$.ajax({
+    type: "POST",
+    url: "https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:44/posts/_search",
+    data: {
+      api_key: "xxxxxxxx"
+    },
+    success: function(data) {
+      console.log(data);
+      //do something when request is successfull
+    },
+    dataType: "json"
+  });
+
+Post.search(null, (err,results) => {
+    if (err) return res.json(err);
+    return res.json(results)
+});
+*/
+    /*
+
+    Post.search(
+        { query_string: { query: "please" }}, (err,results) => {
         if (err) return res.json(err);
         return res.json(results)
     });
+    */
     /*
     Post.search(null, {
         suggest: {

@@ -26,14 +26,6 @@ userSchema.plugin(mongoosastic, {
 
 var User = mongoose.model("User", userSchema);
 
-User.createMapping(function(err, mapping){  
-	if(err){
-	  console.log('error creating mapping');
-	  console.log(err);
-	}else{
-	  console.log('mapping created!');
-	  console.log(mapping);
-	}
-  });
+
 
 module.exports = User;

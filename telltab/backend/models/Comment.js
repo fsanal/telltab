@@ -23,14 +23,5 @@ commentSchema.plugin(mongoosastic, {
 
 var Comment = mongoose.model("Comment", commentSchema);
 
-Comment.createMapping(function(err, mapping){  
-	if(err){
-	  console.log('error creating mapping');
-	  console.log(err);
-	}else{
-	  console.log('mapping created!');
-	  console.log(mapping);
-	}
-});
 
 module.exports = Comment;

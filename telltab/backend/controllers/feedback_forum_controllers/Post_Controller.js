@@ -1,6 +1,7 @@
 const Post = require('../../models/feedback_forum/Post');
 var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
+const mongoosastic = require('mongoosastic');
 
 createPost = (req, res) => {
     const { forumID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
@@ -68,8 +69,72 @@ deletePost = (req, res) => {
     const { id } = req.params;
     Post.findByIdAndRemove(id, (err, post) => {
         if (err) return res.json({ success: false, error: err });
+        post.remove((err) => {
+            if (err) return res.json({ success: false, error: err });
+        });
         return res.json(post);
     });
+}
+
+retrievePosts = (req, res) => {
+    let { forumID, authorID, bucketID,
+    search, personaID, visibilityIDs, tagIDs, assignmentIDs, 
+    sort, progress, limit, skip } = req.query;
+    Post.search({ query_string: { query: search } }, (err,results) => {
+        if (err) return res.json(err);
+        return res.json(results)
+    });
+    /*
+    Post.search(null, {
+        suggest: {
+            "post-suggest": {
+                "text": search,
+                "completion": {
+                    "fields": ["title", "body"]
+                }
+            }
+        },
+        "size" : 0
+    }, (err, results) => {
+        if (err) return res.json({ success: false, error: err });;
+        return console.log(JSON.stringify(results, null, 4));
+    });
+    */
+    /*
+    let query;
+    console.log(search);
+    if (search) query = Post.find({
+        "$or": [
+            { "title" : { "$regex": search, "$options":"i"} },
+            { "body" :   { "$regex": search, "$options":"i"} }
+        ]
+    }); else query = Post.find();
+    */
+    /*
+     "$or": [
+            { "title" : { "$regex": search, "$options":"i"} },
+            { "body" :   { "$regex": search, "$options":"i"} }
+        ]
+{ $text: {$search: "/" + search + "/"}},
+        { score: {$meta: "textScore"}}
+
+    if (forumID) query.where('forum').equals(forumID);
+    if (authorID) query.where('author').equals(authorID);
+    if (bucketID) query.where('bucket').equals(bucketID);
+    //if (personaID) query.where('persona').equals(personaID);
+    if (visibilityIDs) query.where('visibility').all(visibilityIDs);
+    if (tagIDs) query.where('tags').all(tagIDs);
+    if (assignmentIDs) query.where('assignments').all(assignmentIDs);
+    if (progress) query.where('progress').equals(progress);
+    if (limit) query.limit(limit);
+    if (skip) query.skip(skip);
+    */
+   /*
+    query.exec( (err, posts) => {
+        if (err) return res.json({success: false, error: err });
+        return res.json(posts);
+    });
+    */
 }
 
 addVisibility = (req, res) => {
@@ -164,4 +229,4 @@ deleteRequirement = (req, res) => {
 
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 
-    deleteRequirement, assignPost, deassignPost }
+    deleteRequirement, assignPost, deassignPost, retrievePosts }

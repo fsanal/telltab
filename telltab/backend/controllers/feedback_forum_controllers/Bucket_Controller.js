@@ -31,7 +31,7 @@ editBucket = (req, res) => {
     const { id } = req.params;
     const { name, url } = req.body;
     let update = {};
-    if (bucketName) update.name = name; 
+    if (name) update.name = name; 
     if (url) update.url = url
     Bucket.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, bucket) => {
         if (err) return res.json({ success: false, error: err });

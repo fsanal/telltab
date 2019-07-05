@@ -78,80 +78,57 @@ deletePost = (req, res) => {
 
 
 retrievePosts = (req, res) => {
-    let { forumID, authorID, bucketID, personaID, 
+    let { forumID, authorID, bucketID, personas, 
         visibilityIDs, tagIDs, assignmentIDs, 
         sort, progress, limit, skip, search } = req.body;
     let query, aggregate;
-    let body = {};
-    console.log(body);
+    
     if ( search ) {
+        let body = {};
+        body.query = {
+            "bool": {
+                "should": [
+                    { "match": 
+                        { "title": 
+                            { "query": search,
+                            "fuzziness": "AUTO",
+                            "max_expansions": 10,
+                            "boost": 2.0
+                            }
+                        }
+                    },
+                    { "match": 
+                        { "body": 
+                            { "query": search,
+                            "fuzziness": "AUTO",
+                            "max_expansions": 10
+                            }
+                        }
+                    },
+                ],
+                minimum_should_match: 1
+            }
+        };
+        body.query.bool.filter = [];
+        if (forumID) body.query.bool.filter.push({ "term": { "forum": forumID }});
+        if (authorID) body.query.bool.filter.push({ "term": { "author": authorID }});
+        if (bucketID) body.query.bool.filter.push({ "term": { "bucket": bucketID }});
+        if (visibilityIDs) body.query.bool.filter.push({ "terms": { "visibility": visibilityIDs }});
+        if (tagIDs) body.query.bool.filter.push({  "terms": { "tags": tagIDs }});
+        if (personas) body.query.bool.filter.push({  "terms": { "personas": personaIDs }});
+        if (assignmentIDs) body.query.bool.filter.push({  "terms": { "assignments": assignmentIDs }});
+        if (progress) body.query.bool.filter.push({ "term": { "progress": progress }});
+        if (skip) body.from = Number(skip);
+        if (limit) body.size = Number(limit);  
         esClient.search({
             index: 'posts',
-            body: {
-                "query": {
-                    "bool": {
-                        "should": [
-                            { "match": 
-                                { "title": 
-                                    { "query": search,
-                                      "fuzziness": "AUTO",
-                                      "max_expansions": 10
-                                    }
-                                }
-                            },
-                            { "match": 
-                                { "body": 
-                                    { "query": search,
-                                      "fuzziness": "AUTO",
-                                      "max_expansions": 10
-                                    }
-                                }
-                            }  
-                        ] 
-                    }
-                },
-            }
-            /*{
-                        "query": {
-                            "bool": {
-                                "should": [
-                                    { "match": 
-                                        { "title": 
-                                            { "query": search,
-                                              "fuzziness": "AUTO",
-                                              "max_expansions": 10
-                                            }
-                                        }
-                                    },
-                                    { "match": 
-                                        { "body": 
-                                            { "query": search,
-                                              "fuzziness": "AUTO",
-                                              "max_expansions": 10
-                                            }
-                                        }
-                                    }  
-                                ] 
-                            }
-                        },
-                    }
-                    */
+            body: body
         }, (err, response, status) => {
             if (err) return res.json(err)
             idArr = response.hits.hits.map(hit => ObjectId(hit._id));   
             aggregate = Post.aggregate();
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
-            if (forumID) aggregate.match({ forum : ObjectId(forumID) });
-            if (authorID) aggregate.match({ author : ObjectId(authorID) });
-            if (bucketID) aggregate.match({ bucket : ObjectId(bucketID) });
-            //if (personaID) query.where('persona').equals(personaID);
-            if (visibilityIDs) aggregate.match({ visibility : { $all: visibilityIDs.map(visibilityID => ObjectId(visibilityID)) }});
-            if (tagIDs) aggregate.match({ tags : { $in: tagIDs.map(tagID => ObjectId(tagID)) }});
-            if (assignmentIDs) aggregate.match({ assignments : { $all: assignmentIDs.map(assignmentID => ObjectId(assignmentID)) }});
-            if (progress) aggregate.match({ progress: progress });
-            if (limit) aggregate.limit(Number(limit));
-            if (skip) aggregate.skip(Number(skip));
             aggregate.sort({ ordering : 1 });
             aggregate.exec( (err, posts) => {
                 if (err) return res.json({success: false, error: err });

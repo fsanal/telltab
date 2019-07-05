@@ -1,16 +1,16 @@
 const CustomField = require('../models/CustomField');
 var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types;
-const Post = require('../models/feedback_forum/Post');
-const Requirement = require('../models/roadmap/Requirement');
-const User = require('../models/User');
+const { Post } = require('../models/feedback_forum/Post');
+const { Requirement } = require('../models/roadmap/Requirement');
+const { User } = require('../models/User');
 
 createPostCustomField = (req, res) => {
     const { postID, fieldname, type, data } = req.body
 	let field = new CustomField({
 		type
 	})
-	if (postID) field.postID = ObjectId(postID);
+	if (postID) field.post = ObjectId(postID);
     if (fieldname) field.fieldname = fieldname;
     if (data) field.data = data;
 
@@ -66,14 +66,15 @@ deletePostCustomField = (req, res) => { //from post array, need to delete from C
 		if (err) {
             return res.json({success: false, error: err})
         } else {
+            let postID = field.post;
             let update = {};
-            if (field.postID) update.customFields = req.params.id;
-            Post.findByIdAndUpdate(field.postID, {$pull: update}, {new: true}, (err, post) => {
+            if (postID) update.customFields = req.params.id;
+            Post.findByIdAndUpdate(postID, {$pull: update}, {new: true}, (err, post) => {
                 if (err) return res.json({ success: false, error: err });
                 return res.json(post);
             });
         }
-	});
+    });
 }
 
 // 7/4/19

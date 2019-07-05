@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 
 getRequirement = (req, res) => {
     const id = req.params.reqID;
-    Requirement.findById(id, (err, requirement) => {
+    Requirement.findById(id).populate('visibility').populate('tags').populate('assignments').exec(function(err, requirement) {
         if (err) return res.json({success: false, error: err});
         return res.json(requirement);
     });

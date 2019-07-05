@@ -1,6 +1,7 @@
-const Post = require('../../models/feedback_forum/Post');
-var mongoose = require('mongoose')
+const { Post, esClient } = require('../../models/feedback_forum/Post');
+var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
+const mongoosastic = require('mongoosastic');
 
 createPost = (req, res) => {
     const { forumID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
@@ -68,8 +69,66 @@ deletePost = (req, res) => {
     const { id } = req.params;
     Post.findByIdAndRemove(id, (err, post) => {
         if (err) return res.json({ success: false, error: err });
+        post.remove((err) => {
+            if (err) return res.json({ success: false, error: err });
+        });
         return res.json(post);
     });
+}
+
+
+
+retrievePosts = (req, res) => {
+    let { forumID, authorID, bucketID, personaID, 
+        visibilityIDs, tagIDs, assignmentIDs, 
+        sort, progress, limit, skip, search } = req.query;
+
+    let query;
+    if ( search ) {
+        console.log("Entered Here");
+        esClient.search({
+            index: 'posts',
+            body:   {
+                        query: {
+                            match: { "title": search }
+                        },
+                    }
+        }, (err, response, status) => {
+            if (err) return res.json(err);
+            idArr = response.hits.hits.map(hit => hit._id);
+            query = Post.find({'_id' : { $in: idArr}});
+            if (forumID) query.where('forum').equals(forumID);
+            if (authorID) query.where('author').equals(authorID);
+            if (bucketID) query.where('bucket').equals(bucketID);
+            //if (personaID) query.where('persona').equals(personaID);
+            if (visibilityIDs) query.where('visibility').all(visibilityIDs);
+            if (tagIDs) query.where('tags').all(tagIDs);
+            if (assignmentIDs) query.where('assignments').all(assignmentIDs);
+            if (progress) query.where('progress').equals(progress);
+            if (limit) query.limit(Number(limit));
+            if (skip) query.skip(Number(skip));
+            query.exec( (err, posts) => {
+                if (err) return res.json({success: false, error: err });
+                return res.json(posts);
+            });
+        });
+    } else {
+        query = Post.find({});
+        if (forumID) query.where('forum').equals(forumID);
+        if (authorID) query.where('author').equals(authorID);
+        if (bucketID) query.where('bucket').equals(bucketID);
+        //if (personaID) query.where('persona').equals(personaID);
+        if (visibilityIDs) query.where('visibility').all(visibilityIDs);
+        if (tagIDs) query.where('tags').all(tagIDs);
+        if (assignmentIDs) query.where('assignments').all(assignmentIDs);
+        if (progress) query.where('progress').equals(progress);
+        if (limit) query.limit(Number(limit));
+        if (skip) query.skip(Number(skip));
+        query.exec( (err, posts) => {
+            if (err) return res.json({success: false, error: err });
+            return res.json(posts);
+        });
+    }
 }
 
 addVisibility = (req, res) => {
@@ -197,4 +256,4 @@ deleteCustomField = (req, res) => {
 
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 
-    deleteRequirement, assignPost, deassignPost }
+    deleteRequirement, assignPost, deassignPost, retrievePosts }

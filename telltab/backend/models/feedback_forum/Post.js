@@ -10,6 +10,7 @@ var postSchema = new Schema({
     bucket: ObjectId,
     persona: ObjectId,
     author: ObjectId,
+    roadmap: ObjectId,
     visibility: { type: [ObjectId], index: true},
     requirements: { type: [ObjectId], index: true},
     assignments: {type: [ObjectId], index: true},

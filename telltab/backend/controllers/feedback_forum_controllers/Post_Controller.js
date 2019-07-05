@@ -2,7 +2,6 @@ const { Post, esClient } = require('../../models/feedback_forum/Post');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
-const fetch = require('node-fetch');
 
 createPost = (req, res) => {
     const { forumID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
@@ -77,118 +76,59 @@ deletePost = (req, res) => {
     });
 }
 
+
+
 retrievePosts = (req, res) => {
-    let { forumID, authorID, bucketID,
-    search, personaID, visibilityIDs, tagIDs, assignmentIDs, 
-    sort, progress, limit, skip } = req.query;
-    esClient.search({
-        index: 'posts',
-        body: {
-            query: {
-                match: { "title": "please"}
-            },
-        }
-    }, (err, response, status) => {
-        if (err) return res.json(err);
-        return res.json(response);
-    })
+    let { forumID, authorID, bucketID, personaID, 
+        visibilityIDs, tagIDs, assignmentIDs, 
+        sort, progress, limit, skip, search } = req.query;
 
-    /*
-    fetch(url, {method: 'post', 
-                body: JSON.stringify(data), 
-                headers:{'Content-Type': 'application/json'}
-    }).then(res => res.json())
-    .then((response) => {return console.log('Success:', JSON.stringify(response))})
-    .catch(error => console.error('Error:', error));
-    
-*/
-/*
- $.ajax({
-      url: {endpoint}/_search,
-      dataType: 'jsonp',
-      success: function(data) {
-        alert('Total results found: ' + data.hits.total)
-      }
-    });
-
-
-$.ajax({
-    type: "POST",
-    url: "https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:44/posts/_search",
-    data: {
-      api_key: "xxxxxxxx"
-    },
-    success: function(data) {
-      console.log(data);
-      //do something when request is successfull
-    },
-    dataType: "json"
-  });
-
-Post.search(null, (err,results) => {
-    if (err) return res.json(err);
-    return res.json(results)
-});
-*/
-    /*
-
-    Post.search(
-        { query_string: { query: "please" }}, (err,results) => {
-        if (err) return res.json(err);
-        return res.json(results)
-    });
-    */
-    /*
-    Post.search(null, {
-        suggest: {
-            "post-suggest": {
-                "text": search,
-                "completion": {
-                    "fields": ["title", "body"]
-                }
-            }
-        },
-        "size" : 0
-    }, (err, results) => {
-        if (err) return res.json({ success: false, error: err });;
-        return console.log(JSON.stringify(results, null, 4));
-    });
-    */
-    /*
     let query;
-    console.log(search);
-    if (search) query = Post.find({
-        "$or": [
-            { "title" : { "$regex": search, "$options":"i"} },
-            { "body" :   { "$regex": search, "$options":"i"} }
-        ]
-    }); else query = Post.find();
-    */
-    /*
-     "$or": [
-            { "title" : { "$regex": search, "$options":"i"} },
-            { "body" :   { "$regex": search, "$options":"i"} }
-        ]
-{ $text: {$search: "/" + search + "/"}},
-        { score: {$meta: "textScore"}}
-
-    if (forumID) query.where('forum').equals(forumID);
-    if (authorID) query.where('author').equals(authorID);
-    if (bucketID) query.where('bucket').equals(bucketID);
-    //if (personaID) query.where('persona').equals(personaID);
-    if (visibilityIDs) query.where('visibility').all(visibilityIDs);
-    if (tagIDs) query.where('tags').all(tagIDs);
-    if (assignmentIDs) query.where('assignments').all(assignmentIDs);
-    if (progress) query.where('progress').equals(progress);
-    if (limit) query.limit(limit);
-    if (skip) query.skip(skip);
-    */
-   /*
-    query.exec( (err, posts) => {
-        if (err) return res.json({success: false, error: err });
-        return res.json(posts);
-    });
-    */
+    if ( search ) {
+        console.log("Entered Here");
+        esClient.search({
+            index: 'posts',
+            body:   {
+                        query: {
+                            match: { "title": search }
+                        },
+                    }
+        }, (err, response, status) => {
+            if (err) return res.json(err);
+            idArr = response.hits.hits.map(hit => hit._id);
+            query = Post.find({'_id' : { $in: idArr}});
+            if (forumID) query.where('forum').equals(forumID);
+            if (authorID) query.where('author').equals(authorID);
+            if (bucketID) query.where('bucket').equals(bucketID);
+            //if (personaID) query.where('persona').equals(personaID);
+            if (visibilityIDs) query.where('visibility').all(visibilityIDs);
+            if (tagIDs) query.where('tags').all(tagIDs);
+            if (assignmentIDs) query.where('assignments').all(assignmentIDs);
+            if (progress) query.where('progress').equals(progress);
+            if (limit) query.limit(Number(limit));
+            if (skip) query.skip(Number(skip));
+            query.exec( (err, posts) => {
+                if (err) return res.json({success: false, error: err });
+                return res.json(posts);
+            });
+        });
+    } else {
+        query = Post.find({});
+        if (forumID) query.where('forum').equals(forumID);
+        if (authorID) query.where('author').equals(authorID);
+        if (bucketID) query.where('bucket').equals(bucketID);
+        //if (personaID) query.where('persona').equals(personaID);
+        if (visibilityIDs) query.where('visibility').all(visibilityIDs);
+        if (tagIDs) query.where('tags').all(tagIDs);
+        if (assignmentIDs) query.where('assignments').all(assignmentIDs);
+        if (progress) query.where('progress').equals(progress);
+        if (limit) query.limit(Number(limit));
+        if (skip) query.skip(Number(skip));
+        query.exec( (err, posts) => {
+            if (err) return res.json({success: false, error: err });
+            return res.json(posts);
+        });
+    }
 }
 
 addVisibility = (req, res) => {

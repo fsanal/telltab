@@ -14,6 +14,7 @@ router.put('/forms/edit/:id', form_controller.editForm);
 router.delete('/forms/delete/:id', form_controller.deleteForm);
 router.put('/forms/add/form_element/:id', form_controller.addFormElement);
 router.put('/forms/delete/form_element/:id', form_controller.deleteFormElement);
+router.post('/forms/retrieve', form_controller.retrieveFormElements);
 
 const form_element_controller = require('../controllers/widget_controllers/FormElement_Controller');
 router.get('/form_elements/get/:id', form_element_controller.getFormElement);
@@ -28,6 +29,7 @@ router.put('/widgets/edit/:id', widget_controller.editWidget);
 router.delete('/widgets/delete/:id', widget_controller.deleteWidget);
 router.put('/widgets/add_embeddable/:id', widget_controller.addEmbeddable);
 router.put('/widgets/delete_embeddable/:id', widget_controller.deleteEmbeddable);
+router.post('/widgets/retrieve', widget_controller.retrieveEmbeddables);
 
 // Export API routes
 module.exports = router;

@@ -85,12 +85,30 @@ retrievePosts = (req, res) => {
 
     let query;
     if ( search ) {
-        console.log("Entered Here");
         esClient.search({
             index: 'posts',
             body:   {
                         query: {
-                            match: { "title": search }
+                            bool: {
+                                should: [
+                                    { match: 
+                                        { "title": 
+                                            { "query": search,
+                                              "fuzziness": "AUTO",
+                                              "max_expansions": 10
+                                            }
+                                        }
+                                    },
+                                    { match: 
+                                        { "body": 
+                                            { "query": search,
+                                              "fuzziness": "AUTO",
+                                              "max_expansions": 10
+                                            }
+                                        }
+                                    }  
+                                ] 
+                            }
                         },
                     }
         }, (err, response, status) => {
@@ -128,6 +146,7 @@ retrievePosts = (req, res) => {
             if (err) return res.json({success: false, error: err });
             return res.json(posts);
         });
+
     }
 }
 

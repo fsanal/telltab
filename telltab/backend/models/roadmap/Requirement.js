@@ -16,6 +16,11 @@ var requirementSchema = new Schema({
     purpose: String,
     priority: Number,
     value: Number,
+    body: String,
+    visibility: { type: [ObjectId], index: true, ref: 'Persona'},
+    tags: { type: [ObjectId], index: true, ref: 'Tag'},
+    assignments: { type: [ObjectId], index: true, ref: 'User'},
+    customFields: [Mixed],
     title: 
         {
             type: String,
@@ -27,10 +32,6 @@ var requirementSchema = new Schema({
             type: String,
             es_indexed: true
         },
-    visibility: { type: [ObjectId], index: true}, //Persona
-    tags: { type: [ObjectId], index: true}, //Tag
-    assignments: { type: [ObjectId], index: true}, //User
-    customFields: {type: Map, of: Mixed}
 });
 
 requirementSchema.plugin(mongoosastic, { esClient });

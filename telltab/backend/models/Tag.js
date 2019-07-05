@@ -8,8 +8,7 @@ var tagSchema = new Schema({
 	product: String,
 	numPosts: Number,
 	numReqs: Number,
-	url: String,
-	customFields: {type: Map, of: Mixed}
+	url: String
 });
 
 var Tag = mongoose.model("Tag", tagSchema);

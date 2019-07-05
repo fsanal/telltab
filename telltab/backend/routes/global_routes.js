@@ -40,5 +40,10 @@ router.post('/products/create', product_controller.createProduct);
 router.put('/products/edit/:id', product_controller.editProduct);
 router.delete('/products/delete/:id', product_controller.deleteProduct);
 
+const customfield_controller = require('../controllers/CustomField_Controller');
+router.put('/customfields/add/post', customfield_controller.createPostCustomField);
+router.get('/customfields/get/:id', customfield_controller.getCustomField);
+router.put('/customfields/delete/:id', customfield_controller.deletePostCustomField);
+
 // Export API routes
 module.exports = router;

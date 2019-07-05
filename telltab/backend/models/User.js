@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const mongoosastic = require("mongoosastic")
 const elasticsearch = require("elasticsearch")
 const Schema = mongoose.Schema;
-const { ObjectId, Mixed } = Schema.Types;
+const { ObjectId} = Schema.Types;
 
 var userSchema = new Schema({
 	created: Date,
@@ -15,7 +15,7 @@ var userSchema = new Schema({
 	notificationPref: {type: [Boolean]},
 	url: String,
 	imageUrl: String,
-	customFields: {type: Map, of: Mixed}
+	customFields: [ObjectId]
 });
 
 var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443'});

@@ -13,8 +13,7 @@ var formElementSchema = new Schema({
     fontSize: Number,
     backgroundColor: String,
     color: String,
-    alignment: String,
-    customFields: {type: Map, of: Mixed}
+    alignment: String
 });
 
 var FormElement = mongoose.model("FormElement", formElementSchema);

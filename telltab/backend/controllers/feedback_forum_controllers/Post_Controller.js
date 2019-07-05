@@ -239,6 +239,39 @@ deleteRequirement = (req, res) => {
     });
 }
 
+//Custom Field methods
+
+/*addCustomField = (req, res) => {
+    const { id } = req.params;
+    const object = JSON.parse(JSON.stringify(req.body)); //act as JSON for now, should have type as first element
+    let update = {};
+    if (object) update.customFields = object;
+    Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post);
+    });
+}
+
+getCustomField = (req, res) => {
+    Post.findById(req.params.id, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post.customField);
+    });
+}
+
+deleteCustomField = (req, res) => {
+    const { id } = req.params;
+    const { object } = req.body;
+    let update = {};
+    if (object) update.customField = customField;
+    Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post);
+    });
+}*/
+
+
+
 
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 

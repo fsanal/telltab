@@ -87,10 +87,10 @@ retrievePosts = (req, res) => {
         esClient.search({
             index: 'posts',
             body:   {
-                        query: {
-                            bool: {
-                                should: [
-                                    { match: 
+                        "query": {
+                            "bool": {
+                                "should": [
+                                    { "match": 
                                         { "title": 
                                             { "query": search,
                                               "fuzziness": "AUTO",
@@ -98,7 +98,7 @@ retrievePosts = (req, res) => {
                                             }
                                         }
                                     },
-                                    { match: 
+                                    { "match": 
                                         { "body": 
                                             { "query": search,
                                               "fuzziness": "AUTO",
@@ -116,41 +116,21 @@ retrievePosts = (req, res) => {
             aggregate = Post.aggregate();
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
-            if (forumID) aggregate.match({ forum : forumID });
-            if (authorID) aggregate.match({ author : authorID });
-            if (bucketID) aggregate.match({ bucket : bucketID });
+            if (forumID) aggregate.match({ forum : ObjectId(forumID) });
+            if (authorID) aggregate.match({ author : ObjectId(authorID) });
+            if (bucketID) aggregate.match({ bucket : ObjectId(bucketID) });
             //if (personaID) query.where('persona').equals(personaID);
-            if (visibilityIDs) aggregate.match({ visibility : { $all: visibilityIDs }});
-            if (tagIDs) aggregate.match({ tags : { $all: tagIDs }});
-            if (assignmentIDs) aggregate.match({ assignments : { $all: assignmentIDs }});
+            if (visibilityIDs) aggregate.match({ visibility : { $all: visibilityIDs.map(visibilityID => ObjectId(visibilityID)) }});
+            if (tagIDs) aggregate.match({ tags : { $in: tagIDs.map(tagID => ObjectId(tagID)) }});
+            if (assignmentIDs) aggregate.match({ assignments : { $all: assignmentIDs.map(assignmentID => ObjectId(assignmentID)) }});
             if (progress) aggregate.match({ progress: progress });
             if (limit) aggregate.limit(Number(limit));
             if (skip) aggregate.skip(Number(skip));
-            
             aggregate.sort({ ordering : 1 });
             aggregate.exec( (err, posts) => {
                 if (err) return res.json({success: false, error: err });
                 return res.json(posts);
             });
-            
-            /*
-            query = Post.find({'_id' : { $in: idArr}});
-            if (forumID) query.where('forum').equals(forumID);
-            if (authorID) query.where('author').equals(authorID);
-            if (bucketID) query.where('bucket').equals(bucketID);
-            //if (personaID) query.where('persona').equals(personaID);
-            if (visibilityIDs) query.where('visibility').all(visibilityIDs);
-            if (tagIDs) query.where('tags').all(tagIDs);
-            if (assignmentIDs) query.where('assignments').all(assignmentIDs);
-            if (progress) query.where('progress').equals(progress);
-            if (limit) query.limit(Number(limit));
-            if (skip) query.skip(Number(skip));
-            query.sort('-body')
-            query.exec( (err, posts) => {
-                if (err) return res.json({success: false, error: err });
-                return res.json(posts);
-            });
-            */
         });
     } else {
         query = Post.find();

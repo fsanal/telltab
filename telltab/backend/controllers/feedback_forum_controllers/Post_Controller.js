@@ -40,7 +40,7 @@ createPost = (req, res) => {
 }
 
 getPost = (req, res) => {
-    Post.findById(req.params.id, (err, post) => {
+    Post.findById(req.params.id).populate('personas').populate('visibility').populate('requirements').populate('assignments').populate('tags').exec(function(err, post) {
         if (err) return res.json({ success: false, error: err });
         return res.json(post);
     });

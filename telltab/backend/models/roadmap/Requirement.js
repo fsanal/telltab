@@ -15,10 +15,10 @@ var requirementSchema = new Schema({
     value: Number,
     title: String,
     body: String,
-    visibility: { type: [ObjectId], index: true}, //Persona
-    tags: { type: [ObjectId], index: true}, //Tag
-    assignments: { type: [ObjectId], index: true}, //User
-    customFields: {type: Map, of: Mixed}
+    visibility: { type: [ObjectId], index: true, ref: 'Persona'},
+    tags: { type: [ObjectId], index: true, ref: 'Tag'},
+    assignments: { type: [ObjectId], index: true, ref: 'User'},
+    customFields: [Mixed]
 });
 
 var Requirement = mongoose.model("Requirement", requirementSchema);

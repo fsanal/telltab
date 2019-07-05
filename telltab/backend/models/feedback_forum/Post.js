@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { Mixed, ObjectId} = Schema.Types
+const { ObjectId } = Schema.Types
 
 
 var postSchema = new Schema({
@@ -8,10 +8,10 @@ var postSchema = new Schema({
     bucket: ObjectId,
     persona: ObjectId,
     author: ObjectId,
-    visibility: { type: [ObjectId], index: true},
-    requirements: { type: [ObjectId], index: true},
-    assignments: {type: [ObjectId], index: true},
-    tags: { type: [ObjectId], index: true},
+    visibility: { type: [ObjectId], index: true, ref: 'Persona'},
+    requirements: { type: [ObjectId], index: true, ref: 'Requirement'},
+    assignments: {type: [ObjectId], index: true, ref: 'User'},
+    tags: { type: [ObjectId], index: true, ref: 'Tag'},
     created: Date,
     title: String,
     body: String,
@@ -20,7 +20,7 @@ var postSchema = new Schema({
     numComments: Number,
     numVotes: Number,
     url: String,
-    customFields: {type: Map, of: Mixed}
+    customFields:{ type: [ObjectId], index: true}
 });
 
 var Post = mongoose.model("Post", postSchema);

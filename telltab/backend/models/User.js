@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
-const { ObjectId, Mixed } = Schema.Types;
+const { ObjectId} = Schema.Types;
 
 var userSchema = new Schema({
 	created: Date,
@@ -13,7 +13,7 @@ var userSchema = new Schema({
 	notificationPref: {type: [Boolean]},
 	url: String,
 	imageUrl: String,
-	customFields: {type: Map, of: Mixed}
+	customFields: [ObjectId]
 });
 
 var User = mongoose.model("User", userSchema);

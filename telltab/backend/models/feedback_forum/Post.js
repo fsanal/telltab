@@ -20,7 +20,6 @@ var postSchema = new Schema({
         {
             type: String,
             es_indexed: true,
-            es_boost: 2
         },
     body: 
         {

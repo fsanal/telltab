@@ -21,7 +21,7 @@ router.delete('/newreleases/delete/:id', newrelease_controller.deleteNewRelease)
 
 const post_controller = require('../controllers/feedback_forum_controllers/Post_Controller');
 router.get('/posts/get/:id', post_controller.getPost);
-router.get('/posts/get', post_controller.retrievePosts);
+router.post('/posts/retrieve', post_controller.retrievePosts);
 router.post('/posts/create', post_controller.createPost);
 router.put('/posts/edit/:id', post_controller.editPost);
 router.delete('/posts/delete/:id', post_controller.deletePost);

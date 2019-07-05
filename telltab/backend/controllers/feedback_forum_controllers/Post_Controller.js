@@ -81,9 +81,8 @@ deletePost = (req, res) => {
 retrievePosts = (req, res) => {
     let { forumID, authorID, bucketID, personaID, 
         visibilityIDs, tagIDs, assignmentIDs, 
-        sort, progress, limit, skip, search } = req.query;
-
-    let query;
+        sort, progress, limit, skip, search } = req.body;
+    let query, aggregate;
     if ( search ) {
         esClient.search({
             index: 'posts',
@@ -112,8 +111,29 @@ retrievePosts = (req, res) => {
                         },
                     }
         }, (err, response, status) => {
-            if (err) return res.json(err);
-            idArr = response.hits.hits.map(hit => hit._id);
+            if (err) return res.json(err)
+            idArr = response.hits.hits.map(hit => ObjectId(hit._id));   
+            aggregate = Post.aggregate();
+            aggregate.match({ _id : { $in: idArr }});
+            aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
+            if (forumID) aggregate.match({ forum : forumID });
+            if (authorID) aggregate.match({ author : authorID });
+            if (bucketID) aggregate.match({ bucket : bucketID });
+            //if (personaID) query.where('persona').equals(personaID);
+            if (visibilityIDs) aggregate.match({ visibility : { $all: visibilityIDs }});
+            if (tagIDs) aggregate.match({ tags : { $all: tagIDs }});
+            if (assignmentIDs) aggregate.match({ assignments : { $all: assignmentIDs }});
+            if (progress) aggregate.match({ progress: progress });
+            if (limit) aggregate.limit(Number(limit));
+            if (skip) aggregate.skip(Number(skip));
+            
+            aggregate.sort({ ordering : 1 });
+            aggregate.exec( (err, posts) => {
+                if (err) return res.json({success: false, error: err });
+                return res.json(posts);
+            });
+            
+            /*
             query = Post.find({'_id' : { $in: idArr}});
             if (forumID) query.where('forum').equals(forumID);
             if (authorID) query.where('author').equals(authorID);
@@ -125,13 +145,15 @@ retrievePosts = (req, res) => {
             if (progress) query.where('progress').equals(progress);
             if (limit) query.limit(Number(limit));
             if (skip) query.skip(Number(skip));
+            query.sort('-body')
             query.exec( (err, posts) => {
                 if (err) return res.json({success: false, error: err });
                 return res.json(posts);
             });
+            */
         });
     } else {
-        query = Post.find({});
+        query = Post.find();
         if (forumID) query.where('forum').equals(forumID);
         if (authorID) query.where('author').equals(authorID);
         if (bucketID) query.where('bucket').equals(bucketID);
@@ -146,7 +168,6 @@ retrievePosts = (req, res) => {
             if (err) return res.json({success: false, error: err });
             return res.json(posts);
         });
-
     }
 }
 

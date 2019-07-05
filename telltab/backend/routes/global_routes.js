@@ -42,6 +42,8 @@ router.delete('/products/delete/:id', product_controller.deleteProduct);
 
 const customfield_controller = require('../controllers/CustomField_Controller');
 router.put('/customfields/add/post', customfield_controller.createPostCustomField);
+router.put('/customfields/add/requirement', customfield_controller.createRequirementCustomField);
+router.put('/customfields/add/user', customfield_controller.createUserCustomField);
 router.get('/customfields/get/:id', customfield_controller.getCustomField);
 router.put('/customfields/delete/:id', customfield_controller.deletePostCustomField);
 

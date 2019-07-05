@@ -16,7 +16,7 @@ createPostCustomField = (req, res) => {
 
     let update = {};
     update.customFields = field._id;
-    Post.findByIdAndUpdate(postID, {$push: update}, {new: true}, (err, post) => {
+    Post.findByIdAndUpdate(postID, {$push: update}, {new: true}, (err) => {
         if (err) return res.json({ success: false, error: err });
     });
 
@@ -26,18 +26,25 @@ createPostCustomField = (req, res) => {
     });
 }
 
-/*createRequirementCustomField = (req, res) => {
+createRequirementCustomField = (req, res) => {
     const { reqID, fieldname, type, data } = req.body
 	let field = new CustomField({
 		type
 	})
-    if (reqID) field.reqID = ObjectId(reqID);
+	if (reqID) field.requirement = ObjectId(reqID);
     if (fieldname) field.fieldname = fieldname;
     if (data) field.data = data;
+
+    let update = {};
+    update.customFields = field._id;
+    Requirement.findByIdAndUpdate(reqID, {$push: update}, {new: true}, (err) => {
+        if (err) return res.json({ success: false, error: err });
+    });
+
 	field.save((err) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(field)
-	});
+    });
 }
 
 createUserCustomField = (req, res) => {
@@ -45,14 +52,21 @@ createUserCustomField = (req, res) => {
 	let field = new CustomField({
 		type
 	})
-    if (userID) field.userID = ObjectId(userID);
+	if (userID) field.post = ObjectId(userID);
     if (fieldname) field.fieldname = fieldname;
     if (data) field.data = data;
+
+    let update = {};
+    update.customFields = field._id;
+    User.findByIdAndUpdate(userID, {$push: update}, {new: true}, (err) => {
+        if (err) return res.json({ success: false, error: err });
+    });
+
 	field.save((err) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(field)
     });
-}*/
+}
 
 getCustomField = (req, res) => {
 	CustomField.findById(req.params.id, (err, field) => {
@@ -78,8 +92,6 @@ deletePostCustomField = (req, res) => { //from post array, need to delete from C
 }
 
 // 7/4/19
-//Finish create and delete for Requirements and Users
 //Make sure populate works
-//Delete not working for Post Custom Field
 
 module.exports = { createPostCustomField, getCustomField, deletePostCustomField };

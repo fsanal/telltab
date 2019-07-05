@@ -16,7 +16,7 @@ var postSchema = new Schema({
     tags: { type: [ObjectId], index: true, ref: 'Tag'},
     roadmap: ObjectId,
     created: Date,
-    title: 
+    title:
         {
             type: String,
             es_indexed: true,
@@ -32,7 +32,7 @@ var postSchema = new Schema({
     numComments: Number,
     numVotes: Number,
     url: String,
-    customFields:{ type: [ObjectId], index: true}
+    customFields:{ type: [ObjectId], index: true, ref: 'CustomField'}
 });
 
 postSchema.plugin(mongoosastic, { esClient });

@@ -8,7 +8,7 @@ var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt
 var postSchema = new Schema({
     forum: ObjectId,
     bucket: ObjectId,
-    persona: ObjectId,
+    personas: { type: [ObjectId], index: true, ref: 'Persona'},
     author: ObjectId,
     visibility: { type: [ObjectId], index: true, ref: 'Persona'},
     requirements: { type: [ObjectId], index: true, ref: 'Requirement'},

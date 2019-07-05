@@ -89,50 +89,27 @@ deleteEmbeddable = (req, res) => {
 }
 
 retrieveEmbeddables = (req, res) => {
-    let { secret, type, limit, skip, search } = req.body;
-    let query, aggregate;
-    if (search) {
-        esClient.search({
-            index: 'embeddables',
-            body: {
-                "query": {
-                    "bool": {
-                        "should": [
-                            {
-                                "match": {
-                                    "type": {
-                                        "query": search,
-                                        "fuzziness": "AUTO",
-                                        "max_expansions": 10
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        }, (err, response, status) => {
-            if (err) return res.json(err)
-            idArr = response.hits.hits.map(hit => ObjectId(hit._id));   
-            aggregate = Embeddable.aggregate();
-            aggregate.match({ _id : { $in: idArr }});
-            aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
-            if (type) aggregate.match({ type: type });
-            if (limit) aggregate.limit(Number(limit));
-            if (skip) aggregate.skip(Number(skip));
-            aggregate.sort({ ordering : 1 });
-            aggregate.exec( (err, embeddables) => {
+    let { secret, type, widgetID, limit, skip, sort } = req.body;
+    if (widgetID) {
+        let query = Widget.findById(widgetID);
+        query.exec((err, widgets) => {
+            if (err) return res.json({success: false, error: err });
+            let query2 = Embeddable.find()
+            if (type) query.where('type').equals(type);
+            if (limit) query.limit(Number(limit));
+            if (skip) query.skip(Number(skip));
+            query2.exec((err, embeddables) => {
                 if (err) return res.json({success: false, error: err });
                 return res.json(embeddables);
             });
         });
     }
     else {
-        query = Embeddable.find()
+        let query = Embeddable.find()
         if (type) query.where('type').equals(type);
         if (limit) query.limit(Number(limit));
         if (skip) query.skip(Number(skip));
-        query.exec( (err, embeddables) => {
+        query.exec((err, embeddables) => {
             if (err) return res.json({success: false, error: err });
             return res.json(embeddables);
         });

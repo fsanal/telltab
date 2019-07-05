@@ -1,4 +1,5 @@
-const Widget = require('../../models/widget/Widget');
+const { Widget, esClient } = require('../../models/widget/Widget');
+const { Embeddable } = require('../../models/widget/Embeddable');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
@@ -87,4 +88,55 @@ deleteEmbeddable = (req, res) => {
     });
 }
 
-module.exports = { createWidget, getWidget, editWidget, deleteWidget, addEmbeddable, deleteEmbeddable }
+retrieveEmbeddables = (req, res) => {
+    let { secret, type, limit, skip, search } = req.body;
+    let query, aggregate;
+    if (search) {
+        esClient.search({
+            index: 'embeddables',
+            body: {
+                "query": {
+                    "bool": {
+                        "should": [
+                            {
+                                "match": {
+                                    "type": {
+                                        "query": search,
+                                        "fuzziness": "AUTO",
+                                        "max_expansions": 10
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }, (err, response, status) => {
+            if (err) return res.json(err)
+            idArr = response.hits.hits.map(hit => ObjectId(hit._id));   
+            aggregate = Embeddable.aggregate();
+            aggregate.match({ _id : { $in: idArr }});
+            aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
+            if (type) aggregate.match({ type: type });
+            if (limit) aggregate.limit(Number(limit));
+            if (skip) aggregate.skip(Number(skip));
+            aggregate.sort({ ordering : 1 });
+            aggregate.exec( (err, embeddables) => {
+                if (err) return res.json({success: false, error: err });
+                return res.json(embeddables);
+            });
+        });
+    }
+    else {
+        query = Embeddable.find()
+        if (type) query.where('type').equals(type);
+        if (limit) query.limit(Number(limit));
+        if (skip) query.skip(Number(skip));
+        query.exec( (err, embeddables) => {
+            if (err) return res.json({success: false, error: err });
+            return res.json(embeddables);
+        });
+    }
+}
+
+module.exports = { createWidget, getWidget, editWidget, deleteWidget, addEmbeddable, deleteEmbeddable, retrieveEmbeddables }

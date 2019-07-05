@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
 
 createPost = (req, res) => {
-    const { forumID, bucketID, authorID, visibilityIDs, personaID, tagIDs, assignmentIDs,
+    const { forumID, bucketID, authorID, visibilityIDs, personaIDs, tagIDs, assignmentIDs,
         title, body, progress, requirementIDs, url } = req.body;
     let post = new Post(
         {
@@ -22,7 +22,7 @@ createPost = (req, res) => {
     if (visibilityIDs) {
         post.visibility = visibilityIDs.map(visibilityID => ObjectId(visibilityID))
     }
-    if (personaID) post.persona = ObjectId(personaID);
+    if (personaIDs) post.personas = personaIDs.map(personaID =>ObjectId(personaID));
     if (tagIDs) {
         post.tags = tagIDs.map(tagID => ObjectId(tagID));
     }
@@ -50,14 +50,13 @@ getPost = (req, res) => {
 
 editPost = (req, res) => {
     const { id } = req.params;
-    const { title, body, progress, forumID, bucketID, personaID, url } = req.body;
+    const { title, body, progress, forumID, bucketID, personaIDs, url } = req.body;
     let update = {};
     if (title) update.title = title;
     if (body) update.body = body;
     if (progress) update.progress = progress;
     if (forumID) update.forum = ObjectId(forumID);
     if (bucketID) update.bucket = ObjectId(bucketID); 
-    if (personaID) update.persona = ObjectId(personaID);
     if (url) update.url = url
     Post.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
@@ -83,10 +82,36 @@ retrievePosts = (req, res) => {
         visibilityIDs, tagIDs, assignmentIDs, 
         sort, progress, limit, skip, search } = req.body;
     let query, aggregate;
+    let body = {};
+    console.log(body);
     if ( search ) {
         esClient.search({
             index: 'posts',
-            body:   {
+            body: {
+                "query": {
+                    "bool": {
+                        "should": [
+                            { "match": 
+                                { "title": 
+                                    { "query": search,
+                                      "fuzziness": "AUTO",
+                                      "max_expansions": 10
+                                    }
+                                }
+                            },
+                            { "match": 
+                                { "body": 
+                                    { "query": search,
+                                      "fuzziness": "AUTO",
+                                      "max_expansions": 10
+                                    }
+                                }
+                            }  
+                        ] 
+                    }
+                },
+            }
+            /*{
                         "query": {
                             "bool": {
                                 "should": [
@@ -110,6 +135,7 @@ retrievePosts = (req, res) => {
                             }
                         },
                     }
+                    */
         }, (err, response, status) => {
             if (err) return res.json(err)
             idArr = response.hits.hits.map(hit => ObjectId(hit._id));   
@@ -150,6 +176,29 @@ retrievePosts = (req, res) => {
         });
     }
 }
+
+addPersona = (req, res) => {
+    const { id } = req.params;
+    const { personaID } = req.body;
+    let update = {};
+    if (personaID) update.personas = ObjectId(personaID);
+    Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post);
+    });
+}
+
+deletePersona = (req, res) => {
+    const { id } = req.params;
+    const { personaID } = req.body;
+    let update = {};
+    if (personaID) update.personas = ObjectId(personaID);
+    Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post);
+    });
+}
+
 
 addVisibility = (req, res) => {
     const { id } = req.params;

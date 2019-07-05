@@ -1,4 +1,5 @@
-const Widget = require('../../models/widget/Widget');
+const { Widget, esClient } = require('../../models/widget/Widget');
+const { Embeddable } = require('../../models/widget/Embeddable');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
@@ -87,4 +88,32 @@ deleteEmbeddable = (req, res) => {
     });
 }
 
-module.exports = { createWidget, getWidget, editWidget, deleteWidget, addEmbeddable, deleteEmbeddable }
+retrieveEmbeddables = (req, res) => {
+    let { secret, type, widgetID, limit, skip, sort } = req.body;
+    if (widgetID) {
+        let query = Widget.findById(widgetID);
+        query.exec((err, widgets) => {
+            if (err) return res.json({success: false, error: err });
+            let query2 = Embeddable.find()
+            if (type) query.where('type').equals(type);
+            if (limit) query.limit(Number(limit));
+            if (skip) query.skip(Number(skip));
+            query2.exec((err, embeddables) => {
+                if (err) return res.json({success: false, error: err });
+                return res.json(embeddables);
+            });
+        });
+    }
+    else {
+        let query = Embeddable.find()
+        if (type) query.where('type').equals(type);
+        if (limit) query.limit(Number(limit));
+        if (skip) query.skip(Number(skip));
+        query.exec((err, embeddables) => {
+            if (err) return res.json({success: false, error: err });
+            return res.json(embeddables);
+        });
+    }
+}
+
+module.exports = { createWidget, getWidget, editWidget, deleteWidget, addEmbeddable, deleteEmbeddable, retrieveEmbeddables }

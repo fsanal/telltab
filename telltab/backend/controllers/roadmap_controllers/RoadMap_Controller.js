@@ -48,4 +48,15 @@ deleteRoadMap = (req, res) => {
     });
 }
 
-module.exports = { getRoadMap, createRoadMap, editRoadMap, deleteRoadMap };
+retrieveRoadMaps = (req, rest) => {
+    let { secret, limit, skip } = req.body;
+    let query = RoadMap.find();
+    if (limit) query.limit(Number(limit));
+    if (skip) query.skip(Number(skip));
+    query.exec((err, roadmaps) => {
+        if (err) return res.json({success: false, error: err });
+        return res.json(roadmaps);
+    });
+}
+
+module.exports = { getRoadMap, createRoadMap, editRoadMap, deleteRoadMap, retrieveRoadMaps };

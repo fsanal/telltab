@@ -48,4 +48,16 @@ deleteInitiative = (req, res) => {
     });
 }
 
-module.exports = { getInitiative, createInitiative, editInitiative, deleteInitiative };
+retrieveInitiatives = (req, res) => {
+    let { secret, roadmapID, limit, skip } = req.body;
+    let query = Initiative.find();
+    if (roadmapID) query.where('roadmap').equals(roadmapID);
+    if (limit) query.limit(Number(limit));
+    if (skip) query.skip(Number(skip));
+    query.exec( (err, initiatives) => {
+        if (err) return res.json({success: false, error: err });
+        return res.json(initiatives);
+    });
+}
+
+module.exports = { getInitiative, createInitiative, editInitiative, deleteInitiative, retrieveInitiatives };

@@ -8,6 +8,7 @@ router.get('/initiatives/get/:id', initiative_controller.getInitiative);
 router.post('/initiatives/create', initiative_controller.createInitiative);
 router.put('/initiatives/edit/:id', initiative_controller.editInitiative);
 router.delete('/initiatives/delete/:id', initiative_controller.deleteInitiative);
+router.post('/initiatives/retrieve', initiative_controller.retrieveInitiatives);
 
 const requirement_controller = require('../controllers/roadmap_controllers/Requirement_Controller');
 router.get('/requirements/get/:id', requirement_controller.getRequirement);
@@ -26,6 +27,7 @@ router.get('/roadmaps/get/:id', roadmap_controller.getRoadMap);
 router.post('/roadmaps/create', roadmap_controller.createRoadMap);
 router.put('/roadmaps/edit/:id', roadmap_controller.editRoadMap);
 router.delete('/roadmaps/delete/:id', roadmap_controller.deleteRoadMap);
+router.post('/roadmaps/retrieve', roadmap_controller.retrieveRoadMaps);
 
 const timeblock_controller = require('../controllers/roadmap_controllers/TimeBlock_Controller');
 router.get('/timeblocks/get/:id', timeblock_controller.getTimeBlock);

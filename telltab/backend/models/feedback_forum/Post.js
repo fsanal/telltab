@@ -6,21 +6,20 @@ const elasticsearch = require('elasticsearch');
 var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443'});
 
 var postSchema = new Schema({
-    forum: ObjectId,
+    forum: {type: ObjectId, es_indexed: true},
     bucket: ObjectId,
-    persona: ObjectId,
+    personas: [{ type: ObjectId, index: true, ref: 'Persona'}],
     author: ObjectId,
-    visibility: { type: [ObjectId], index: true, ref: 'Persona'},
-    requirements: { type: [ObjectId], index: true, ref: 'Requirement'},
-    assignments: {type: [ObjectId], index: true, ref: 'User'},
-    tags: { type: [ObjectId], index: true, ref: 'Tag'},
+    visibility: [{ type: ObjectId, index: true, ref: 'Persona'}],
+    requirements: [{ type: ObjectId, index: true, ref: 'Requirement'}],
+    assignments: [{type: ObjectId, index: true, ref: 'User'}],
+    tags: [{ type: ObjectId, index: true, ref: 'Tag'}],
     roadmap: ObjectId,
     created: Date,
     title:
         {
             type: String,
             es_indexed: true,
-            es_boost: 2
         },
     body: 
         {
@@ -28,7 +27,7 @@ var postSchema = new Schema({
             es_indexed: true
         },
     value: Number,
-    progress: String,
+    progress: {type: String, es_indexed: true},
     numComments: Number,
     numVotes: Number,
     url: String,

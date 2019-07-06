@@ -6,6 +6,7 @@ const elasticsearch = require('elasticsearch');
 var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443'});
 
 var requirementSchema = new Schema({
+    roadmap: ObjectId,
     initiative: ObjectId,
     timeblock: ObjectId,
     persona: ObjectId,

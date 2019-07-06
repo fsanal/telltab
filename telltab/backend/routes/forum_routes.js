@@ -18,6 +18,7 @@ router.get('/newreleases/get/:id', newrelease_controller.getNewRelease);
 router.post('/newreleases/create', newrelease_controller.createNewRelease);
 router.put('/newreleases/edit/:id', newrelease_controller.editNewRelease);
 router.delete('/newreleases/delete/:id', newrelease_controller.deleteNewRelease);
+router.post('/newreleases/retrieve', newrelease_controller.retrieveNewReleases);
 
 const post_controller = require('../controllers/feedback_forum_controllers/Post_Controller');
 router.get('/posts/get/:id', post_controller.getPost);

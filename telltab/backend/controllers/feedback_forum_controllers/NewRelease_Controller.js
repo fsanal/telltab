@@ -70,6 +70,6 @@ retrieveNewReleases = (req, res) => {
 	});
 }
 
-module.exports = { createNewRelease, getNewRelease, editNewRelease, deleteNewRelease }
+module.exports = { createNewRelease, getNewRelease, editNewRelease, deleteNewRelease, retrieveNewReleases }
 
 

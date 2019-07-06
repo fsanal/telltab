@@ -78,5 +78,16 @@ deleteFormElement = (req, res) => {
     });
 }
 
+retrieveFormElements = (req, res) => {
+    let { secret, type, sort, limit, skip } = req.body;
+    let query = FormElement.find()
+	if (type) query.where('type').all(type);
+	if (limit) query.limit(Number(limit));
+	if (skip) query.skip(Number(skip));
+	query.exec((err, formElements) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(formElements);
+	});
+}
 
 module.exports = { createForm, getForm, editForm, deleteForm, addFormElement, deleteFormElement, retrieveFormElements }

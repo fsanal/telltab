@@ -88,5 +88,4 @@ deleteEmbeddable = (req, res) => {
     });
 }
 
-
-module.exports = { createWidget, getWidget, editWidget, deleteWidget, addEmbeddable, deleteEmbeddable, retrieveEmbeddables }
+module.exports = { createWidget, getWidget, editWidget, deleteWidget, addEmbeddable, deleteEmbeddable }

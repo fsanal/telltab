@@ -29,7 +29,6 @@ router.put('/widgets/edit/:id', widget_controller.editWidget);
 router.delete('/widgets/delete/:id', widget_controller.deleteWidget);
 router.put('/widgets/add_embeddable/:id', widget_controller.addEmbeddable);
 router.put('/widgets/delete_embeddable/:id', widget_controller.deleteEmbeddable);
-router.post('/widgets/retrieve', widget_controller.retrieveEmbeddables);
 
 // Export API routes
 module.exports = router;

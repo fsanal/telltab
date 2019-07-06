@@ -140,7 +140,30 @@ deleteAssignment = (req, res) => {
     });
 }
 
+createCustomField = (req, res) => {
+    const { id } = req.params;
+    const { fieldID } = req.body;
+    let update = {};
+    if (fieldID) update.customFields = ObjectId(fieldID);
+    Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, req) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(req);
+    });
+}
+
+deleteCustomField = (req, res) => {
+    const { id } = req.params;
+    const { fieldID } = req.body;
+    let update = {};
+    if (fieldID) update.customFields = ObjectId(fieldID);
+    Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, req) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(req);
+    });
+}
+
 
 
 module.exports = { getRequirement, createRequirement, editRequirement, deleteRequirement, 
-    addVisibility, removeVisibility, addTag, deleteTag, addAssignment, deleteAssignment };
+    addVisibility, removeVisibility, addTag, deleteTag, addAssignment, deleteAssignment,
+    createCustomField, deleteCustomField };

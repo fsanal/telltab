@@ -16,7 +16,7 @@ createTag = (req, res) => {
 	});
 }
 
-getTag  = (req, res) => {
+getTag = (req, res) => {
 	Tag.findById(req.params.id, (err, tag) => {
 		if (err) return res.json({success: false, error: err})
 		return res.json(tag)

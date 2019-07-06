@@ -33,6 +33,8 @@ router.put('/posts/assign_post/:id', post_controller.assignPost);
 router.put('/posts/deassign_post/:id', post_controller.deassignPost);
 router.put('/posts/add_requirement/:id', post_controller.addRequirement);
 router.put('/posts/delete_requirement/:id', post_controller.deleteRequirement);
+router.put('/posts/add_customfield/:id', post_controller.createCustomField);
+router.put('/posts/delete_customfield/:id', post_controller.deleteCustomField);
 
 const vote_controller = require('../controllers/feedback_forum_controllers/Vote_Controller');
 router.get('/votes/get/:id', vote_controller.getVote);

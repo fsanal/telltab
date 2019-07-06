@@ -38,6 +38,6 @@ const vote_controller = require('../controllers/feedback_forum_controllers/Vote_
 router.get('/votes/get/:id', vote_controller.getVote);
 router.post('/votes/create', vote_controller.createVote);
 router.delete('/votes/delete/:id', vote_controller.deleteVote);
-
+router.post('/votes/retrieve', vote_controller.retrieveVotes);
 // Export API routes
 module.exports = router;

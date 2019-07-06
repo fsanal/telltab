@@ -30,4 +30,16 @@ deleteTag = (req, res) => {
 	});
 }
 
-module.exports = { createTag, getTag, deleteTag }
+retrieveTags = (req, res) => {
+	const { productID, sort, limit, skip } = req.body;
+	let query = Tag.find()
+	if (productID) query.where('product').equals(productID);
+	if (limit) query.limit(Number(limit));
+	if (skip) query.skip(Number(skip));
+	query.exec((err, tags) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(tags);
+	});
+}
+
+module.exports = { createTag, getTag, deleteTag, retrieveTags }

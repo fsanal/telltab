@@ -38,4 +38,18 @@ deleteVote = (req, res) => {
     });
 }
 
-module.exports = { createVote, getVote, deleteVote }
+retrieveVotes = (req, res) => {
+    let { secret, userID, forumID, postID, commentID, limit, skip } = req.body;
+    let query = Vote.find();
+    if (userID) query.where('user').equals(userID);
+    if (forumID) query.where('forum').equals(forumID);
+    if (postID) query.where('post').equals(postID);
+    if (newReleaseID) query.where('comment').equals(commentID);
+    if (limit) query.limit(Number(limit));
+    if (skip) query.skip(Number(skip));
+    query.exec( (err, votes) => {
+        if (err) return res.json({success: false, error: err });
+        return res.json(votes);
+    });
+}
+module.exports = { createVote, getVote, deleteVote, retrieveVotes }

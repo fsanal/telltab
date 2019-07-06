@@ -48,5 +48,21 @@ deleteComment = (req, res) => {
 	});
 }
 
+retrieveComments = (req, res) => {
+	const { postID, requirementID, newReleaseID, parentID, authorID, sort, limit, skip } = req.body;
+	let query = Comment.find();
+	if (postID) query.where('post').equals(postID);
+	if (requirementID) query.where('requirement').equals(requirementID);
+	if (newReleaseID) query.where('newRelease').equals(newReleaseID);
+	if (parentID) query.where('parent').equals(parentID);
+	if (authorID) query.where('author').equals(authorID);
+	if (limit) query.limit(Number(limit));
+	if (skip) query.skip(Number(skip));
+	query.exec((err, comments) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(comments);
+	});
+}
 
-module.exports = { createComment, getComment, editComment, deleteComment }
+
+module.exports = { createComment, getComment, editComment, deleteComment, retrieveComments }

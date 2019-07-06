@@ -4,7 +4,9 @@ const { ObjectId } = mongoose.Types;
 
 getRequirement = (req, res) => {
     const { id } = req.params;
-    Requirement.findById(id).populate('visibility').populate('tags').populate('assignments').exec(function(err, requirement) {
+    Requirement.findById(id).populate('roadmap').populate('initiative').populate('timeblock')
+    .populate('persona').populate('author').populate('visibility').populate('tags')
+    .populate('assignments').exec(function(err, requirement) {
         if (err) return res.json({success: false, error: err});
         return res.json(requirement);
     });
@@ -236,7 +238,9 @@ retrieveRequirements = (req, res) => {
         if (purpose) query.where('purpose').equals(purpose);
         if (limit) query.limit(Number(limit));
         if (skip) query.skip(Number(skip));
-        query.exec( (err, requirements) => {
+        query.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments').exec( (err, requirements) => {
             if (err) return res.json({success: false, error: err });
             return res.json(requirements);
         });

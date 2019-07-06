@@ -4,8 +4,8 @@ const { ObjectId } = Schema.Types;
 
 var notificationSchema = new Schema({
 	created: Date,
-    user: ObjectId,
-	product: ObjectId,
+    user: {type: ObjectId, ref: 'User'},
+	product: {type: ObjectId, ref: 'Product'},
 	content: String,
 	directToUrl: String,
 	type: String

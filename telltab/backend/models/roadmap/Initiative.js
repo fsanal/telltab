@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var initiativeSchema = new Schema({
-    roadmap: ObjectId,
+    roadmap: {type: ObjectId, ref: 'RoadMap'},
     created: {type: Date, required: true},
     title: {type: String, required: true},
     numReqs: Number

@@ -24,7 +24,8 @@ createNewRelease = (req, res) => {
 }
 
 getNewRelease = (req, res) => {
-    NewRelease.findById(req.params.id, (err, newRelease) => {
+    NewRelease.findById(req.params.id).populate('requirement').populate('forum').populate('author')
+    .populate('form').exec(function(err, newRelease) {
         if (err) return res.json({ success: false, error: err });
         return res.json(newRelease);
     });
@@ -55,21 +56,22 @@ deleteNewRelease = (req, res) => {
 }
 
 retrieveNewReleases = (req, res) => {
-	const { postID, requirementIDs, forumID, authorID, sort, limit, skip } = req.body;
+	const { requirementIDs, forumID, authorID, sort, limit, skip } = req.body;
 	let query = NewRelease.find()
-	if (postID) query.where('post').equals(postID);
     if (requirementIDs) query.where('requirement').in(requirementIDs);
     if (forumID) query.where('forum').equals(forumID);
 	if (authorID) query.where('author').equals(authorID);
 	if (roadMapConfig) query.where('roadMapConfig').equals(roadMapConfig);
 	if (limit) query.limit(Number(limit));
-	if (skip) query.skip(Number(skip));
-	query.exec((err, newReleases) => {
+    if (skip) query.skip(Number(skip));
+    query.populate('requirement').populate('forum').populate('author').populate('form')
+    .exec((err, newReleases) => {
 		if (err) return res.json({success: false, error: err });
 		return res.json(newReleases);
 	});
 }
 
-module.exports = { createNewRelease, getNewRelease, editNewRelease, deleteNewRelease, retrieveNewReleases }
+module.exports = { createNewRelease, getNewRelease, editNewRelease, deleteNewRelease,
+retrieveNewReleases }
 
 

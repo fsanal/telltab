@@ -97,4 +97,4 @@ deleteCustomField = (req, res) => {
 }
 
 module.exports = { createUser, getUser, editUser, deleteUser, addPersona, deletePersona,
-					createCustomField, deleteCustomField }
+createCustomField, deleteCustomField }

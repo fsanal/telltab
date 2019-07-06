@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var timeblockSchema = new Schema({
-    roadmap: ObjectId,
+    roadmap: {type: ObjectId, ref: 'RoadMap'},
     created: {type: Date, required: true},
     title: {type: String, required: true},
     beginDate: Date,

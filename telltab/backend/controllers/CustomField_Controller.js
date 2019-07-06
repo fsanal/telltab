@@ -21,10 +21,11 @@ createCustomField = (req, res) => {
 }
 
 getCustomField = (req, res) => {
-	CustomField.findById(req.params.id, (err, field) => {
-		if (err) return res.json({success: false, error: err})
+    CustomField.findById(req.params.id).populate('post').populate('requirement')
+    .populate('user').exec(function(err, field) {
+        if (err) return res.json({success: false, error: err})
 		return res.json(field)
-	});
+    });
 }
 
 deleteCustomField = (req, res) => {

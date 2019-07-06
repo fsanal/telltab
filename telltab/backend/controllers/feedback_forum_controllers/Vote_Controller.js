@@ -24,7 +24,8 @@ createVote = (req, res) => {
 }
 
 getVote = (req, res) => {
-    Vote.findById(req.params.id, (err, vote) => {
+    Vote.findById(req.params.id).populate('user').populate('post').populate('comment')
+    .exec(function(err, vote) {
         if (err) return res.json({ success: false, error: err });
         return res.json(vote);
     });
@@ -47,7 +48,7 @@ retrieveVotes = (req, res) => {
     if (newReleaseID) query.where('comment').equals(commentID);
     if (limit) query.limit(Number(limit));
     if (skip) query.skip(Number(skip));
-    query.exec( (err, votes) => {
+    query.populate('user').populate('post').populate('comment').exec( (err, votes) => {
         if (err) return res.json({success: false, error: err });
         return res.json(votes);
     });

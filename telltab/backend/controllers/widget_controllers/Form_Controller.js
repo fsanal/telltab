@@ -84,7 +84,7 @@ retrieveFormElements = (req, res) => {
 	if (type) query.where('type').all(type);
 	if (limit) query.limit(Number(limit));
 	if (skip) query.skip(Number(skip));
-	query.exec((err, formElements) => {
+	query.populate('formElements').exec((err, formElements) => {
 		if (err) return res.json({success: false, error: err });
 		return res.json(formElements);
 	});

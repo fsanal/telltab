@@ -6,12 +6,12 @@ const { ObjectId } = Schema.Types;
 
 var commentSchema = new Schema({
 	created: Date,
-	post: ObjectId,
-	requirement: ObjectId,
-	newRelease: ObjectId,
-	parent: ObjectId,
+	post: {type: ObjectId, ref: 'Post'},
+	requirement: {type: ObjectId, ref: 'Requirement'},
+	newRelease: {type: ObjectId, ref: 'NewRelease'},
+	parent: {type: ObjectId, ref: 'Comment'},
 	numVotes: Number,
-	author: ObjectId,
+	author: {type: ObjectId, ref: 'User'},
 	content: String
 });
 

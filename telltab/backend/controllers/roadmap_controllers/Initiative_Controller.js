@@ -5,7 +5,7 @@ const { ObjectId } = mongoose.Types;
 
 getInitiative = (req, res) => {
     const id = req.params.id;
-    Initiative.findById(id, (err, initiative) => {
+    Initiative.findById(id).populate('roadmap').exec(function(err, initiative) {
         if (err) return res.json({success: false, error: err});
         return res.json(initiative);
     });
@@ -54,7 +54,7 @@ retrieveInitiatives = (req, res) => {
     if (roadmapID) query.where('roadmap').equals(roadmapID);
     if (limit) query.limit(Number(limit));
     if (skip) query.skip(Number(skip));
-    query.exec( (err, initiatives) => {
+    query.populate('roadmap').exec( (err, initiatives) => {
         if (err) return res.json({success: false, error: err });
         return res.json(initiatives);
     });

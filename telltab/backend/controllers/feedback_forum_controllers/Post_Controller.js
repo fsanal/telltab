@@ -1,4 +1,5 @@
 const { Post, esClient } = require('../../models/feedback_forum/Post');
+const { Comment } = require('../../models/Comment');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
@@ -288,10 +289,31 @@ deleteCustomField = (req, res) => {
     });
 }
 
+createMergedPost = (req, res) => {
+    const { parentID, childID, requirementID, postID, newReleaseID,
+            authorID, content } = req.body
+    let comment = new Comment({
+        author: ObjectId(authorID),
+        created: new Date(),
+        content
+    })
+    if (postID) { comment.post = ObjectId(postID) } else if (parentID) {
+        comment.parent = ObjectId(parentID);
+    } else if (requirementID) {
+        comment.requirement = ObjectId(requirementID);
+    } else if (newReleaseID) {
+        comment.newRelease = ObjectId(newReleaseID);
+    }
+    comment.save((err) => {
+        if (err) return res.json({success: false, error: err})
+        return res.json(comment)
+    });
+}
+
 
 
 
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 
     deleteRequirement, assignPost, deassignPost, retrievePosts, createCustomField,
-    deleteCustomField }
+    deleteCustomField, createMergedPost }

@@ -10,6 +10,7 @@ var commentSchema = new Schema({
 	requirement: ObjectId,
 	newRelease: ObjectId,
 	parent: ObjectId,
+	source: ObjectId,
 	numVotes: Number,
 	author: ObjectId,
 	content: String

@@ -27,6 +27,8 @@ var postSchema = new Schema({
             es_indexed: true
         },
     value: Number,
+    parent: ObjectId,
+    merged: Boolean,
     progress: {type: String, es_indexed: true},
     numComments: Number,
     numVotes: Number,

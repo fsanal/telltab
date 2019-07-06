@@ -266,9 +266,32 @@ deleteRequirement = (req, res) => {
     });
 }
 
+createCustomField = (req, res) => {
+    const { id } = req.params;
+    const { fieldID } = req.body;
+    let update = {};
+    if (fieldID) update.customFields = ObjectId(fieldID);
+    Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post);
+    });
+}
+
+deleteCustomField = (req, res) => {
+    const { id } = req.params;
+    const { fieldID } = req.body;
+    let update = {};
+    if (fieldID) update.customFields = ObjectId(fieldID);
+    Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(post);
+    });
+}
+
 
 
 
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 
-    deleteRequirement, assignPost, deassignPost, retrievePosts }
+    deleteRequirement, assignPost, deassignPost, retrievePosts, createCustomField,
+    deleteCustomField }

@@ -33,6 +33,8 @@ router.put('/users/edit/:id', user_controller.editUser);
 router.delete('/users/delete/:id', user_controller.deleteUser);
 router.put('/users/add_persona/:id', user_controller.addPersona);
 router.put('/users/delete_persona/:id', user_controller.deletePersona);
+router.put('/users/add_customfield/:id', user_controller.createCustomField);
+router.put('/users/delete_customfield/:id', user_controller.deleteCustomField);
 
 const product_controller = require('../controllers/Product_Controller');
 router.get('/products/get/:id', product_controller.getProduct);
@@ -41,11 +43,9 @@ router.put('/products/edit/:id', product_controller.editProduct);
 router.delete('/products/delete/:id', product_controller.deleteProduct);
 
 const customfield_controller = require('../controllers/CustomField_Controller');
-router.put('/customfields/add/post', customfield_controller.createPostCustomField); //pass ID through body
-router.put('/customfields/add/requirement', customfield_controller.createRequirementCustomField);
-router.put('/customfields/add/user', customfield_controller.createUserCustomField);
+router.post('/customfields/create', customfield_controller.createCustomField);
 router.get('/customfields/get/:id', customfield_controller.getCustomField);
-router.put('/customfields/delete/:id', customfield_controller.deletePostCustomField);
+router.put('/customfields/delete/:id', customfield_controller.deleteCustomField);
 
 // Export API routes
 module.exports = router;

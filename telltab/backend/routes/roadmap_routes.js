@@ -21,6 +21,8 @@ router.put('/requirements/add_tag/:id', requirement_controller.addTag);
 router.put('/requirements/delete_tag/:id', requirement_controller.deleteTag);
 router.put('/requirements/add_assignment/:id', requirement_controller.addAssignment);
 router.put('/requirements/delete_assignment/:id', requirement_controller.deleteAssignment);
+router.put('/requirements/add_customfield/:id', requirement_controller.createCustomField);
+router.put('/requirements/delete_customfield/:id', requirement_controller.deleteCustomField);
 
 const roadmap_controller = require('../controllers/roadmap_controllers/RoadMap_Controller');
 router.get('/roadmaps/get/:id', roadmap_controller.getRoadMap);

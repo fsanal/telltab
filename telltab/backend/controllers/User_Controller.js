@@ -74,4 +74,27 @@ deletePersona = (req, res) => {
 	});
 }
 
-module.exports = { createUser, getUser, editUser, deleteUser, addPersona, deletePersona }
+createCustomField = (req, res) => {
+    const { id } = req.params;
+    const { fieldID } = req.body;
+    let update = {};
+    if (fieldID) update.customFields = ObjectId(fieldID);
+    User.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, user) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(user);
+    });
+}
+
+deleteCustomField = (req, res) => {
+    const { id } = req.params;
+    const { fieldID } = req.body;
+    let update = {};
+    if (fieldID) update.customFields = ObjectId(fieldID);
+    User.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, user) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json(user);
+    });
+}
+
+module.exports = { createUser, getUser, editUser, deleteUser, addPersona, deletePersona,
+					createCustomField, deleteCustomField }

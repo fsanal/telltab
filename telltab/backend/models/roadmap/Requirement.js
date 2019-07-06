@@ -10,7 +10,7 @@ var requirementSchema = new Schema({
     timeblock: ObjectId,
     persona: ObjectId,
     author: ObjectId,
-    created: {type: Date, required: true},
+    created: Date,
     beginDate: Date,
     endDate: Date,
     purpose: String,
@@ -20,7 +20,7 @@ var requirementSchema = new Schema({
     visibility: { type: [ObjectId], index: true, ref: 'Persona'},
     tags: { type: [ObjectId], index: true, ref: 'Tag'},
     assignments: { type: [ObjectId], index: true, ref: 'User'},
-    customFields: [Mixed],
+    customFields: { type: [ObjectId], index: true, ref: 'CustomField'},
     title: 
         {
             type: String,

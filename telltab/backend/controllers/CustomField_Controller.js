@@ -6,7 +6,7 @@ const { Requirement } = require('../models/roadmap/Requirement');
 const { User } = require('../models/User');
 
 createPostCustomField = (req, res) => {
-    const { postID, fieldname, type, data } = req.body
+    const { postID, fieldname, type, data } = req.body;
 	let field = new CustomField({
 		type
 	})
@@ -27,7 +27,7 @@ createPostCustomField = (req, res) => {
 }
 
 createRequirementCustomField = (req, res) => {
-    const { reqID, fieldname, type, data } = req.body
+    const { reqID, fieldname, type, data } = req.body;
 	let field = new CustomField({
 		type
 	})
@@ -91,7 +91,8 @@ deletePostCustomField = (req, res) => { //from post array, need to delete from C
     });
 }
 
-// 7/4/19
-//Make sure populate works
+// 7/5/19
+//Make sure populate works//
 
-module.exports = { createPostCustomField, getCustomField, deletePostCustomField };
+module.exports = { createPostCustomField, createRequirementCustomField, 
+    createUserCustomField, getCustomField, deletePostCustomField };

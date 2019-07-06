@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 getRequirement = (req, res) => {
-    const id = req.params.reqID;
+    const { id } = req.params;
     Requirement.findById(id).populate('visibility').populate('tags').populate('assignments').exec(function(err, requirement) {
         if (err) return res.json({success: false, error: err});
         return res.json(requirement);
@@ -13,7 +13,6 @@ getRequirement = (req, res) => {
 createRequirement = (req, res) => {
     const { initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
     title, body, visibilityIDs, tagIDs, authorID, assignmentIDs } = req.body;
-    console.log(timeblockID);
     let requirement = new Requirement(
         {
             created: new Date(),

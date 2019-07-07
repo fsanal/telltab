@@ -38,6 +38,7 @@ router.put('/posts/add_customfield/:id', post_controller.createCustomField);
 router.put('/posts/delete_customfield/:id', post_controller.deleteCustomField);
 router.put('/posts/mergepost/:id', post_controller.createMergedPost); //can have all these functionalities in one put method?
 router.post('/posts/auto_tag', post_controller.autoTag);
+router.post('/posts/similar_requirements', post_controller.findSimilarRequirements);
 
 const vote_controller = require('../controllers/feedback_forum_controllers/Vote_Controller');
 router.get('/votes/get/:id', vote_controller.getVote);

@@ -2,6 +2,7 @@ const { Post, esClient } = require('../../models/feedback_forum/Post');
 const Comment = require('../../models/Comment');
 const Vote = require('../../models/feedback_forum/Vote');
 const Tag = require('../../models/Tag');
+const Requirement = require('../../models/roadmap/Requirement');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
@@ -355,9 +356,9 @@ createMergedPost = (req, res) => {
 autoTag = (req, res) => {
     let { secret, postID } = req.body;
     Post.findById(postID).exec(function(err, post) {
-        if (err) return res.json({success: false, error: err})
+        if (err) return res.json({success: false, error: err});
         Tag.find().exec(function(err, tag) {
-            if (err) return res.json({success: false, error: err})
+            if (err) return res.json({success: false, error: err});
             
             var tagsObj = {};
             var tags = [];
@@ -365,10 +366,10 @@ autoTag = (req, res) => {
             var body = '';
 
             for (var i in tag) {
-                let property = tag[i];
-                if (property.name) {
-                    tagsObj[property.name] = property._id;
-                    tags.push(property.name);
+                let obj = tag[i];
+                if (obj.name) {
+                    tagsObj[obj.name] = obj._id;
+                    tags.push(obj.name);
                 }
             }
             if (post.title) title = post.title;
@@ -383,6 +384,54 @@ autoTag = (req, res) => {
             result.then((autotag) => {
                 if (autotag.error) return res.json(autotag);
                 return res.json({success: true, tag: autotag.autotag, tagID: tagsObj[autotag.autotag]});
+            });
+        });
+    });
+}
+
+findSimilarRequirements = (req, res) => {
+    let { secret, postID } = req.body;
+    Post.findById(postID).exec(function(err, post) {
+        if (err) return res.json({success: false, error: err});
+        Requirement.find().exec(function(err, requirement) {
+            if (err) return res.json({success: false, error: err});
+
+            var scores = {};
+            var ids = [];
+            var doc1 = '';
+            var doc2 = [];
+
+            if (post.title) doc1 += (post.title + ' ');
+            if (post.body) doc1 += post.body;
+
+            for (var i in requirement) {
+                var reqs = '';
+                let obj = requirement[i];
+                let id = obj._id;
+
+                if (obj.purpose) reqs += (obj.purpose + ' ');
+                if (obj.title) reqs += (obj.title + ' ');
+                if (obj.body) reqs += obj.body;
+                
+                ids.push(id);
+                doc2.push(reqs);
+            }
+
+            let data = {
+                'doc1': doc1,
+                'doc2': doc2
+            };
+
+            result = postData('http://localhost:5000/similarity', data);
+            result.then((similarities) => {
+                if (similarities.error) return res.json(similarities);
+                
+                for (var i in similarities.similarity) {
+                    score = similarities.similarity[i];
+                    scores[ids[i]] = score;
+                }
+
+                return res.json({success: true, scores: scores});
             });
         });
     });
@@ -409,4 +458,4 @@ function postData(url = '', data = {}) {
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 
     deleteRequirement, assignPost, deassignPost, retrievePosts, createCustomField,
-    deleteCustomField, createMergedPost, autoTag }
+    deleteCustomField, createMergedPost, autoTag, findSimilarRequirements }

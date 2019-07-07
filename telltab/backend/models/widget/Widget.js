@@ -7,9 +7,9 @@ var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt
 
 var widgetSchema = new Schema({
     created: Date,
-    forum: ObjectId,
+    forum: {type: ObjectId, ref: 'Forum'},
     embeddables: [{type: ObjectId, index: true, ref: 'Embeddable'}],
-    form: ObjectId,
+    form: {type: ObjectId, ref: 'Form'},
     type: String,
     orientation: String,
     height: Number,

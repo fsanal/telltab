@@ -79,31 +79,15 @@ deleteFormElement = (req, res) => {
 }
 
 retrieveFormElements = (req, res) => {
-    let { secret, formID, type, limit, skip, sort } = req.body;
-    if (formID) {
-        let query = Form.findById(formID);
-        query.exec((err, forms) => {
-            if (err) return res.json({success: false, error: err });
-            let query2 = FormElement.find()
-            if (type) query.where('type').equals(type);
-            if (limit) query.limit(Number(limit));
-            if (skip) query.skip(Number(skip));
-            query2.exec((err, formElements) => {
-                if (err) return res.json({success: false, error: err });
-                return res.json(formElements);
-            });
-        });
-    }
-    else {
-        let query = FormElement.find()
-        if (type) query.where('type').equals(type);
-        if (limit) query.limit(Number(limit));
-        if (skip) query.skip(Number(skip));
-        query.exec((err, formElements) => {
-            if (err) return res.json({success: false, error: err });
-            return res.json(formElements);
-        });
-    }
+    let { secret, type, sort, limit, skip } = req.body;
+    let query = FormElement.find()
+	if (type) query.where('type').all(type);
+	if (limit) query.limit(Number(limit));
+	if (skip) query.skip(Number(skip));
+	query.populate('formElements').exec((err, formElements) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(formElements);
+	});
 }
 
 module.exports = { createForm, getForm, editForm, deleteForm, addFormElement, deleteFormElement, retrieveFormElements }

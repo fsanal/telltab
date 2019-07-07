@@ -4,3 +4,6 @@ telltab/backend/node_modules/*
 
 #ignore node_modules in frontend
 telltab/frontend/node_modules/*
+
+#ignore __pycache__ in flask server
+telltab/flask/__pycache__

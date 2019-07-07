@@ -22,7 +22,8 @@ createPersona = (req, res) => {
 }
 
 getPersona = (req, res) => {
-	Persona.findById(req.params.id).populate('tags').exec(function(err, persona) {
+	Persona.findById(req.params.id).populate('tags').populate('product')
+	.exec(function(err, persona) {
 		if (err) return res.json({success: false, error: err})
 		return res.json(persona);
 	});
@@ -73,4 +74,21 @@ deleteTag = (req, res) => {
 	});
 }
 
-module.exports = { createPersona, getPersona, editPersona, deletePersona, addTag, deleteTag }
+
+retrievePersonas = (req, res) => {
+	const { tagIDs, isAdmin, isPM, roadMapConfig, sort, limit, skip } = req.body;
+	let query = Persona.find()
+	if (tagIDs) query.where('tags').all(tagIDs);
+	if (isAdmin) query.where('isAdmin').equals(isAdmin);
+	if (isPM) query.where('isPM').equals(isPM);
+	if (roadMapConfig) query.where('roadMapConfig').equals(roadMapConfig);
+	if (limit) query.limit(Number(limit));
+	if (skip) query.skip(Number(skip));
+	query.populate('tags').populate('product').exec((err, personas) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(personas);
+	});
+}
+
+module.exports = { retrievePersonas, createPersona, getPersona, editPersona, deletePersona, addTag,
+deleteTag }

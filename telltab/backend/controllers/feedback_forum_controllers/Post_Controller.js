@@ -1,5 +1,6 @@
 const { Post, esClient } = require('../../models/feedback_forum/Post');
-const { Comment } = require('../../models/Comment');
+const Comment = require('../../models/Comment');
+const Vote = require('../../models/feedback_forum/Vote');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
@@ -41,7 +42,8 @@ createPost = (req, res) => {
 }
 
 getPost = (req, res) => {
-    Post.findById(req.params.id).populate('personas').populate('visibility').populate('requirements').populate('assignments').populate('tags').exec(function(err, post) {
+    Post.findById(req.params.id).populate('personas').populate('visibility').
+    populate('requirements').populate('assignments').populate('tags').exec(function(err, post) {
         if (err) return res.json({ success: false, error: err });
         return res.json(post);
     });
@@ -289,25 +291,63 @@ deleteCustomField = (req, res) => {
     });
 }
 
+//Create 2 posts
+//Test that number of votes works correctly
 createMergedPost = (req, res) => {
-    const { parentID, childID, requirementID, postID, newReleaseID,
-            authorID, content } = req.body
-    let comment = new Comment({
-        author: ObjectId(authorID),
-        created: new Date(),
-        content
-    })
-    if (postID) { comment.post = ObjectId(postID) } else if (parentID) {
-        comment.parent = ObjectId(parentID);
-    } else if (requirementID) {
-        comment.requirement = ObjectId(requirementID);
-    } else if (newReleaseID) {
-        comment.newRelease = ObjectId(newReleaseID);
-    }
-    comment.save((err) => {
-        if (err) return res.json({success: false, error: err})
-        return res.json(comment)
+    const { id } = req.params;
+    const { parentPostID } = req.body
+
+    var numChildVotes = 0;
+
+    Post.findById(id, (err, childPost) => {
+        if (err) {
+            return res.json({ success1: false, error: err });
+        }
+        let comment = new Comment({
+		    author: ObjectId(childPost.author),
+		    created: new Date(),
+            content: childPost.body,
+            numVotes: 0,
+            source: ObjectId(id),
+            post: ObjectId(parentPostID)
+        })
+        
+        if (id) {
+            updatePost = {};
+            updatePost.post = parentPostID;
+            Comment.updateMany({post: id}, {$set: updatePost}, {new: true}, (err, comments) => {
+                if (err) return res.json({success2: false, error: err})
+            })
+        }
+	    comment.save((err) => {
+            if (err) return res.json({success3: false, error: err})
+        });
+
+        let update = {};
+        update.parent = parentPostID;
+        Post.findByIdAndUpdate(id, {$set: update}, {new: true}, (err) => {
+            if (err) return res.json({ success4: false, error: err });
+        });
+
+        //Assume working, check later because no way to see numVotes for post
+        numChildVotes = childPost.numVotes;
     });
+
+    Post.findById(parentPostID, (err, parentPost) => {
+        if (err) return res.json({ success5: false, error: err });
+        let updateNumVotes = {};
+        updateNumVotes.votes = parentPost.numVotes + numChildVotes;
+        Post.findByIdAndUpdate(parentPostID, {$set: updateNumVotes}, {new: true}, (err) => {
+            if (err) return res.json({ success6: false, error: err });
+        });
+    });
+
+    updateVotes = {};
+    updateVotes.post = parentPostID;
+    Vote.updateMany({post: id}, {$set: updateVotes}, (err) => {
+        if (err) return res.json({success2: false, error: err})
+    })
+
 }
 
 

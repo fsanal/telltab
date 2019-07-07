@@ -19,7 +19,8 @@ createNotification = (req, res) => {
 }
 
 getNotification  = (req, res) => {
-	Notification.findById(req.params.id, (err, notification) => {
+	Notification.findById(req.params.id).populate('user').populate('product')
+	.exec(function(err, notification) {
 		if (err) return res.json({success: false, error: err})
 		return res.json(notification)
 	});

@@ -5,7 +5,7 @@ const { ObjectId } = Schema.Types
 var forumSchema = new Schema({
     created: Date,
     name: {type: String, required: true},
-    product: ObjectId,
+    product: {type: ObjectId, ref: 'Product'},
     numPosts: Number,
     url: String
 });

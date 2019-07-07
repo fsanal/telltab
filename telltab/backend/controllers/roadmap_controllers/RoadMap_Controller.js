@@ -4,10 +4,10 @@ const { ObjectId } = mongoose.Types;
 
 getRoadMap = (req, res) => {
     const { id } = req.params;
-    RoadMap.findById(id, (err, roadmap) => {
+    RoadMap.findById(id).populate('product').exec(function(err, roadmap) {
         if (err) return res.json({success: false, error: err});
         return res.json(roadmap);
-    })
+    });
 }
 
 createRoadMap = (req, res) => {
@@ -53,7 +53,7 @@ retrieveRoadMaps = (req, rest) => {
     let query = RoadMap.find();
     if (limit) query.limit(Number(limit));
     if (skip) query.skip(Number(skip));
-    query.exec((err, roadmaps) => {
+    query.populate('product').exec((err, roadmaps) => {
         if (err) return res.json({success: false, error: err });
         return res.json(roadmaps);
     });

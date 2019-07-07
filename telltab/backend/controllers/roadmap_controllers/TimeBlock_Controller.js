@@ -4,10 +4,10 @@ const { ObjectId } = mongoose.Types;
 
 getTimeBlock = (req, res) => {
     const id = req.params.id;
-    let timeblock = TimeBlock.findById(id, (err, timeblock) => {
+    TimeBlock.findById(id).populate('roadmap').exec(function(err, timeblock) {
         if (err) return res.json({success: false, error: err});
         return res.json(timeblock);
-    })
+    });
 }
 
 createTimeBlock = (req, res) => {

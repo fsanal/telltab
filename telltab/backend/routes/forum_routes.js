@@ -18,6 +18,7 @@ router.get('/newreleases/get/:id', newrelease_controller.getNewRelease);
 router.post('/newreleases/create', newrelease_controller.createNewRelease);
 router.put('/newreleases/edit/:id', newrelease_controller.editNewRelease);
 router.delete('/newreleases/delete/:id', newrelease_controller.deleteNewRelease);
+router.post('/newreleases/retrieve', newrelease_controller.retrieveNewReleases);
 
 const post_controller = require('../controllers/feedback_forum_controllers/Post_Controller');
 router.get('/posts/get/:id', post_controller.getPost);
@@ -35,11 +36,12 @@ router.put('/posts/add_requirement/:id', post_controller.addRequirement);
 router.put('/posts/delete_requirement/:id', post_controller.deleteRequirement);
 router.put('/posts/add_customfield/:id', post_controller.createCustomField);
 router.put('/posts/delete_customfield/:id', post_controller.deleteCustomField);
+router.put('/posts/mergepost/:id', post_controller.createMergedPost); //can have all these functionalities in one put method?
 
 const vote_controller = require('../controllers/feedback_forum_controllers/Vote_Controller');
 router.get('/votes/get/:id', vote_controller.getVote);
 router.post('/votes/create', vote_controller.createVote);
 router.delete('/votes/delete/:id', vote_controller.deleteVote);
-
+router.post('/votes/retrieve', vote_controller.retrieveVotes);
 // Export API routes
 module.exports = router;

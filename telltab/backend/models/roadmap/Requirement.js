@@ -6,10 +6,11 @@ const elasticsearch = require('elasticsearch');
 var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443'});
 
 var requirementSchema = new Schema({
-    initiative: ObjectId,
-    timeblock: ObjectId,
-    persona: ObjectId,
-    author: ObjectId,
+    roadmap: {type: ObjectId, ref: 'RoadMap'},
+    initiative: {type: ObjectId, ref: 'Initiative'},
+    timeblock: {type: ObjectId, ref: 'TimeBlock'},
+    persona: {type: ObjectId, ref: 'Persona'},
+    author: {type: ObjectId, ref: 'User'},
     created: Date,
     beginDate: Date,
     endDate: Date,
@@ -17,10 +18,10 @@ var requirementSchema = new Schema({
     priority: Number,
     value: Number,
     body: String,
-    visibility: { type: [ObjectId], index: true, ref: 'Persona'},
-    tags: { type: [ObjectId], index: true, ref: 'Tag'},
-    assignments: { type: [ObjectId], index: true, ref: 'User'},
-    customFields: { type: [ObjectId], index: true, ref: 'CustomField'},
+    visibility: [{ type: ObjectId, index: true, ref: 'Persona'}],
+    tags: [{ type: ObjectId, index: true, ref: 'Tag'}],
+    assignments: [{ type: ObjectId, index: true, ref: 'User'}],
+    customFields: [{ type: ObjectId, index: true, ref: 'CustomField'}],
     title: 
         {
             type: String,

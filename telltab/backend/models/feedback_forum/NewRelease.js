@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var newReleaseSchema = new Schema({
-    requirement: ObjectId,
-    forum: ObjectId,
-    author: ObjectId,
-    form: ObjectId,
+    requirement: {type: ObjectId, ref: 'Requirement'},
+    forum: {type: ObjectId, ref: 'Forum'},
+    author: {type: ObjectId, ref: 'User'},
+    form: {type: ObjectId, ref: 'Form'},
     title: String,
     body: String,
     created: Date,

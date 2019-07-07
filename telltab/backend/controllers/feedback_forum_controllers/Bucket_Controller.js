@@ -21,7 +21,7 @@ createBucket = (req, res) => {
 
 
 getBucket = (req, res) => {
-    Bucket.findById(req.params.id, (err, bucket) => {
+    Bucket.findById(req.params.id).populate('forum').exec(function(err, bucket) {
         if (err) return res.json({ success: false, error: err });
         return res.json(bucket);
     });

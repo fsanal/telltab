@@ -7,6 +7,7 @@ router.get('/comments/get/:id', comment_controller.getComment);
 router.post('/comments/create', comment_controller.createComment);
 router.put('/comments/edit/:id', comment_controller.editComment);
 router.delete('/comments/delete/:id', comment_controller.deleteComment);
+router.post('/comments/retrieve', comment_controller.retrieveComments);
 
 const notification_controller = require('../controllers/Notification_Controller');
 router.get('/notifications/get/:id', notification_controller.getNotification);
@@ -20,11 +21,13 @@ router.put('/personas/edit/:id', persona_controller.editPersona);
 router.delete('/personas/delete/:id', persona_controller.deletePersona);
 router.put('/personas/add_tag/:id', persona_controller.addTag);
 router.put('/personas/delete_tag/:id', persona_controller.deleteTag);
+router.post('/personas/retrieve', persona_controller.retrievePersonas);
 
 const tag_controller = require('../controllers/Tag_Controller');
 router.get('/tags/get/:id', tag_controller.getTag);
 router.post('/tags/create', tag_controller.createTag);
 router.delete('/tags/delete/:id', tag_controller.deleteTag);
+router.post('/tags/retrieve', tag_controller.retrieveTags);
 
 const user_controller = require('../controllers/User_Controller');
 router.get('/users/get/:id', user_controller.getUser);

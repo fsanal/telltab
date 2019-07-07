@@ -4,10 +4,12 @@ import feedbackReducer from './feedbackReducer';
 import productReducer from './Product_Reducer';
 import forumReducer from './Forum_Reducer';
 import bucketReducer from './Bucket_Reducer';
+import authReducer from './Auth_Reducer';
 
 export default combineReducers({
     productState: productReducer,
     feedbacks: feedbackReducer,
     forumState: forumReducer,
     bucketState: bucketReducer,
+    auth: authReducer
 });

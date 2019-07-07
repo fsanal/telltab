@@ -16,7 +16,6 @@ export const createProduct = (name, url) => async (dispatch, getState) => {
 
 export const retrieveProducts = () => async (dispatch, getState) => {
     const { secret } = getState().auth;
-    console.log("ENTERED HERE CHILD");
     const response = await api.post('/products/retrieve', { secret });
     dispatch({ type: RETRIEVE_PRODUCTS, payload: response.data });
 }

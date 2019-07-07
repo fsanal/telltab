@@ -13,29 +13,32 @@ import Typography from '@material-ui/core/Typography';
 
 class Home extends React.Component {
     componentDidMount() {
-        console.log("Entered Here")
         this.props.retrieveProducts();
     }
-/*
+
     renderList() {
-        const { products } = this.props.productState;
-        return products.map(product => {
-            return (
-                <div>
-                    <Card>
-                        <CardActionArea>
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">{product.name}</Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </div>
-            )
-        })
+        const { products } = this.props;
+        if (products){
+            console.log(products);
+            return products.map(product => {
+                return (
+                    <div>
+                        <Card>
+                            <CardActionArea>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">{product.name}</Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </div>
+                )
+            })
+        }
     }
-*/
+
+
     render() {
-        return <div></div>
+        return <div>{this.renderList()}</div>
     }
 
 
@@ -44,7 +47,8 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        productState: Object.values(state.productState)
+        currentProduct: state.productState.currentProduct,
+        products: Object.values(state.productState.products)
     }
 }
 

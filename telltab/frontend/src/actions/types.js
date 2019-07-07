@@ -23,3 +23,8 @@ export const CREATE_FORUM = 'CREATE_FORUM';
 export const GET_FORUM = 'GET_FORUM';
 export const EDIT_FORUM = 'EDIT_FORUM';
 export const DELETE_FORUM = 'DELETE_FORUM'
+
+export const CREATE_BUCKET = 'CREATE_BUCKET';
+export const GET_BUCKET = 'GET_BUCKET';
+export const DELETE_BUCKET = 'DELETE_BUCKET';
+export const EDIT_BUCKET = 'EDIT_BUCKET';

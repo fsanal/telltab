@@ -20,12 +20,13 @@ export const retrieveProducts = () => async (dispatch, getState) => {
     dispatch({ type: RETRIEVE_PRODUCTS, payload: response.data });
 }
 
-export const editProduct = (id, name, secret) => async (dispatch) => {
+export const editProduct = (id, name) => async (dispatch) => {
+    const { secret } = getState().auth;
     const response = await api.put(`/products/edit/${id}`, { name });
     dispatch({ type: EDIT_PRODUCT, payload: response.data });
 }
 
-export const selectProduct = (product) => {s
+export const selectProduct = (product) => {
     return {
         type: SELECT_PRODUCT,
         payload: product

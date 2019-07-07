@@ -1,9 +1,11 @@
 const { Post, esClient } = require('../../models/feedback_forum/Post');
 const Comment = require('../../models/Comment');
 const Vote = require('../../models/feedback_forum/Vote');
+const Tag = require('../../models/Tag');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
+const fetch = require('node-fetch');
 
 createPost = (req, res) => {
     const { forumID, bucketID, authorID, visibilityIDs, personaIDs, tagIDs, assignmentIDs,
@@ -350,10 +352,61 @@ createMergedPost = (req, res) => {
 
 }
 
+autoTag = (req, res) => {
+    let { secret, postID } = req.body;
+    Post.findById(postID).exec(function(err, post) {
+        if (err) return res.json({success: false, error: err})
+        Tag.find().exec(function(err, tag) {
+            if (err) return res.json({success: false, error: err})
+            
+            var tagsObj = {};
+            var tags = [];
+            var title = '';
+            var body = '';
 
+            for (var i in tag) {
+                let property = tag[i];
+                if (property.name) {
+                    tagsObj[property.name] = property._id;
+                    tags.push(property.name);
+                }
+            }
+            if (post.title) title = post.title;
+            if (post.body) body = post.body;
+            let data = {
+                'tags': tags,
+                'title': title,
+                'body': body
+            };
 
+            result = postData('http://localhost:5000/autotag', data);
+            result.then((autotag) => {
+                if (autotag.error) return res.json(autotag);
+                return res.json({success: true, tag: autotag.autotag, tagID: tagsObj[autotag.autotag]});
+            });
+        });
+    });
+}
+
+function postData(url = '', data = {}) {
+    // Default options are marked with *
+      return fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, cors, *same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+              'Content-Type': 'application/json',
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrer: 'no-referrer', // no-referrer, *client
+          body: JSON.stringify(data), // body data type must match "Content-Type" header
+      })
+      .then(response => response.json()); // parses JSON response into native JavaScript objects 
+  }
 
 module.exports = { createPost, getPost, editPost, deletePost, 
     addVisibility, removeVisibility, addTag, deleteTag, addRequirement, 
     deleteRequirement, assignPost, deassignPost, retrievePosts, createCustomField,
-    deleteCustomField, createMergedPost }
+    deleteCustomField, createMergedPost, autoTag }

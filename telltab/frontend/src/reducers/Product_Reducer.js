@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 const INITIAL_STATE = {
     currentProduct: null,
-    products: null
+    products: {}
 }
 
 export default ( state = INITIAL_STATE, action ) => {

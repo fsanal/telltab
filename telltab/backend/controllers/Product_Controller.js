@@ -47,7 +47,7 @@ deleteProduct = (req, res) => {
 retrieveProducts = (req, res) => {
 	const { secret } = req.body;
     let query = Product.find();
-    query.where('secret').equals(secret);
+  //  query.where('secret').equals(secret);
 	query.sort({created: -1});
 	query.exec((err, products) => {
 		if (err) return res.json({success: false, error: err });

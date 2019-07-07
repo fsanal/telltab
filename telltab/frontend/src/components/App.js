@@ -1,19 +1,21 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import history from '../history';
-import Navbar from './Navbar';
-import Dashboard from './dashboard/Dashboard';
+import SideNav from './SideNav';
+import Forum from './forum/Forum';
+import Roadmap from './roadmap/Roadmap';
 
 const App = () => {
-    return <div>
+    return (<>
                 <Router history = {history}>
-                    <div>
-                        <Navbar/>
-
-                        <Route path = "/" exact component = {Dashboard}/>
+                    <div className = "prodash">
+                        <SideNav/>
+                        <div className = "prodash__rightcontent">
+                            <Route path = "/" exact component = {Forum} />           
+                        </div>
                     </div>
                 </Router>     
-          </div>;
+            </>)
 }
 
 export default App;

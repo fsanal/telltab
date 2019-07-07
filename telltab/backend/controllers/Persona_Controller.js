@@ -76,9 +76,10 @@ deleteTag = (req, res) => {
 
 
 retrievePersonas = (req, res) => {
-	const { tagIDs, isAdmin, isPM, roadMapConfig, sort, limit, skip } = req.body;
+	const { tagIDs, isAdmin, productID, isPM, roadMapConfig, sort, limit, skip } = req.body;
 	let query = Persona.find()
 	if (tagIDs) query.where('tags').all(tagIDs);
+	if (productID) query.where('product').equals(productID);
 	if (isAdmin) query.where('isAdmin').equals(isAdmin);
 	if (isPM) query.where('isPM').equals(isPM);
 	if (roadMapConfig) query.where('roadMapConfig').equals(roadMapConfig);

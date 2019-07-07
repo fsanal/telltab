@@ -3,9 +3,10 @@ var mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 
 createProduct = (req, res) => {
-    const { name, url } = req.body;
+    const { name, url, secret } = req.body;
     let product = new Product(
         {
+            secret,
             name,
             created: new Date(),
         }
@@ -43,4 +44,15 @@ deleteProduct = (req, res) => {
     });
 }
 
-module.exports = { createProduct, getProduct, editProduct, deleteProduct }
+retrieveProducts = (req, res) => {
+	const { secret } = req.body;
+    let query = Product.find();
+    query.where('secret').equals(secret);
+	query.sort({created: -1});
+	query.exec((err, products) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(products);
+	});
+}
+
+module.exports = { createProduct, getProduct, editProduct, deleteProduct, retrieveProducts }

@@ -24,8 +24,6 @@ export const editProduct = (id, name) => async (dispatch) => {
     dispatch({ type: EDIT_PRODUCT, payload: response.data });
 }
 
-//Don't delete
-
 export const selectProduct = (product) => {
     return {
         type: SELECT_PRODUCT,

@@ -8,7 +8,7 @@ import {
 import api from '../apis/api';
 import history from '../history';
 
-export const createProduct = (secret, name, url) => async dispatch => {   
+export const createProduct = (secret, name, url) => async dispatch => {
     const response = await api.post('/products/create', {secret, name, url});
     dispatch({ type: CREATE_PRODUCT, payload: response.data });
 }
@@ -23,6 +23,8 @@ export const editProduct = (id, name) => async (dispatch) => {
     const response = await api.put(`/products/edit/${id}`, { name });
     dispatch({ type: EDIT_PRODUCT, payload: response.data });
 }
+
+//Don't delete
 
 export const selectProduct = (product) => {
     return {

@@ -5,7 +5,11 @@ from nltk.corpus import stopwords
 
 def similarity(doc1, doc2):
     stops = set(stopwords.words('english'))
-    l1 = set(re.sub("[^\w]", " ", doc1.lower()).split()) - stops
-    l2 = set(re.sub("[^\w]", " ", doc2.lower()).split()) - stops
-    
-    return len(l1.intersection(l2)) / len(l1.union(l2))
+    d1 = set(re.sub("[^\w]", " ", doc1.lower()).split()) - stops
+    scores = []
+
+    for doc in doc2:
+        d2 = set(re.sub("[^\w]", " ", doc.lower()).split()) - stops
+        scores.append(len(d1.intersection(d2)) / len(d1.union(d2)))
+
+    return scores

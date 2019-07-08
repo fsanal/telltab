@@ -4,7 +4,7 @@ import {
     SELECT_PRODUCT,
     DELETE_PRODUCT,
     EDIT_PRODUCT
-} from './forum_types';
+} from './global_types';
 import api from '../../apis/api';
 import history from '../../history';
 

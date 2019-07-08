@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { createProduct } from '../../actions/Product_Actions';
+import { createProduct } from '../../actions/global_actions/Product_Actions';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 

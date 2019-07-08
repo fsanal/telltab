@@ -5,12 +5,6 @@ export const FETCH_FEEDBACK = 'FETCH_FEEDBACK';
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
 export const EDIT_FEEDBACK= 'EDIT_FEEDBACK';
 
-//product action types
-export const CREATE_PRODUCT = 'CREATE_PRODUCT';
-export const RETRIEVE_PRODUCTS = 'RETRIEVE_PRODUCTS';
-export const SELECT_PRODUCT = 'SELECT_PRODUCT';
-export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 
 //post action types
 export const CREATE_POST = 'CREATE_POST';

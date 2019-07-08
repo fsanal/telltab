@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { retrieveProducts, editProduct, selectProduct } from '../../actions/Product_Actions';
+import { retrieveProducts, editProduct, selectProduct } from '../../actions/global_actions/Product_Actions';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';

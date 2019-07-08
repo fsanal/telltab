@@ -4,7 +4,7 @@ import {
     SELECT_PRODUCT,
     DELETE_PRODUCT,
     EDIT_PRODUCT
-} from '../actions/types';
+} from '../../actions/feedback_forum_actions/forum_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

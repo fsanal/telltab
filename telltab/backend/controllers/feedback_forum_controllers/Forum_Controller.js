@@ -48,4 +48,4 @@ deleteForum = (req, res) => {
 
 
 
-module.exports = {createForum, getForum, editForum, deleteForum}
+module.exports = {createForum, getForum, editForum, deleteForum }

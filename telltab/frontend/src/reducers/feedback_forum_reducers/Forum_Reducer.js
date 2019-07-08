@@ -3,7 +3,7 @@ import {
     GET_FORUM,
     DELETE_FORUM,
     EDIT_FORUM
-} from '../actions/types';
+} from '../../actions/feedback_forum_actions/forum_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

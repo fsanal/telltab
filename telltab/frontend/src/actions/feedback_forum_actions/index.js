@@ -28,9 +28,9 @@ import {
     FETCH_FEEDBACK,
     DELETE_FEEDBACK,
     EDIT_FEEDBACK
-} from './types';
+} from './forum_types';
 import axios from 'axios';
-import history from '../history';
+import history from '../../history';
 
 
 

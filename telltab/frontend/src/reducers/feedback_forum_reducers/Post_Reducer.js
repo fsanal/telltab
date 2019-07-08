@@ -4,7 +4,7 @@ import {
     FETCH_POST,
     DELETE_POST,
     EDIT_POST
-} from '../actions/types';
+} from '../../actions/feedback_forum_actions/forum_types';
 import _ from 'lodash';
 
 export default (state = {}, action) => {

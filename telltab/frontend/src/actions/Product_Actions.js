@@ -8,10 +8,12 @@ import {
 import api from '../apis/api';
 import history from '../history';
 
-export const createProduct = (name, url) => async (dispatch, getState) => {   
+export const createProduct = (formValues) => async (dispatch, getState) => { 
+    let name = formValues.name;
     const { secret } = getState().auth;
-    const response = await api.post('/products/create', {secret, name, url});
+    const response = await api.post('/products/create', {secret, name});
     dispatch({ type: CREATE_PRODUCT, payload: response.data });
+    history.push('/home')
 }
 
 export const retrieveProducts = () => async (dispatch, getState) => {

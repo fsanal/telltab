@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { retrieveProducts, editProduct, selectProduct, createProduct } from '../../actions/Product_Actions';
+import { retrieveProducts, editProduct, selectProduct } from '../../actions/Product_Actions';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -16,29 +17,40 @@ class Home extends React.Component {
         this.props.retrieveProducts();
     }
 
+    handleProductClick(product) {
+        console.log("Entered Here");
+        this.props.selectProduct(product);
+    }
+
     renderList() {
         const { products } = this.props;
         if (products){
-            console.log(products);
             return products.map(product => {
                 return (
-                    <div>
-                        <Card>
+                    <Link to = {`/forum/${product.name}`} onClick = {() => {this.handleProductClick(product)}} >
+                        <Card key = {product._id}>
                             <CardActionArea>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">{product.name}</Typography>
                                 </CardContent>
                             </CardActionArea>
                         </Card>
-                    </div>
+                    </Link>
                 )
             })
         }
     }
 
+    handle
+
 
     render() {
-        return <div>{this.renderList()}</div>
+        return <div>
+                    <Link to = "/create_product" >
+                            <button>Create a Product</button>
+                    </Link>
+                    {this.renderList()}
+               </div>
     }
 
 
@@ -46,6 +58,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.productState.currentProduct)
     return {
         currentProduct: state.productState.currentProduct,
         products: Object.values(state.productState.products)
@@ -53,5 +66,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { retrieveProducts, editProduct, 
-    selectProduct, createProduct })(Home);
+    selectProduct })(Home);
 

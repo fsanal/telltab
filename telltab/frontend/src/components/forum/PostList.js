@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post'
 import { connect } from 'react-redux';
-import { fetchFeedbacks } from '../../actions/index';
+import { fetchFeedbacks } from '../../actions/feedback_forum_actions/index';
 
 class PostList extends React.Component {
     componentDidMount() {

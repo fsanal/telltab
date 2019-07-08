@@ -4,9 +4,9 @@ import {
     SELECT_PRODUCT,
     DELETE_PRODUCT,
     EDIT_PRODUCT
-} from './types';
-import api from '../apis/api';
-import history from '../history';
+} from './forum_types';
+import api from '../../apis/api';
+import history from '../../history';
 
 export const createProduct = (name, url) => async (dispatch, getState) => {   
     const { secret } = getState().auth;

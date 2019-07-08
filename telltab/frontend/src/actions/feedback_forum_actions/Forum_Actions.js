@@ -3,9 +3,9 @@ import {
     GET_FORUM,
     DELETE_FORUM,
     EDIT_FORUM
-} from './types';
-import api from '../apis/api';
-import history from '../history';
+} from './feedback_forum_types';
+import api from '../../apis/api';
+import history from '../../history';
 
 
 export const createForum = (name, productID, url) => async dispatch => {

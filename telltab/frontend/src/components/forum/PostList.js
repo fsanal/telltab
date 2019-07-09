@@ -1,19 +1,29 @@
 import React from 'react';
 import Post from './Post'
 import { connect } from 'react-redux';
-import { fetchFeedbacks } from '../../actions/index';
+import { retrievePosts, selectPost, deletePost } from '../../actions/feedback_forum_actions/Post_Actions';
 
 class PostList extends React.Component {
-    componentDidMount() {
-        this.props.fetchFeedbacks();
+
+
+
+    renderFeedbackClass(post){
+        let cls = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "feedback-selected" : "feedback";
+        return cls
     }
 
+    handleSelectPost = (post) => {
+        this.props.selectPost(post);
+    }
+
+    handleDeletePost = (post) => {
+        this.props.deletePost(post);
+    }
 
     renderList() {
-        console.log(this.props.feedbacks);
-        return this.props.feedbacks.map(feedback => {
-            return <Post key = {feedback.feedbackId} votes = {feedback.votes}
-            name = {feedback.name} id = {feedback.feedbackId} title = {feedback.title} content = {feedback.content} />
+        return this.props.posts.map(post => {
+            return <Post onDelete = {() => {this.handleDeletePost(post)}} onSelect = {() => {this.handleSelectPost(post)}} key = {post._id} votes = {post.numVotes}
+            cls = {this.renderFeedbackClass(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} />
         })
     }
 
@@ -28,8 +38,9 @@ class PostList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        feedbacks: Object.values(state.feedbacks)
+        posts: Object.values(state.postState.posts),
+        selectedPosts: state.postState.selectedPosts
     }
 }
 
-export default connect(mapStateToProps, { fetchFeedbacks })(PostList);
+export default connect(mapStateToProps, { retrievePosts, selectPost, deletePost })(PostList);

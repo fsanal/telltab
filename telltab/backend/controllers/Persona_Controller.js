@@ -65,7 +65,6 @@ addTag = (req, res) => {
 deleteTag = (req, res) => {
 	const { id } = req.params;
 	const { tagID } = req.body;
-	console.log(tagID);
 	update = {};
 	update.tags = ObjectId(tagID)
     Persona.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, persona) => {

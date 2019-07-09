@@ -3,7 +3,7 @@ import {
     GET_BUCKET,
     DELETE_BUCKET,
     EDIT_BUCKET
-} from '../actions/types';
+} from '../../actions/feedback_forum_actions/feedback_forum_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

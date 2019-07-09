@@ -26,6 +26,16 @@ getForum = (req, res) => {
     });
 }
 
+getProductForum = (req, res) => {
+    const { productID } = req.body;
+    let query = Forum.find();
+    query.where('product').equals(productID);
+    query.exec((err, forum) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(forum);
+	});
+}
+
 editForum = (req, res) => {
     const { id } = req.params;
     const { name, productID } = req.body;
@@ -48,4 +58,4 @@ deleteForum = (req, res) => {
 
 
 
-module.exports = {createForum, getForum, editForum, deleteForum}
+module.exports = {createForum, getForum, editForum, deleteForum, getProductForum }

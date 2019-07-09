@@ -1,14 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { retrieveProducts, editProduct, selectProduct, createProduct } from '../../actions/Product_Actions';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { retrieveProducts, editProduct, selectProduct, deleteProduct } from '../../actions/global_actions/Product_Actions';
+import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
+import { Link } from 'react-router-dom';
 
 
 class Home extends React.Component {
@@ -16,20 +10,24 @@ class Home extends React.Component {
         this.props.retrieveProducts();
     }
 
+    handleSelectProduct(product) {
+        this.props.selectProduct(product);
+    }
+
+    handleDeleteProduct(product) {
+        this.props.deleteProduct(product)
+    }
+
     renderList() {
         const { products } = this.props;
         if (products){
-            console.log(products);
             return products.map(product => {
                 return (
-                    <div>
-                        <Card>
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">{product.name}</Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
+                    <div key = {product._id}>
+                        <Link to = {`${product.name}/forum`} onClick = {() => {this.handleSelectProduct(product)}} >
+                            <div>{product.name}</div>
+                        </Link>
+                        <button onClick = {() => {this.handleDeleteProduct(product)}}>Delete</button>
                     </div>
                 )
             })
@@ -38,9 +36,13 @@ class Home extends React.Component {
 
 
     render() {
-        return <div>{this.renderList()}</div>
+        return <div>
+                    <Link to = "/create_product" >
+                            <button>Create a Product</button>
+                    </Link>
+                    {this.renderList()}
+               </div>
     }
-
 
 
 }
@@ -53,5 +55,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { retrieveProducts, editProduct, 
-    selectProduct, createProduct })(Home);
+    selectProduct, deleteProduct, getProductForum })(Home);
 

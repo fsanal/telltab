@@ -6,6 +6,7 @@ router.get('/forums/get/:id', forum_controller.getForum);
 router.post('/forums/create', forum_controller.createForum);
 router.put('/forums/edit/:id', forum_controller.editForum);
 router.delete('/forums/delete/:id', forum_controller.deleteForum);
+router.post('/forums/get_product_forum', forum_controller.getProductForum);
 
 const bucket_controller = require('../controllers/feedback_forum_controllers/Bucket_Controller');
 router.get('/buckets/get/:id', bucket_controller.getBucket);
@@ -39,6 +40,7 @@ router.put('/posts/delete_customfield/:id', post_controller.deleteCustomField);
 router.put('/posts/mergepost/:id', post_controller.createMergedPost); //can have all these functionalities in one put method?
 router.post('/posts/auto_tag', post_controller.autoTag);
 router.post('/posts/similar_requirements', post_controller.findSimilarRequirements);
+
 
 const vote_controller = require('../controllers/feedback_forum_controllers/Vote_Controller');
 router.get('/votes/get/:id', vote_controller.getVote);

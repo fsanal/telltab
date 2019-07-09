@@ -3,9 +3,9 @@ import {
     GET_BUCKET,
     DELETE_BUCKET,
     EDIT_BUCKET
-} from './types';
-import api from '../apis/api';
-import history from '../history';
+} from './feedback_forum_types';
+import api from '../../apis/api';
+import history from '../../history';
 
 
 export const createBucket = (name, forumID, url) => async dispatch => {

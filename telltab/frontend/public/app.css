@@ -216,7 +216,7 @@ body {
 
 .feedback {
     cursor:pointer;
-    border: #DADCE0 solid 0.18rem;
+    border: #DADCE0 solid 0.3rem;
     border-radius: 0.8rem;
     background-color: white;
     height: 9rem;

@@ -25,15 +25,14 @@ export default (state = INITIAL_STATE, action) => {
             posts[action.payload._id] = action.payload
             return { ...state, posts };
         case DELETE_POST:
-            return _.omit(state, action.payload);
+            posts = _.omit(posts, action.payload._id);
+            return { ...state, posts };
         case SELECT_POST:
             let post = action.payload;
             if (!(selectedPosts.hasOwnProperty(post._id))) {
-                console.log("ENTERED HERE -- doesn't have it")
                 selectedPosts[post._id] = post;
                 return {...state, selectedPosts};
             } else {
-                console.log("ENTERED HERE -- does have it")
                 selectedPosts = _.omit(selectedPosts, post._id)
                 return {...state, selectedPosts};
             }

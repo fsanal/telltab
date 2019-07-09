@@ -6,7 +6,7 @@ const Toolbar = () => {
          <div className = "dashcontent__toolbar">
           <div className = "dashcontent__toolbar-box">
                <i class="toolbar-item fas fa-trash"></i>
-               <i class="toolbar-item fas fa-angle-double-right"></i>
+               <i class="toolbar-item fas fa-angle-right"></i>
                <i class="toolbar-item fas fa-eye"></i>
                <i class="toolbar-item fas fa-address-book"></i>
                <i class="toolbar-item fas fa-suitcase"></i>

@@ -231,7 +231,7 @@ body {
 
 .feedback-selected {
     cursor:pointer;
-    border: #1A73E8 solid 0.18rem;
+    border: #1A73E8 solid 0.2rem;
     border-radius: 0.8rem;
     background-color: white;
     height: 9rem;
@@ -244,9 +244,8 @@ body {
     width: 58rem;
 }
 
-.feedback:hover {
+.feedback__content:hover {
     background-color: #FAFBFC;
-    box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 .feedback__checkbox {
@@ -308,7 +307,11 @@ body {
 }
 
 .feedback__content {
-    width: 40rem;
+    margin-left: 3px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #999999;
+    width: 54rem;
     padding-top: 1rem;
     padding-left: 1.2rem;
 }
@@ -330,4 +333,41 @@ body {
     font-size: 2rem;
     padding-bottom: 3rem;
     width: 35vw;
+}
+
+.feedback__delete {
+    width: 5rem;
+    text-align: center;
+    border-left: 0.2rem solid #DADCE0;
+}
+
+
+.fa-ellipsis-v {
+    padding-top: 1.5rem;
+}
+
+.fa-angle-double-right{
+    padding-top: 1.3rem;
+}
+
+.arrowright__box {
+    height: 4rem;
+    font-size: 2rem;
+    color:#777777;
+}
+
+.ellipse__box {
+    height: 4.5rem;
+    font-size: 2rem;
+    color: #777777;
+    border-bottom: 0.2rem solid #DADCE0;
+}
+
+
+.ellipse__box:hover .fa-ellipsis-v{
+    color: #1DB665;
+}
+
+.arrowright__box:hover .fa-angle-double-right{
+    color: #1DB665;
 }

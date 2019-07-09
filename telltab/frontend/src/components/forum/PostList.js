@@ -2,18 +2,15 @@ import React from 'react';
 import Post from './Post'
 import { connect } from 'react-redux';
 import { fetchFeedbacks } from '../../actions/feedback_forum_actions/index';
+import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
 
 class PostList extends React.Component {
-    componentDidMount() {
-        this.props.fetchFeedbacks();
-    }
 
 
     renderList() {
-        console.log(this.props.feedbacks);
-        return this.props.feedbacks.map(feedback => {
-            return <Post key = {feedback.feedbackId} votes = {feedback.votes}
-            name = {feedback.name} id = {feedback.feedbackId} title = {feedback.title} content = {feedback.content} />
+        return this.props.posts.map(post => {
+            return <Post key = {post._id} votes = {post.numVotes}
+            name = "Baiju" id = {post._id} title = {post.title} body = {post.body} />
         })
     }
 
@@ -27,9 +24,10 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.postState.posts);
     return {
-        feedbacks: Object.values(state.feedbacks)
+        posts: Object.values(state.postState.posts)
     }
 }
 
-export default connect(mapStateToProps, { fetchFeedbacks })(PostList);
+export default connect(mapStateToProps, { retrievePosts })(PostList);

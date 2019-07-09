@@ -1,18 +1,21 @@
 import {
     CREATE_POST,
-    FETCH_POSTS,
-    FETCH_POST,
+    RETRIEVE_POSTS,
     DELETE_POST,
     EDIT_POST
-} from '../../actions/feedback_forum_actions/forum_types';
+} from '../../actions/feedback_forum_actions/feedback_forum_types';
 import _ from 'lodash';
 
-export default (state = {}, action) => {
+const INITIAL_STATE = {
+    currentPost: null,
+    posts: {}
+}
+
+export default (state = INITIAL_STATE, action) => {
+    let { posts, currentPost} = state;
     switch (action.type) {
-        case FETCH_POSTS:
-            return { ...state, ..._.mapKeys(action.payload, 'id')};
-        case FETCH_POST:
-            return { ...state, [action.payload._id]: action.payload };
+        case RETRIEVE_POSTS:
+            return { ...state, posts: _.mapKeys(action.payload, '_id') };
         case CREATE_POST:
             return { ...state, [action.payload._id]: action.payload };
         case EDIT_POST:

@@ -15,6 +15,7 @@ const App = () => {
                             <Route path = "/" exact component = {Forum} />    
                             <Route path = "/create_product" exact component = {CreateProduct}/>
                             <Route path = "/home" exact component = {Home} /> 
+                            <Route path = "/roadmap" exact component = {Roadmap} />
                         </div>
                     </div>
                 </Router>     

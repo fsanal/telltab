@@ -5,7 +5,6 @@ import productReducer from './global_reducers/Product_Reducer';
 import authReducer from './global_reducers/Auth_Reducer';
 
 //forum reducers
-import feedbackReducer from './forum_reducers/feedbackReducer';
 import forumReducer from './forum_reducers/Forum_Reducer';
 import bucketReducer from './forum_reducers/Bucket_Reducer';
 import postReducer from './forum_reducers/Post_Reducer';
@@ -24,11 +23,10 @@ export default combineReducers({
     form: formReducer,
 
     productState: productReducer,
-    feedbacks: feedbackReducer,
     forumState: forumReducer,
     bucketState: bucketReducer,
     postState: postReducer,
-    
+
     initiativeState: initiativeReducer,
     requirementState: requirementReducer,
     roadmapState: roadmapReducer,

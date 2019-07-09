@@ -9,9 +9,10 @@ export const EDIT_FEEDBACK= 'EDIT_FEEDBACK';
 //post action types
 export const CREATE_POST = 'CREATE_POST';
 export const RETRIEVE_POSTS = 'RETRIEVE_POSTS';
-export const FETCH_POST = 'FETCH_POST';
+export const SELECT_POST = 'SELECT_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST'
+
 
 //forum action types
 export const CREATE_FORUM = 'CREATE_FORUM';

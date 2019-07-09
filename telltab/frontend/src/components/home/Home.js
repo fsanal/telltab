@@ -24,7 +24,7 @@ class Home extends React.Component {
             return products.map(product => {
                 return (
                     <div key = {product._id}>
-                        <Link to = {`/forum/${product.name}`} onClick = {() => {this.handleSelectProduct(product)}} >
+                        <Link to = {`${product.name}/forum`} onClick = {() => {this.handleSelectProduct(product)}} >
                             <div>{product.name}</div>
                         </Link>
                         <button onClick = {() => {this.handleDeleteProduct(product)}}>Delete</button>

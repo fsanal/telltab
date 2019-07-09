@@ -6,12 +6,18 @@ import CategoryBox from './catbox/CategoryBox';
 import { connect } from 'react-redux';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
 import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
+import history from '../../history';
 
 class Forum extends React.Component {
 
     componentDidMount(){
         const promise = this.props.getProductForum();
-        promise.then(this.props.retrievePosts());
+        promise.then((result) => {this.props.retrievePosts()});
+    }
+
+    openModal(){
+        let path = window.location.pathname + "/create";
+        history.push(path);
     }
 
     render(){
@@ -22,10 +28,10 @@ class Forum extends React.Component {
                         <ForumNav/>
                         <Toolbar/>
                         <div className = "dashcontent__boxes">
-                            <button className = "dashcontent__create">
+                            <div className = "dashcontent__create" onClick = {() => this.openModal()}>
                                 <i className="dashcontent__createpost fas fa-plus-circle"></i>
                                 <div className = "dashcontent__createpost-content">Create Post</div>
-                            </button>
+                            </div>
                             <CategoryBox/>
                         </div>
                         <PostList/>

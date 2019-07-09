@@ -86,7 +86,7 @@ body {
 .dashcontent {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: 30rem 70rem auto;
     grid-template-rows: 8rem 8rem auto;
 }
 
@@ -100,7 +100,7 @@ body {
 }
 
 .dashcontent__logo {
-    letter-spacing: 03px;
+    letter-spacing: 3px;
     display: flex;
     font-family: 'Roboto Slab', serif;
     padding-left: 5rem;
@@ -115,7 +115,7 @@ body {
 .dashcontent__create {
     display: flex;
     background-color: #1EBE6B;
-    
+    cursor:pointer;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
     margin-top: 2rem;
     margin-left: 1rem;
@@ -149,8 +149,8 @@ body {
 
 .dashcontent__toolbar {
     background-color: #F1F3F4;
-  
-    grid-column: 4 / -1;
+    grid-row: 2 / 3;
+    grid-column: 2 / -1;
     
 }
 
@@ -163,9 +163,7 @@ body {
     margin-right: 2rem;
     margin-top: 1.5rem;
     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
-    
     width: 58rem;
-  
 }
 
 .toolbar-item {
@@ -186,7 +184,7 @@ body {
 
 .dashcontent__boxes {
 
-    grid-column: 1 / 4;
+    grid-column: 1 / 2;
     grid-row: 2 / -1;
     background-color: white;
     
@@ -196,9 +194,9 @@ body {
  
     display: flex;
     flex-direction: column;
-    grid-column: 4 / -1;
+    grid-column: 2 / -1;
     grid-row: 3 / -1;
-    background-color: #EFF0F1;
+    background-color: #F4F5F7;
 }
 
 .dashcontent__boxes-categories{
@@ -211,16 +209,15 @@ body {
 .dashcontent__boxes-groups{
     background-color: white;
     height:0rem;
-    
 }
 
 
 /* Feedback Card */
 
 .feedback {
-  
-   
-    border-radius: 3rem;
+    cursor:pointer;
+    border: #DADCE0 solid 0.18rem;
+    border-radius: 0.8rem;
     background-color: white;
     height: 9rem;
     display: flex;
@@ -228,21 +225,36 @@ body {
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: 1rem; 
-   
+    box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+    width: 58rem;
+}
+
+.feedback-selected {
+    cursor:pointer;
+    border: #1A73E8 solid 0.18rem;
+    border-radius: 0.8rem;
+    background-color: white;
+    height: 9rem;
+    display: flex;
+    color: black;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1rem; 
+    box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+    width: 58rem;
 }
 
 .feedback:hover {
-    box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: #FAFBFC;
+    box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 .feedback__checkbox {
-  
     height: 8.8rem;
     width: 4rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     border-right: #dcdde1 2px solid;
-    
 }
 
 .fa-square {
@@ -253,13 +265,11 @@ body {
 }
 
 .feedback__votes {
-    flex: 1;
     width: 5rem;
     height: 9rem;
     text-align: center;
     font-size: 1.5rem;
-    vertical-align: middle;
-    padding-top: 2.2rem;
+    padding-top: 2.5rem;
     color: #1EBE6B;
 }
 
@@ -298,18 +308,16 @@ body {
 }
 
 .feedback__content {
-    flex: 0;
-    display: flex;
+    width: 40rem;
     padding-top: 1rem;
-    padding-left: 3rem;
-    display: flex;
-    flex-direction: column;
+    padding-left: 1.2rem;
 }
 
 .feedback__content-title {
-    font-size: 1.5rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    height: 4rem;
+    height: 2rem;
+    color: #172B4D;
 }
 
 .feedback__content-progress {
@@ -318,7 +326,8 @@ body {
 }
 
 .feedback__content-description {
-    font-size: 1.2rem;
+    padding-top: 1.2rem;
+    font-size: 2rem;
     padding-bottom: 3rem;
     width: 35vw;
 }

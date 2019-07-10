@@ -24,7 +24,8 @@ export const getForum = (id) => async dispatch => {
 
 export const getProductForum = () => async (dispatch, getState) => {
     const { currentProduct } = getState().productState;
-    let productID = currentProduct._id;
+    let productID;
+    if (currentProduct) productID = currentProduct._id;
     const response = await api.post(`/forums/get_product_forum`, {productID});
     dispatch({type: SELECT_PRODUCT_FORUM, payload: response.data});
 } 

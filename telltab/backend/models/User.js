@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const mongoosastic = require("mongoosastic")
 const elasticsearch = require("elasticsearch")
 const Schema = mongoose.Schema;
+const bcrypt   = require('bcrypt-nodejs');
 const { ObjectId} = Schema.Types;
 
 var userSchema = new Schema({
@@ -23,6 +24,14 @@ var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt
 userSchema.plugin(mongoosastic, {
 	esClient: esClient
 });
+
+userSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
 
 var User = mongoose.model("User", userSchema);
 

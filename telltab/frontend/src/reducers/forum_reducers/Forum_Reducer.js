@@ -23,6 +23,7 @@ export default ( state = INITIAL_STATE, action ) => {
             return { ...state, currentForum };
         case SELECT_PRODUCT_FORUM:
             currentForum = action.payload[0];
+            console.log(currentForum);
             return { ...state, currentForum };
         default:
             return state;

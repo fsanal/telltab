@@ -4,7 +4,7 @@ import {
     FETCH_FEEDBACK,
     DELETE_FEEDBACK,
     EDIT_FEEDBACK
-} from '../../actions/feedback_forum_actions/forum_types';
+} from '../../actions/feedback_forum_actions/feedback_forum_types';
 
 import _ from 'lodash';
 

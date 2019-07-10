@@ -15,43 +15,18 @@ import Typography from '@material-ui/core/Typography';
 
 class Roadmap extends React.Component {
     componentDidMount() {
-        //this.props.retrieveRoadmaps();
+        const promise = this.props.getProductForum();
+        promise.then(this.props.retrievePosts());
     }
-
-    handleRoadmapClick(roadmap) {
-        console.log("Entered 1");
-        this.props.selectRoadmap(roadmap);
-    }
-
-    renderList() {
-        const { roadmaps } = this.props;
-        if (roadmaps){
-            return roadmaps.map(roadmap => {
-                return (
-                    <Link to = {`/roadmap/${product.name}`} onClick = {() => {this.handleRoadmapClick(roadmap)}} >
-                        <Card key = {roadmap._id}>
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">{roadmap.name}</Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                    </Link>
-                )
-            })
-        }
-    }
-
 
     render() {
         return(
-            <div>Test</div>
-            /*<div>
-                    <Link to = "/create_timeblock" >
-                            <button>Add timeblock</button>
+            <div>
+                    <Link to = "/" >
+                            <button>Create a Product</button>
                     </Link>
                     {this.renderList()}
-            </div>*/
+            </div>
         );
     }
 }

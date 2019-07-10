@@ -13,17 +13,21 @@ const INITIAL_STATE = {
 }
 
 export default ( state = INITIAL_STATE, action ) => {
-    const {products, currentProduct} = state;
+    let {products, currentProduct} = state;
     switch (action.type) {
         case CREATE_PRODUCT:
+            currentProduct = action.payload;
             products[action.payload._id] = action.payload;
-            return { ...state, products }
+            return { ...state, products, currentProduct }
         case RETRIEVE_PRODUCTS:
             return { ...state, products : _.mapKeys(action.payload, '_id') }
         case SELECT_PRODUCT:
             return { ...state, currentProduct: action.payload }
         case EDIT_PRODUCT:
             products[action.payload._id] = action.payload;
+            return { ...state, products }
+        case DELETE_PRODUCT:
+            products = _.omit(products, action.payload);
             return { ...state, products }
         default:
             return state;

@@ -7,6 +7,7 @@ import {
 } from './global_types';
 import api from '../../apis/api';
 import history from '../../history';
+import { createForum } from '../feedback_forum_actions/Forum_Actions'
 
 export const createProduct = (formValues) => async (dispatch, getState) => { 
     let name = formValues.name;
@@ -33,4 +34,13 @@ export const selectProduct = (product) => {
         type: SELECT_PRODUCT,
         payload: product
     }
+}
+
+export const deleteProduct = (product) => async (dispatch, getState) => {
+    const { secret } = getState().auth;
+    let id = product._id;
+    const response = await api.delete(`/products/delete/${id}`);
+    dispatch({ type: DELETE_PRODUCT, payload: response.data });
+    history.push('/homes');
+    history.push('/home');
 }

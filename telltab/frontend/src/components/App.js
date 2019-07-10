@@ -6,18 +6,16 @@ import Forum from './forum/Forum';
 import Roadmap from './roadmap/Roadmap';
 import Home from './home/Home';
 import CreateProduct from '../components/home/CreateProduct';
+import Dashboard from './Dashboard';
 
 const App = () => {
     return (<>
                 <Router history = {history}>
-                    <div className = "prodash">
-                        <div className = "prodash__rightcontent">
-                            <Route path = "/" exact component = {Forum} />    
-                            <Route path = "/create_product" exact component = {CreateProduct}/>
-                            <Route path = "/home" exact component = {Home} /> 
-                            <Route path = "/roadmap" exact component = {Roadmap} />
-                        </div>
-                    </div>
+                    <Route path = "/create_product" exact component = {CreateProduct}/>
+                    <Route path = "/home" exact component = {Home} /> 
+                    <Route path = "/dash" component = {Dashboard} />    
+                    <Route path = "/forum" component = {Forum} />
+                    <Route path = "/roadmap" component = {Roadmap} />
                 </Router>     
             </>)
 }

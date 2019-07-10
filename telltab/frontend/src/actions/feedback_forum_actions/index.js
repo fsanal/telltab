@@ -4,7 +4,7 @@ import {
     FETCH_FEEDBACK,
     DELETE_FEEDBACK,
     EDIT_FEEDBACK
-} from './forum_types';
+} from './feedback_forum_types';
 import axios from 'axios';
 import history from '../../history';
 

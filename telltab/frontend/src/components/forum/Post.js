@@ -16,7 +16,7 @@ const Post = (props) => {
                     {props.title}
                 </div>
                 <div className = "feedback__content-description">
-                    {props.content}
+                    {props.body}
                 </div>
             </div>
             <div className = "feedback__person">

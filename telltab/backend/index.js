@@ -3,12 +3,16 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const Database = require('./database');
+//const Database = require('./database');
 
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
+
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 // this is our MongoDB database
 const dbRoute =
@@ -33,18 +37,23 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
+app.use(cookieParser());
+app.use(session({ secret: 'telltabsupersecretsecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 var forumRoutes = require("./routes/forum_routes");
 var globalRoutes = require("./routes/global_routes");
 var widgetRoutes = require("./routes/widget_routes");
 var roadmapRoutes = require("./routes/roadmap_routes")
+var authenticationRoutes = require("./routes/authentication_routes");
 
 app.use('/api', roadmapRoutes)
 app.use('/api', widgetRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', globalRoutes);
 app.use('/api', widgetRoutes);
-
+app.use('/api', authenticationRoutes);
 
 // append /api for our http requests
 //app.use('/api', router);

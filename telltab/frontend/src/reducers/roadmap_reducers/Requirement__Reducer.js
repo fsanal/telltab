@@ -13,7 +13,7 @@ import {
     CREATE_REQUIREMENT_CUSTOMFIELD,
     DELETE_REQUIREMENT_CUSTOMFIELD,
     RETRIEVE_REQUIREMENTS
-} from '../../actions/roadmap_actions/roadmap_types';
+} from '../../actions/types/roadmap_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

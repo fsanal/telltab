@@ -13,6 +13,7 @@ router.get('/buckets/get/:id', bucket_controller.getBucket);
 router.post('/buckets/create', bucket_controller.createBucket);
 router.put('/buckets/edit/:id', bucket_controller.editBucket);
 router.delete('/buckets/delete/:id', bucket_controller.deleteBucket);
+router.post('/buckets/retrieve', bucket_controller.retrieveBuckets);
 
 const newrelease_controller = require('../controllers/feedback_forum_controllers/NewRelease_Controller');
 router.get('/newreleases/get/:id', newrelease_controller.getNewRelease);

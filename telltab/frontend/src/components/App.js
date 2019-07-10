@@ -8,15 +8,17 @@ import Home from './home/Home';
 import CreateProduct from '../components/home/CreateProduct';
 import Dashboard from './Dashboard';
 import CreatePost from './forum/CreatePost';
+import CreateBucket from './forum/bucketbox/CreateBucket';
 
 const App = () => {
     return (<>
                 <Router history = {history}>
                     <Route path = "/create_product" exact component = {CreateProduct}/>
-                    <Route path = "/home" exact component = {Home} /> 
+                    <Route path = "/" exact component = {Home} /> 
                     <Route path = "/dash" component = {Dashboard} />    
-                    <Route path = "*/forum" exact component = {Forum} />
-                    <Route path = "*/forum/create" exact component = {CreatePost} />
+                    <Route path = "/:name/forum" exact component = {Forum} />
+                    <Route path = "/:name/forum/createPost" exact component = {CreatePost} />
+                    <Route path = "/:name/forum/createBucket" exact component = {CreateBucket} />
                 </Router>     
             </>)
 }

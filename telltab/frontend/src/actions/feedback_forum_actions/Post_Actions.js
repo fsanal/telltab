@@ -4,7 +4,7 @@ import {
     SELECT_POST,
     DELETE_POST,
     EDIT_POST
-} from './feedback_forum_types';
+} from '../types/feedback_forum_types';
 import api from '../../apis/api';
 import history from '../../history';
 
@@ -16,11 +16,14 @@ export const selectPost = (post) => {
 }
 
 export const createPost = (formValues) => async (dispatch, getState) => {
+    alert("entered here");
     const { title, body } = formValues;
     const { currentForum } = getState().forumState;
-    let forumID;
+    const { currentBucket } = getState().bucketState;
+    let forumID, bucketID;
     if (currentForum) forumID = currentForum._id;
-    const response = await api.post('/posts/create', { ...formValues, forumID });
+    if (currentBucket) bucketID = currentBucket._id;
+    const response = await api.post('/posts/create', { ...formValues, forumID, bucketID });
     dispatch({type: CREATE_POST, payload: response.data});
     history.goBack();
 }
@@ -28,10 +31,13 @@ export const createPost = (formValues) => async (dispatch, getState) => {
 export const retrievePosts = (search) => async (dispatch, getState) => {
     const { forumState, bucketState } = getState();
     let forumID, bucketID;
-    if (!forumState.currentForum) return history.push('/home');
+    if (!forumState.currentForum) return history.push('/');
     forumID = forumState.currentForum._id;
     if (bucketState.currentBucket) bucketID = bucketState.currentBucket._id;
-    const response = await api.post(`/posts/retrieve`, {forumID, bucketID});
+    console.log(forumID);
+    console.log(bucketID);
+    console.log(search);
+    const response = await api.post(`/posts/retrieve`, {forumID, bucketID, search});
     dispatch({type: RETRIEVE_POSTS, payload: response.data});
 } 
 

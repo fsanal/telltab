@@ -9,6 +9,11 @@ class Home extends React.Component {
     componentDidMount() {
         this.props.retrieveProducts();
     }
+/*
+    componentDidUpdate() {
+        this.props.retrieveProducts();
+    }
+    */
 
     handleSelectProduct(product) {
         this.props.selectProduct(product);

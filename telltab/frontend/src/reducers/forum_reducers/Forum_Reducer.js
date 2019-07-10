@@ -4,7 +4,7 @@ import {
     DELETE_FORUM,
     EDIT_FORUM,
     SELECT_PRODUCT_FORUM
-} from '../../actions/feedback_forum_actions/feedback_forum_types';
+} from '../../actions/types/feedback_forum_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -23,7 +23,6 @@ export default ( state = INITIAL_STATE, action ) => {
             return { ...state, currentForum };
         case SELECT_PRODUCT_FORUM:
             currentForum = action.payload[0];
-            console.log(currentForum);
             return { ...state, currentForum };
         default:
             return state;

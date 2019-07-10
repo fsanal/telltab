@@ -4,7 +4,7 @@ import {
     DELETE_TIMEBLOCK,
     EDIT_TIMEBLOCK,
     GET_TIMEBLOCK
-} from '../../actions/roadmap_actions/roadmap_types';
+} from '../../actions/types/roadmap_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

@@ -3,7 +3,7 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const Database = require('./database');
+//const Database = require('./database');
 
 const API_PORT = 3001;
 const app = express();
@@ -53,7 +53,6 @@ app.use('/api', forumRoutes);
 app.use('/api', globalRoutes);
 app.use('/api', widgetRoutes);
 app.use('/api', authenticationRoutes);
-
 
 // append /api for our http requests
 //app.use('/api', router);

@@ -2,6 +2,16 @@ var User = require('../../models/User');
 var passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
+
 passport.use('local-signup', new LocalStrategy({
     usernameField : 'email',
     passwordField : 'password',
@@ -53,11 +63,15 @@ function(req, email, password, done) {
 }));
 
 function isLoggedIn(req, res) {
-
     if (req.isAuthenticated())
-        return res.json({ authenticated: true });
+        return ({ authenticated: true });
 
-    res.redirect('/');
+    return ({ authenticated: false });
 }
 
-module.exports = {  };
+logout = (req, res) => {
+    req.logout();
+    return res.json({ success: true });
+}
+
+module.exports = { logout };

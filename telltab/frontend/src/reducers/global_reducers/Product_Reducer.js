@@ -4,7 +4,7 @@ import {
     SELECT_PRODUCT,
     DELETE_PRODUCT,
     EDIT_PRODUCT
-} from '../../actions/global_actions/global_types';
+} from '../../actions/types/global_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -27,7 +27,7 @@ export default ( state = INITIAL_STATE, action ) => {
             products[action.payload._id] = action.payload;
             return { ...state, products }
         case DELETE_PRODUCT:
-            products = _.omit(products, action.payload);
+            products = _.omit(products, action.payload._id);
             return { ...state, products }
         default:
             return state;

@@ -22,6 +22,7 @@ const dbRoute =
 
 
 // connects our back end code with the database
+
 mongoose.connect(dbRoute, { useNewUrlParser: true });
 
 let db = mongoose.connection;

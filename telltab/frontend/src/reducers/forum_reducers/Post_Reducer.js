@@ -4,7 +4,7 @@ import {
     SELECT_POST,
     DELETE_POST,
     EDIT_POST
-} from '../../actions/feedback_forum_actions/feedback_forum_types';
+} from '../../actions/types/feedback_forum_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

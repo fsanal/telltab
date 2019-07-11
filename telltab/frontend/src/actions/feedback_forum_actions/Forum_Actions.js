@@ -4,7 +4,7 @@ import {
     SELECT_PRODUCT_FORUM,
     DELETE_FORUM,
     EDIT_FORUM
-} from './feedback_forum_types';
+} from '../types/feedback_forum_types';
 import api from '../../apis/api';
 import history from '../../history';
 

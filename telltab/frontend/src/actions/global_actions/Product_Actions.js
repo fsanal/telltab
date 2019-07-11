@@ -4,7 +4,7 @@ import {
     SELECT_PRODUCT,
     DELETE_PRODUCT,
     EDIT_PRODUCT
-} from './global_types';
+} from '../types/global_types';
 import api from '../../apis/api';
 import history from '../../history';
 import { createForum } from '../feedback_forum_actions/Forum_Actions'
@@ -14,7 +14,7 @@ export const createProduct = (formValues) => async (dispatch, getState) => {
     const { secret } = getState().auth;
     const response = await api.post('/products/create', {secret, name});
     dispatch({ type: CREATE_PRODUCT, payload: response.data });
-    history.push('/home')
+    history.push('/')
 }
 
 export const retrieveProducts = () => async (dispatch, getState) => {
@@ -41,6 +41,4 @@ export const deleteProduct = (product) => async (dispatch, getState) => {
     let id = product._id;
     const response = await api.delete(`/products/delete/${id}`);
     dispatch({ type: DELETE_PRODUCT, payload: response.data });
-    history.push('/homes');
-    history.push('/home');
 }

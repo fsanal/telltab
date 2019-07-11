@@ -4,7 +4,7 @@ import {
     DELETE_ROADMAP,
     EDIT_ROADMAP,
     SELECT_PRODUCT_ROADMAP
-} from '../../actions/roadmap_actions/roadmap_types';
+} from '../../actions/types/roadmap_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {

@@ -92,11 +92,25 @@ body {
 
 .dashcontent__dashnav {
     display: flex;
-    grid-column: 1 / -1;
+    grid-column: 1 / 2;
     background-color: white;
     color: #1EBE6B;
     text-align: center;
     border-bottom: 2px solid #F1F3F4;
+    cursor: pointer;
+}
+
+.forum__utility {
+    grid-column: 2 / -1;
+    background-color: white;
+}
+
+.forum__searchbar{
+    height: 4rem;
+    width: 58rem;
+    margin-left: 2rem;
+    margin-top: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .dashcontent__logo {
@@ -160,7 +174,6 @@ body {
     height: 5rem;
     border-radius: 0.5rem;
     margin-left: 2rem;
-    margin-right: 2rem;
     margin-top: 1.5rem;
     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
     width: 58rem;
@@ -199,9 +212,21 @@ body {
     background-color: #F4F5F7;
 }
 
-.dashcontent__boxes-categories{
-    height:0px;
-    width:0px;
+.dashcontent__boxes-buckets{
+    height: 10rem;
+}
+
+.dashcontent__create_bucket {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 4rem;
+    border: 0.5rem solid #F4F5F7;
+    cursor: pointer;
+
+}
+
+.dashcontent__create_bucket:hover {
+    background-color: #FAFBFC;
 }
 
 
@@ -216,7 +241,7 @@ body {
 
 .feedback {
     cursor:pointer;
-    border: #DADCE0 solid 0.3rem;
+    border: #DADCE0 solid 0.2rem;
     border-radius: 0.8rem;
     background-color: white;
     height: 9rem;
@@ -225,7 +250,8 @@ body {
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: 1rem; 
-    box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+   /* box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);*/
     width: 58rem;
 }
 
@@ -240,7 +266,7 @@ body {
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: 1rem; 
-    box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
     width: 58rem;
 }
 

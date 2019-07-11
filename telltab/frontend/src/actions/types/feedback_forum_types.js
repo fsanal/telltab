@@ -26,3 +26,5 @@ export const CREATE_BUCKET = 'CREATE_BUCKET';
 export const GET_BUCKET = 'GET_BUCKET';
 export const DELETE_BUCKET = 'DELETE_BUCKET';
 export const EDIT_BUCKET = 'EDIT_BUCKET';
+export const RETRIEVE_BUCKETS = 'RETRIEVE_BUCKET';
+export const SELECT_BUCKET = 'SELECT_BUCKET';

@@ -12,8 +12,10 @@ class PostList extends React.Component {
         return cls
     }
 
-    handleSelectPost = (post) => {
-        this.props.selectPost(post);
+    handleSelectPost = (post, e) => {
+        e.preventDefault();
+        console.log(e);
+        if (e.type === "contextmenu") this.props.selectPost(post);
     }
 
     handleDeletePost = (post) => {
@@ -22,7 +24,7 @@ class PostList extends React.Component {
 
     renderList() {
         return this.props.posts.map(post => {
-            return <Post onDelete = {() => {this.handleDeletePost(post)}} onSelect = {() => {this.handleSelectPost(post)}} key = {post._id} votes = {post.numVotes}
+            return <Post onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
             cls = {this.renderFeedbackClass(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} />
         })
     }

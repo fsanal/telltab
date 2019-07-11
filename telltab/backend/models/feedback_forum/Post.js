@@ -7,13 +7,13 @@ var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt
 
 var postSchema = new Schema({
     forum: {type: ObjectId, es_indexed: true, ref: 'Forum'},
-    bucket: {type: ObjectId, ref: 'Bucket'},
-    personas: [{ type: ObjectId, index: true, ref: 'Persona'}],
-    author: {type: ObjectId, ref: 'User'},
-    visibility: [{ type: ObjectId, index: true, ref: 'Persona'}],
+    bucket: {type: ObjectId, es_indexed:true, ref: 'Bucket'},
+    personas: [{ type: ObjectId, index: true, es_indexed: true, ref: 'Persona'}],
+    author: {type: ObjectId, es_indexed: true, ref: 'User'},
+    visibility: [{ type: ObjectId, es_indexed: true, index: true, ref: 'Persona'}],
     requirements: [{ type: ObjectId, index: true, ref: 'Requirement'}],
     assignments: [{type: ObjectId, index: true, ref: 'User'}],
-    tags: [{ type: ObjectId, index: true, ref: 'Tag'}],
+    tags: [{ type: ObjectId, es_indexed: true, index: true, ref: 'Tag'}],
     roadmap: {type: ObjectId, ref: 'RoadMap'},
     created: Date,
     title:

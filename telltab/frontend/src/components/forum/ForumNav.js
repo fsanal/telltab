@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import history from '../../history';
 
 class ForumNav extends React.Component {
     componentDidMount() {
         //this.props.fetchStream(this.props.match.params.id);
     }
 
-    onClick = () => {
-        //this.props.deleteStream(this.props.match.params.id);
+    goHome = () => {
+        history.push('/');
     }
 
     
@@ -17,7 +18,7 @@ class ForumNav extends React.Component {
     render(){
         return(
             <div className = "dashcontent__dashnav">
-                <div className = "dashcontent__logo">telltab</div>
+                <div onClick = {() => {this.goHome()}} className = "dashcontent__logo">telltab</div>
             </div>
             /*
             <i className="dashcontent__createpost fas fa-plus-circle"></i>

@@ -47,4 +47,14 @@ deleteBucket = (req, res) => {
     });
 }
 
-module.exports = { createBucket, getBucket, editBucket, deleteBucket }
+retrieveBuckets = (req, res) => {
+    const { forumID } = req.body;
+    let query = Bucket.find();
+    query.where('forum').equals(forumID);
+    query.exec((err, buckets) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(buckets);
+	});
+}
+
+module.exports = { createBucket, getBucket, editBucket, deleteBucket, retrieveBuckets}

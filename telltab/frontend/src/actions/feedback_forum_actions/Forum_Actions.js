@@ -9,7 +9,7 @@ import api from '../../apis/api';
 import history from '../../history';
 
 
-export const createForum = (name, ) => async (dispatch, getState) => {
+export const createForum = (name) => async (dispatch, getState) => {
     const { currentProduct } = getState().productState;
     let name = currentProduct.name;
     let productID = currentProduct._id;

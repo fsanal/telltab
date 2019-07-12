@@ -32,9 +32,14 @@ class PostList extends React.Component {
         this.props.openCreateTagModal();
     }
 
+    showPostModal = (post) => {
+        this.props.setCurrentPost(post);
+        this.props.openShowPostModal();
+    }
+
     renderList() {
         return this.props.posts.map(post => {
-            return <Post addPostTag = {() => {this.addPostTag(post)}} onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
+            return <Post showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
             cls = {this.renderFeedbackClass(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} />
         })
     }

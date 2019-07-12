@@ -397,3 +397,13 @@ body {
 .arrowright__box:hover .fa-angle-double-right{
     color: #1DB665;
 }
+
+#post__dropdown {
+    width: 4.5rem;
+    height: 8.5rem;
+    border: none;
+    font-size: 2rem;
+    background: white;
+    color: #777777;
+}
+

@@ -1,27 +1,33 @@
 import React from 'react';
+import AddTag from './AddTag';
+import { DropdownButton } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap';
 
 const Post = (props) => {
     return (
-        <div className = {props.cls}>
-            <div  onContextMenu = {props.onSelect} className = "feedback__content">
-                <div className = "feedback__content-title">
-                    {props.title}
+        <div>
+            <div className = {props.cls}>
+                <div  onContextMenu = {props.onSelect} className = "feedback__content">
+                    <div className = "feedback__content-title">
+                        {props.title}
+                    </div>
+                    <div className = "feedback__content-description">
+                        {props.body}
+                    </div>
                 </div>
-                <div className = "feedback__content-description">
-                    {props.body}
+                <div className = "feedback__delete">
+                    <DropdownButton title = "" id = "post__dropdown" >
+                            <Dropdown.Item  onClick = {props.onDelete} >Delete</Dropdown.Item>
+                            <Dropdown.Item >Add Tag</Dropdown.Item>
+                            <Dropdown.Item >Change Visibility</Dropdown.Item>
+                    </DropdownButton>
                 </div>
             </div>
-            <div className = "feedback__delete">
-                <div onClick = {props.onDelete} className = "ellipse__box" >
-                    <i className ="fas fa-ellipsis-v"></i>
-                </div>
-                <div className = "arrowright__box">
-                    <i className ="fas fa-angle-double-right"></i>
-                </div>
-            </div>
+            <AddTag/>
         </div>
     )
 }
+
 
 
 /*

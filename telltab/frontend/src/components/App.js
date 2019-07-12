@@ -9,6 +9,7 @@ import CreateProduct from '../components/home/CreateProduct';
 import Dashboard from './Dashboard';
 import CreatePost from './forum/CreatePost';
 import CreateBucket from './forum/bucketbox/CreateBucket';
+import VModal from './general/VModal';
 
 const App = () => {
     return (<>
@@ -19,6 +20,7 @@ const App = () => {
                     <Route path = "/:name/forum" exact component = {Forum} />
                     <Route path = "/:name/forum/createPost" exact component = {CreatePost} />
                     <Route path = "/:name/forum/createBucket" exact component = {CreateBucket} />
+                    <Route path = "/lala" exact component = {VModal} />
                 </Router>     
             </>)
 }

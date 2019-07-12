@@ -4,6 +4,7 @@ import PostList from './PostList';
 import Toolbar from './Toolbar';
 import BucketBox from './bucketbox/BucketBox';
 import ForumUtility from './ForumUtility';
+import CreatePost from './CreatePost';
 import { connect } from 'react-redux';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
 import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
@@ -11,6 +12,12 @@ import { retrieveBuckets } from '../../actions/feedback_forum_actions/Bucket_Act
 import history from '../../history';
 
 class Forum extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            showCreatePostModal: false,
+        };
+    }
 
     componentDidMount(){
         const promise = this.props.getProductForum();
@@ -24,9 +31,12 @@ class Forum extends React.Component {
         this.props.retrievePosts();
     }
 
-    openModal(){
-        let path = window.location.pathname + "/createPost";
-        history.push(path);
+    openCreatePostModal = () => {
+        this.setState({showCreatePostModal: true})
+    }
+
+    closeCreatePostModal = () => {
+        this.setState({showCreatePostModal: false})
     }
 
     render(){
@@ -38,7 +48,7 @@ class Forum extends React.Component {
                         <ForumUtility/>
                         <Toolbar/>
                         <div className = "dashcontent__boxes">
-                            <div className = "dashcontent__create" onClick = {() => this.openModal()}>
+                            <div className = "dashcontent__create" onClick = {this.openCreatePostModal}>
                                 <i className="dashcontent__createpost fas fa-plus-circle"></i>
                                 <div className = "dashcontent__createpost-content">Create Post</div>
                             </div>
@@ -47,6 +57,7 @@ class Forum extends React.Component {
                         <PostList/>
                     </div>
                 </div>
+                <CreatePost show = {this.state.showCreatePostModal} onHide = {this.closeCreatePostModal} />
             </div>
         )
     }

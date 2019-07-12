@@ -5,6 +5,7 @@ import Toolbar from './Toolbar';
 import BucketBox from './bucketbox/BucketBox';
 import ForumUtility from './ForumUtility';
 import CreatePost from './CreatePost';
+import AddTag from './AddTag';
 import { connect } from 'react-redux';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
 import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
@@ -16,6 +17,7 @@ class Forum extends React.Component {
         super();
         this.state = {
             showCreatePostModal: false,
+            showCreateTagModal: false
         };
     }
 
@@ -39,6 +41,14 @@ class Forum extends React.Component {
         this.setState({showCreatePostModal: false})
     }
 
+    openCreateTagModal = () => {
+        this.setState({showCreateTagModal: true})
+    }
+
+    closeCreateTagModal = () => {
+        this.setState({showCreateTagModal: false})
+    }
+
     render(){
         return (
             <div className = "prodash__rightcontent">
@@ -54,10 +64,11 @@ class Forum extends React.Component {
                             </div>
                             <BucketBox/>
                         </div>
-                        <PostList/>
+                        <PostList openCreateTagModal = {this.openCreateTagModal}/>
                     </div>
                 </div>
                 <CreatePost show = {this.state.showCreatePostModal} onHide = {this.closeCreatePostModal} />
+                <AddTag show = {this.state.showCreateTagModal} onHide = {this.closeCreateTagModal} />
             </div>
         )
     }

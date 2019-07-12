@@ -42,4 +42,15 @@ retrieveTags = (req, res) => {
 	});
 }
 
-module.exports = { createTag, getTag, deleteTag, retrieveTags }
+findTag = (req, res) => {
+	const { productID, name } = req.body;
+	let query = Tag.findOne()
+	if (productID) query.where('product').equals(productID);
+	if (name) query.where('name').equals(name);
+	query.exec((err, tag) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(tag);
+	});
+}
+
+module.exports = { createTag, getTag, deleteTag, retrieveTags, findTag }

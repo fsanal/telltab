@@ -2,7 +2,8 @@ import React from 'react';
 import { Field, FieldArray, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
 import { getProductRoadmap } from '../../actions/roadmap_actions/RoadMap_Actions';
-import { retrieveInitiatives } from '../../actions/roadmap_actions/Initiative_Actions';
+//import { retrieveInitiatives } from '../../actions/roadmap_actions/Initiative_Actions';
+//import { retrieveTimeBlocks } from '../../actions/roadmap_actions/TimeBlock_Actions';
 import RoadMapNav from './RoadMapNav';
 import history from '../../history';
 import Button from 'react-bootstrap/Button';
@@ -12,7 +13,10 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 class Roadmap extends React.Component {
 	componentDidMount() {
 		const promise = this.props.getProductRoadmap();
-		promise.then(this.props.retrieveInitiatives());
+        promise.then((result) => {
+            //this.props.retrieveRequirements();
+            //this.props.retrieveInitatives();
+        });
 	}
 
 	openModal() {
@@ -39,5 +43,5 @@ class Roadmap extends React.Component {
 	}
 }
 
-export default connect(null, { getProductRoadmap, retrieveInitiatives })(Roadmap);
+export default connect(null, { getProductRoadmap })(Roadmap);
 

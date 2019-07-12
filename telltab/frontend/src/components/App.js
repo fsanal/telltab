@@ -10,6 +10,7 @@ import Dashboard from './Dashboard';
 import CreatePost from './forum/CreatePost';
 import CreateBucket from './forum/bucketbox/CreateBucket';
 import CreateRequirement from './roadmap/CreateRequirement';
+import VModal from './general/VModal';
 
 const App = () => {
     return (<>

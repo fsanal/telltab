@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { retrieveProducts, editProduct, selectProduct, deleteProduct } from '../../actions/global_actions/Product_Actions';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
+import { getProductRoadmap } from '../../actions/roadmap_actions/RoadMap_Actions';
 import { Link } from 'react-router-dom';
 
 
@@ -9,11 +10,6 @@ class Home extends React.Component {
     componentDidMount() {
         this.props.retrieveProducts();
     }
-/*
-    componentDidUpdate() {
-        this.props.retrieveProducts();
-    }
-    */
 
     handleSelectProduct(product) {
         this.props.selectProduct(product);
@@ -60,5 +56,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { retrieveProducts, editProduct, 
-    selectProduct, deleteProduct, getProductForum })(Home);
+    selectProduct, deleteProduct, getProductForum, getProductRoadmap })(Home);
 

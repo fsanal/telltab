@@ -3,6 +3,8 @@ import history from '../../history';
 import { createPost } from '../../actions/feedback_forum_actions/Post_Actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Form, Button } from 'react-bootstrap';
+import VModal from '../general/VModal';
 
 class CreatePost extends React.Component {
 
@@ -23,22 +25,27 @@ class CreatePost extends React.Component {
     renderInput = ({input, label, meta}) => {
         const className = `field ${meta.error && meta.touched ? 'error' : ''}`
         return(
-            <div className = {className}>
-                <label>{label}</label>
-                <input {...input} />
-                {this.renderError(meta)}
-            </div>
+            <Form.Group>
+                <Form.Label>{label}</Form.Label>
+                <Form.Control {...input} type="text" />
+            </Form.Group>
+        )
+    }
+
+    renderForm = () => {
+        return(
+            <Form onSubmit = {this.props.handleSubmit(this.onSubmit)}>
+                <Field name = "title" bogus = "Title" component = {this.renderInput} label = "Title" />
+                <Field name = "body" component = {this.renderInput} label = "Body" />
+                <Button onClick = {this.props.onHide} variant="primary" type="submit">Submit</Button>
+            </Form>
         )
     }
 
 
     render(){
         return(
-            <form onSubmit = {this.props.handleSubmit(this.onSubmit)} className = "ui form">
-                <Field name = "title" component = {this.renderInput} label = "Title" />
-                <Field name = "body" component = {this.renderInput} label = "Body" />
-                <button className = "ui button primary">Submit</button>
-            </form>
+           < VModal show = {this.props.show} onHide = {this.props.onHide} title = "Create Post" renderForm = {this.renderForm()} />
         )
     }   
 }

@@ -9,8 +9,11 @@ import api from '../../apis/api';
 import history from '../../history';
 
 
-export const createRoadmap = (name, productID, url) => async dispatch => {
-    const response = await api.post('/roadmaps/create', {name, productID, url});
+export const createRoadmap = (name) => async (dispatch, getState) => {
+    const { currentProduct } = getState().productState;
+    let name = currentProduct.name;
+    let productID = currentProduct._id;
+    const response = await api.post('/roadmaps/create', {name, productID});
     dispatch({type: CREATE_ROADMAP, payload: response.data});
 }
 

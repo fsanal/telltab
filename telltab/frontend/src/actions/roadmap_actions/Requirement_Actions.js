@@ -103,12 +103,9 @@ export const deleteRequirementCustomField = (id, fieldID) => async dispatch => {
     dispatch({type: DELETE_REQUIREMENT_CUSTOMFIELD, payload: response.data});
 }
 
-export const retrieveRequirements = (roadmapID, authorID, search, purpose, initiativeID, timeBlockID,
-    limit, skip, personaID, visibilityIDs, tagIDs, assignmentIDs, sort) => async (dispatch, getState) => {
-    const { secret } = getState().auth;
-    const response = await api.post('/requirements/retrieve', { roadmapID, authorID, search, 
-        purpose, initiativeID, timeBlockID, limit, skip, 
-        personaID, visibilityIDs, tagIDs, assignmentIDs, sort });
+export const retrieveRequirements = () => async (dispatch, getState) => {
+    //const { secret } = getState().auth;
+    const response = await api.post('/requirements/retrieve');
     dispatch({ type: RETRIEVE_REQUIREMENTS, payload: response.data });
 }
 

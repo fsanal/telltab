@@ -16,7 +16,6 @@ export const selectPost = (post) => {
 }
 
 export const createPost = (formValues) => async (dispatch, getState) => {
-    alert("entered here");
     const { title, body } = formValues;
     const { currentForum } = getState().forumState;
     const { currentBucket } = getState().bucketState;
@@ -25,7 +24,6 @@ export const createPost = (formValues) => async (dispatch, getState) => {
     if (currentBucket) bucketID = currentBucket._id;
     const response = await api.post('/posts/create', { ...formValues, forumID, bucketID });
     dispatch({type: CREATE_POST, payload: response.data});
-    history.goBack();
 }
 
 export const retrievePosts = (search) => async (dispatch, getState) => {

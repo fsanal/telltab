@@ -4,7 +4,7 @@ import {
     DELETE_ROADMAP,
     EDIT_ROADMAP,
     SELECT_PRODUCT_ROADMAP,
-} from './roadmap_types';
+} from '../types/roadmap_types';
 import api from '../../apis/api';
 import history from '../../history';
 

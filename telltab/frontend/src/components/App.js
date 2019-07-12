@@ -9,6 +9,7 @@ import CreateProduct from '../components/home/CreateProduct';
 import Dashboard from './Dashboard';
 import CreatePost from './forum/CreatePost';
 import CreateBucket from './forum/bucketbox/CreateBucket';
+import CreateRequirement from './roadmap/CreateRequirement';
 
 const App = () => {
     return (<>
@@ -20,6 +21,7 @@ const App = () => {
                     <Route path = "/:name/forum/createPost" exact component = {CreatePost} />
                     <Route path = "/:name/forum/createBucket" exact component = {CreateBucket} />
                     <Route path = "/:name/roadmap" exact component = {Roadmap} />
+                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />
                 </Router>     
             </>)
 }

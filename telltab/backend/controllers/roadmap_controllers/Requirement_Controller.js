@@ -41,8 +41,10 @@ createRequirement = (req, res) => {
     if (assignmentIDs) {
         requirement.assignments = assignmentIDs.map(assignmentID => ObjectId(assignmentID));
     }
-    requirement.save((err) => {
+    console.log("1: " + requirement);
+    requirement.save((err, requirement) => {
         if (err) res.json({success: false, error: err});
+        console.log(requirement);
         res.json(requirement);
     });
 }

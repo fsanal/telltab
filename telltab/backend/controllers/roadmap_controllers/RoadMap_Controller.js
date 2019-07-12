@@ -2,14 +2,6 @@ const RoadMap = require('../../models/roadmap/RoadMap');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
-getRoadMap = (req, res) => {
-    const { id } = req.params;
-    RoadMap.findById(id).populate('product').exec(function(err, roadmap) {
-        if (err) return res.json({success: false, error: err});
-        return res.json(roadmap);
-    });
-}
-
 createRoadMap = (req, res) => {
     const { name, productID, url } = req.body;
     let roadmap = new RoadMap(
@@ -25,6 +17,24 @@ createRoadMap = (req, res) => {
         if (err) return res.json({success: false, error: err});
         return res.json(roadmap);
     });
+}
+
+getRoadMap = (req, res) => {
+    const { id } = req.params;
+    RoadMap.findById(id).populate('product').exec(function(err, roadmap) {
+        if (err) return res.json({success: false, error: err});
+        return res.json(roadmap);
+    });
+}
+
+getProductRoadMap = (req, res) => {
+    const { productID } = req.body;
+    let query = RoadMap.find();
+    query.where('product').equals(productID);
+    query.exec((err, roadmap) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(roadmap);
+	});
 }
 
 editRoadMap = (req, res) => {
@@ -48,15 +58,4 @@ deleteRoadMap = (req, res) => {
     });
 }
 
-retrieveRoadMaps = (req, rest) => {
-    let { secret, limit, skip } = req.body;
-    let query = RoadMap.find();
-    if (limit) query.limit(Number(limit));
-    if (skip) query.skip(Number(skip));
-    query.populate('product').exec((err, roadmaps) => {
-        if (err) return res.json({success: false, error: err });
-        return res.json(roadmaps);
-    });
-}
-
-module.exports = { getRoadMap, createRoadMap, editRoadMap, deleteRoadMap, retrieveRoadMaps };
+module.exports = { getRoadMap, createRoadMap, getProductRoadMap, editRoadMap, deleteRoadMap };

@@ -4,7 +4,7 @@ import {
     DELETE_INITIATIVE,
     EDIT_INITIATIVE,
     RETRIEVE_INITIATIVES
-} from './roadmap_types';
+} from '../types/roadmap_types';
 import api from '../../apis/api';
 import history from '../../history';
 

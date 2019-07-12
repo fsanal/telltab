@@ -20,7 +20,7 @@ const App = () => {
                     <Route path = "/:name/forum" exact component = {Forum} />
                     <Route path = "/:name/forum/createPost" exact component = {CreatePost} />
                     <Route path = "/:name/forum/createBucket" exact component = {CreateBucket} />
-                    <Route path = "/lala" exact component = {VModal} />
+                    <Route path = "/:name/roadmap" exact component = {Roadmap} />
                 </Router>     
             </>)
 }

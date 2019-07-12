@@ -1,32 +1,32 @@
 import {
     CREATE_ROADMAP,
-    SELECT_ROADMAP,
+    GET_ROADMAP,
     DELETE_ROADMAP,
     EDIT_ROADMAP,
-    RETRIEVE_ROADMAPS
+    SELECT_PRODUCT_ROADMAP
 } from '../../actions/types/roadmap_types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
-    currentRoadmap: null,
-    roadmaps: {}
+    currentRoadmap: null
 }
 
 export default ( state = INITIAL_STATE, action ) => {
-    const {roadmaps, currentRoadmap} = state;
+    let { currentRoadmap } = state;
     switch (action.type) {
         case CREATE_ROADMAP:
-            roadmaps[action.payload._id] = action.payload;
-            return { ...state, roadmaps }
-        case RETRIEVE_ROADMAPS:
-            return { ...state, roadmaps : _.mapKeys(action.payload, '_id') }
-        case SELECT_ROADMAP:
-            return { ...state, currentRoadmap: action.payload }
+            return state;
+        case GET_ROADMAP:
+            return state;
         case EDIT_ROADMAP:
-            roadmaps[action.payload._id] = action.payload;
-            return { ...state, roadmaps }
+            currentRoadmap = action.payload[0];
+            return { ...state, currentRoadmap };
+        case SELECT_PRODUCT_ROADMAP:
+            currentRoadmap = action.payload[0];
+            console.log(currentRoadmap);
+            return { ...state, currentRoadmap };
         case DELETE_ROADMAP:
-            return { ...state }
+            return state;
         default:
             return state;
     }

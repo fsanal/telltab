@@ -30,7 +30,7 @@ router.get('/roadmaps/get/:id', roadmap_controller.getRoadMap);
 router.post('/roadmaps/create', roadmap_controller.createRoadMap);
 router.put('/roadmaps/edit/:id', roadmap_controller.editRoadMap);
 router.delete('/roadmaps/delete/:id', roadmap_controller.deleteRoadMap);
-router.post('/roadmaps/retrieve', roadmap_controller.retrieveRoadMaps);
+router.post('/roadmaps/get_product_roadmap', roadmap_controller.getProductRoadMap);
 
 const timeblock_controller = require('../controllers/roadmap_controllers/TimeBlock_Controller');
 router.get('/timeblocks/get/:id', timeblock_controller.getTimeBlock);

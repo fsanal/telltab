@@ -13,17 +13,29 @@ import {
     CREATE_REQUIREMENT_CUSTOMFIELD,
     DELETE_REQUIREMENT_CUSTOMFIELD,
     RETRIEVE_REQUIREMENTS
-} from './roadmap_types';
+} from '../types/roadmap_types';
 import api from '../../apis/api';
 import history from '../../history';
 
 
-export const createRequirement = (roadmapID, initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
-    title, body, visibilityIDs, tagIDs, authorID, assignmentIDs) => async dispatch => {
-    const response = await api.post('/requirements/create', {roadmapID, initiativeID, beginDate, 
-        endDate, purpose, timeblockID, priority, value, personaID,
-        title, body, visibilityIDs, tagIDs, authorID, assignmentIDs});
+export const createRequirement = (formValues) => async (dispatch, getState) => {
+    //visibilityIDs, tagIDs, assignmentIDs (map()?)
+    const { purpose, priority, value, title, body, beginDate, endDate } = formValues;
+    const { currentRoadmap } = getState().roadmapState;
+    const { currentInitiative } = getState().initiativeState;
+    //const { currentAuthor } = getState().authorState;
+    //const { currentPersona } = getState().personaState;
+    //const { currentTimeBlock } = getState().timeblockState;
+    let roadmapID, initiativeID, authorID, personaID, timeblockID;
+    if (currentRoadmap) roadmapID = currentRoadmap._id;
+    if (currentInitiative) initiativeID = currentInitiative._id;
+    //if (currentAuthor) authorID = currentAuthor._id;
+    //if (currentPersona) personaID = currentPersona._id;
+    //if (currentTimeBlock) timeblockID = currentTimeBlock._id;
+    const response = await api.post('/requirements/create', { ...formValues, roadmapID, initiativeID,
+    timeblockID, authorID, personaID});
     dispatch({type: CREATE_REQUIREMENT, payload: response.data});
+    history.goBack();
 }
 
 export const selectRequirement = (requirement) => {
@@ -91,12 +103,9 @@ export const deleteRequirementCustomField = (id, fieldID) => async dispatch => {
     dispatch({type: DELETE_REQUIREMENT_CUSTOMFIELD, payload: response.data});
 }
 
-export const retrieveRequirements = (roadmapID, authorID, search, purpose, initiativeID, timeBlockID,
-    limit, skip, personaID, visibilityIDs, tagIDs, assignmentIDs, sort) => async (dispatch, getState) => {
-    const { secret } = getState().auth;
-    const response = await api.post('/requirements/retrieve', { roadmapID, authorID, search, 
-        purpose, initiativeID, timeBlockID, limit, skip, 
-        personaID, visibilityIDs, tagIDs, assignmentIDs, sort });
+export const retrieveRequirements = () => async (dispatch, getState) => {
+    //const { secret } = getState().auth;
+    const response = await api.post('/requirements/retrieve');
     dispatch({ type: RETRIEVE_REQUIREMENTS, payload: response.data });
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { createProduct } from '../../actions/global_actions/Product_Actions';
 import { createForum } from '../../actions/feedback_forum_actions/Forum_Actions';
+import { createRoadmap } from '../../actions/roadmap_actions/RoadMap_Actions';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -31,6 +32,7 @@ class CreateProduct extends React.Component {
         const promise = this.props.createProduct(formValues);
         promise.then((result) => {
             this.props.createForum();
+            this.props.createRoadmap();
         })
     }
 
@@ -58,5 +60,5 @@ const validate = (formValues) => {
 export default reduxForm({
     form: 'create_product_form',
     validate
-})(connect(null, { createProduct, createForum })(CreateProduct))
+})(connect(null, { createProduct, createForum, createRoadmap })(CreateProduct))
 

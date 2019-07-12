@@ -23,7 +23,6 @@ export default ( state = INITIAL_STATE, action ) => {
             return { ...state, currentRoadmap };
         case SELECT_PRODUCT_ROADMAP:
             currentRoadmap = action.payload[0];
-            console.log(currentRoadmap);
             return { ...state, currentRoadmap };
         case DELETE_ROADMAP:
             return state;

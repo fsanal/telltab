@@ -38,6 +38,5 @@ export default ( state = INITIAL_STATE, action ) => {
             return { ...state }
         default:
             return state;
-            //finish the rest 7/8 and test
     }
 };

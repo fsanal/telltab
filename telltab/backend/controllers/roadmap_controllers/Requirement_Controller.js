@@ -221,7 +221,9 @@ retrieveRequirements = (req, res) => {
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
             aggregate.sort({ ordering : 1 });
-            aggregate.exec( (err, requirements) => {
+            aggregate.populate('roadmap').populate('initiative').populate('timeblock')
+            .populate('persona').populate('author').populate('visibility').populate('tags')
+            .populate('assignments').exec( (err, requirements) => {
                 if (err) return res.json({success: false, error: err });
                 return res.json(requirements);
             });

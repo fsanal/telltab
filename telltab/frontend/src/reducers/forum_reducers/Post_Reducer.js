@@ -3,7 +3,10 @@ import {
     RETRIEVE_POSTS,
     SELECT_POST,
     DELETE_POST,
-    EDIT_POST
+    EDIT_POST,
+    ADD_POST_TAG,
+    DELETE_POST_TAG,
+    SET_CURRENT_POST
 } from '../../actions/types/feedback_forum_types';
 import _ from 'lodash';
 
@@ -36,6 +39,18 @@ export default (state = INITIAL_STATE, action) => {
                 selectedPosts = _.omit(selectedPosts, post._id)
                 return {...state, selectedPosts};
             }
+        case ADD_POST_TAG:
+            posts[action.payload._id] = action.payload;
+            currentPost = action.payload;
+            return { ...state, posts, currentPost };
+        case DELETE_POST_TAG:
+            posts[action.payload._id] = action.payload;
+            currentPost = action.payload;
+            return { ...state, posts, currentPost };    
+        case SET_CURRENT_POST:
+            currentPost = action.payload;
+            console.log("Setting current post");
+            return { ...state, currentPost };    
         default:
             return state;
     }

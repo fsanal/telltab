@@ -45,8 +45,9 @@ createPost = (req, res) => {
 }
 
 getPost = (req, res) => {
-    Post.findById(req.params.id).populate('personas').populate('visibility').
-    populate('requirements').populate('assignments').populate('tags').exec(function(err, post) {
+    Post.findById(req.params.id).populate('forum').populate('bucket').populate('personas')
+    .populate('author').populate('visibility').populate('requirements').populate('assignments')
+    .populate('tags').populate('roadmap').exec(function(err, post) {
         if (err) return res.json({ success: false, error: err });
         return res.json(post);
     });
@@ -136,7 +137,9 @@ retrievePosts = (req, res) => {
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
             aggregate.sort({ ordering : 1 });
-            aggregate.exec( (err, posts) => {
+            aggregate.populate('forum').populate('bucket').populate('personas')
+            .populate('author').populate('visibility').populate('requirements').populate('assignments')
+            .populate('tags').populate('roadmap').exec( (err, posts) => {
                 if (err) return res.json({success: false, error: err });
                 return res.json(posts);
             });
@@ -153,7 +156,9 @@ retrievePosts = (req, res) => {
         if (progress) query.where('progress').equals(progress);
         if (limit) query.limit(Number(limit));
         if (skip) query.skip(Number(skip));
-        query.exec( (err, posts) => {
+        query.populate('forum').populate('bucket').populate('personas')
+        .populate('author').populate('visibility').populate('requirements').populate('assignments')
+        .populate('tags').populate('roadmap').exec( (err, posts) => {
             if (err) return res.json({success: false, error: err });
             return res.json(posts);
         });

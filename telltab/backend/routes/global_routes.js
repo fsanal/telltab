@@ -28,6 +28,7 @@ router.get('/tags/get/:id', tag_controller.getTag);
 router.post('/tags/create', tag_controller.createTag);
 router.delete('/tags/delete/:id', tag_controller.deleteTag);
 router.post('/tags/retrieve', tag_controller.retrieveTags);
+router.post('/tags/find', tag_controller.findTag);
 
 const user_controller = require('../controllers/User_Controller');
 router.get('/users/get/:id', user_controller.getUser);

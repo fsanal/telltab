@@ -28,7 +28,7 @@ createComment = (req, res) => {
 
 getComment = (req, res) => {
 	Comment.findById(req.params.id).populate('post').populate('requirement').populate('newRelease')
-	.populate('parent').populate('author').exec(function(err, comment) {
+	.populate('parent').populate('source').populate('author').exec(function(err, comment) {
 		if (err) return res.json({success: false, error: err})
 		return res.json(comment)
 	});
@@ -63,7 +63,7 @@ retrieveComments = (req, res) => {
 	if (limit) query.limit(Number(limit));
 	if (skip) query.skip(Number(skip));
 	query.populate('post').populate('requirement').populate('newRelease')
-	.populate('parent').populate('author').exec((err, comments) => {
+	.populate('parent').populate('source').populate('author').exec((err, comments) => {
 		if (err) return res.json({success: false, error: err });
 		return res.json(comments);
 	});

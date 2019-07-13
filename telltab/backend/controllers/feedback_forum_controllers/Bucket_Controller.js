@@ -51,7 +51,7 @@ retrieveBuckets = (req, res) => {
     const { forumID } = req.body;
     let query = Bucket.find();
     query.where('forum').equals(forumID);
-    query.exec((err, buckets) => {
+    query.populate('forum').exec((err, buckets) => {
 		if (err) return res.json({success: false, error: err });
 		return res.json(buckets);
 	});

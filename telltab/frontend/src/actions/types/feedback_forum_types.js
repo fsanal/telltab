@@ -11,7 +11,10 @@ export const CREATE_POST = 'CREATE_POST';
 export const RETRIEVE_POSTS = 'RETRIEVE_POSTS';
 export const SELECT_POST = 'SELECT_POST';
 export const EDIT_POST = 'EDIT_POST';
-export const DELETE_POST = 'DELETE_POST'
+export const DELETE_POST = 'DELETE_POST';
+export const ADD_POST_TAG = 'ADD_POST_TAG';
+export const DELETE_POST_TAG = 'DELETE_POST_TAG';
+export const SET_CURRENT_POST = 'SET_CURRENT_POST'
 
 
 //forum action types
@@ -28,3 +31,4 @@ export const DELETE_BUCKET = 'DELETE_BUCKET';
 export const EDIT_BUCKET = 'EDIT_BUCKET';
 export const RETRIEVE_BUCKETS = 'RETRIEVE_BUCKET';
 export const SELECT_BUCKET = 'SELECT_BUCKET';
+

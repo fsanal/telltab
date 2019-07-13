@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post'
 import { connect } from 'react-redux';
-import { retrievePosts, selectPost, deletePost } from '../../actions/feedback_forum_actions/Post_Actions';
+import { retrievePosts, selectPost, deletePost, setCurrentPost } from '../../actions/feedback_forum_actions/Post_Actions';
 
 class PostList extends React.Component {
 
@@ -19,12 +19,27 @@ class PostList extends React.Component {
     }
 
     handleDeletePost = (post) => {
+        console.log(post.tags);
         this.props.deletePost(post);
+    }
+
+    handleSetCurrentPost = (post) => {
+        this.props.setCurrentPost(post);
+    }
+
+    addPostTag = (post) => {
+        this.props.setCurrentPost(post);
+        this.props.openCreateTagModal();
+    }
+
+    showPostModal = (post) => {
+        this.props.setCurrentPost(post);
+        this.props.openShowPostModal();
     }
 
     renderList() {
         return this.props.posts.map(post => {
-            return <Post onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
+            return <Post showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
             cls = {this.renderFeedbackClass(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} />
         })
     }
@@ -45,4 +60,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { retrievePosts, selectPost, deletePost })(PostList);
+export default connect(mapStateToProps, { retrievePosts, selectPost, deletePost, setCurrentPost })(PostList);

@@ -2,21 +2,23 @@ import React from 'react';
 import { Field, FieldArray, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
 import { getProductRoadmap } from '../../actions/roadmap_actions/RoadMap_Actions';
+import { retrieveRequirements } from '../../actions/roadmap_actions/Requirement_Actions';
 //import { retrieveInitiatives } from '../../actions/roadmap_actions/Initiative_Actions';
 //import { retrieveTimeBlocks } from '../../actions/roadmap_actions/TimeBlock_Actions';
 import RoadMapNav from './RoadMapNav';
 import history from '../../history';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import RequirementList from './RequirementList';
 
 
 class Roadmap extends React.Component {
 	componentDidMount() {
 		const promise = this.props.getProductRoadmap();
-        promise.then((result) => {
-            //this.props.retrieveRequirements();
-            //this.props.retrieveInitatives();
-        });
+		promise.then((result) => {
+			this.props.retrieveRequirements();
+			//this.props.retrieveInitatives();
+		});
 	}
 
 	openModal() {
@@ -30,7 +32,7 @@ class Roadmap extends React.Component {
 				<div>
 					<div className="dashcontent">
 						<RoadMapNav />
-						<div>"This Product" Roadmap</div>
+						<div>Roadmap</div>
 					</div>
 				</div>
 				<ButtonToolbar>
@@ -38,10 +40,17 @@ class Roadmap extends React.Component {
 						Create Requirement
     				</Button>
 				</ButtonToolbar>
+				<RequirementList />
 			</div>
 		);
 	}
 }
 
-export default connect(null, { getProductRoadmap })(Roadmap);
+const mapStateToProps = (state) => {
+	return {
+		currentRequirement: state.requirementState.currentRequirement
+	}
+}
+
+export default connect(mapStateToProps, { getProductRoadmap, retrieveRequirements })(Roadmap);
 

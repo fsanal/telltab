@@ -15,6 +15,10 @@ class Home extends React.Component {
         this.props.selectProduct(product);
     }
 
+    handleSelectProductRoadmap(product) {
+        this.props.selectProduct(product);
+    }
+
     handleDeleteProduct(product) {
         this.props.deleteProduct(product)
     }
@@ -27,6 +31,9 @@ class Home extends React.Component {
                     <div key = {product._id}>
                         <Link to = {`${product.name}/forum`} onClick = {() => {this.handleSelectProduct(product)}} >
                             <div>{product.name}</div>
+                        </Link>
+                        <Link to = {`${product.name}/roadmap`} onClick = {() => {this.handleSelectProductRoadmap(product)}} >
+                            <div>{product.name} Roadmap</div>
                         </Link>
                         <button onClick = {() => {this.handleDeleteProduct(product)}}>Delete</button>
                     </div>

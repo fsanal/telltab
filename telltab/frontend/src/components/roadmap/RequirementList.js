@@ -8,14 +8,35 @@ class RequirementList extends React.Component {
         this.props.retrieveRequirements();
     }
 
+    renderRequirementList() {
+        return this.props.requirements.map(requirement => {
+            return (
+                <div className="req_item" key={requirement.id}>
+                    <div className="title">
+                        {requirement.title}
+                        <div className="body">
+                            {requirement.body}
+                        </div>
+                    </div>
+                </div>
+            );
+        });
+    }
+
     render() {
-        console.log(this.props.requirements);
-        return <div>Requirement List</div>;
+        return (
+            <div>
+                <h2>Requirements</h2>
+                <div className="ui celled list">
+                    {this.renderRequirementList()}
+                </div>
+            </div>
+        );
     }
 }
 
 const mapStateToProps = (state) => {
-    return { requirements: Object.values(state.requirements) };
+    return { requirements: Object.values(state.requirementState.requirements) };
 }
 
 export default connect(mapStateToProps, { retrieveRequirements })(RequirementList);

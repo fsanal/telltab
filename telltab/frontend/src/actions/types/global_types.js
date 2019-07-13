@@ -11,3 +11,11 @@ export const CREATE_TAG = 'CREATE_TAG';
 export const RETRIEVE_TAGS = 'RETRIEVE_TAGS';
 export const SELECT_TAG = 'SELECT_TAG';
 export const DELETE_TAG = 'DELETE_TAG';
+
+
+//comment action types
+export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const RETRIEVE_COMMENTS = 'RETRIEVE_COMMENTS';
+export const SELECT_COMMENT = 'SELECT_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';

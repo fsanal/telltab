@@ -19,7 +19,6 @@ export const selectComment = (comment) => {
 export const retrieveComments = (post) => async (dispatch, getState) => {
     const { currentPost } = getState().postState;
     let postID, authorID;
-    console.log("HERE: " + postID);
     if (currentPost) {
         postID = currentPost._id;
         authorID = currentPost.author;

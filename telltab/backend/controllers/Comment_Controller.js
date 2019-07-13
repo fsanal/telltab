@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 
 createComment = (req, res) => {
 	const { requirementID, postID, newReleaseID,
-		 	parentID, authorID, content } = req.body
+			parentID, authorID, content } = req.body
 	let comment = new Comment({
 		author: ObjectId(authorID),
 		created: new Date(),

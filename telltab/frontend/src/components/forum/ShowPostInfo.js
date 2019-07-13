@@ -73,7 +73,11 @@ class ShowPostInfo extends React.Component {
 
     //Replace with a CommentList.js?
     renderComments = () => {
-        //rendering object but not text?
+        const entries = Object.entries(this.props.comments);
+        const values = Object.values(entries);
+        for (const val of values) {
+            return <div>{val[1].content}</div>;
+        }
     }
 
 
@@ -90,7 +94,7 @@ class ShowPostInfo extends React.Component {
 const mapStateToProps = (state) => {
     return {
         currentPost: state.postState.currentPost,
-        comments: Object.values(state.commentState.comments.content)
+        comments: state.commentState.comments
     }
 }
 

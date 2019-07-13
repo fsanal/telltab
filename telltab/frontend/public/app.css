@@ -97,7 +97,6 @@ body {
     color: #1EBE6B;
     text-align: center;
     border-bottom: 2px solid #F1F3F4;
-    cursor: pointer;
 }
 
 .forum__utility {
@@ -114,6 +113,7 @@ body {
 }
 
 .dashcontent__logo {
+    cursor: pointer;
     letter-spacing: 3px;
     display: flex;
     font-family: 'Roboto Slab', serif;
@@ -407,3 +407,7 @@ body {
     color: #777777;
 }
 
+
+.feedback-voted {
+    color: #1DB665;
+}

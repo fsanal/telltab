@@ -1,8 +1,8 @@
 import React from 'react';
 import Post from './Post'
 import { connect } from 'react-redux';
-import { retrievePosts, selectPost, deletePost, setCurrentPost } from '../../actions/feedback_forum_actions/Post_Actions';
-
+import { retrievePosts, selectPost, deletePost, setCurrentPost, editPost } from '../../actions/feedback_forum_actions/Post_Actions';
+import { createVote, deleteVote } from '../../actions/feedback_forum_actions/Vote_Actions';
 class PostList extends React.Component {
 
 
@@ -37,9 +37,44 @@ class PostList extends React.Component {
         this.props.openShowPostModal();
     }
 
+    checkVote = (post) => {
+        let votePosts = this.props.votes.map((vote) => vote.post._id);
+        let index = votePosts.indexOf(post._id);
+        if (index != -1) return this.props.votes[index] ; else return null;
+    }
+
+    renderVoteClass(post){
+        let cls = (this.checkVote(post)) ? "feedback-voted" : "";
+        return cls
+    }
+    
+    handleVote = (post) => {
+        let vote = this.checkVote(post);
+        if (!vote) {
+            console.log("Entered Create");
+            this.props.createVote(post).then((result) => {
+                this.props.setCurrentPost(post);
+                let newNumVotes = post.numVotes + 1;
+                this.props.editPost({ numVotes: newNumVotes})
+            })
+        } else {
+            console.log("Entered Delete");
+            this.props.deleteVote(vote).then((result) => {
+                this.props.setCurrentPost(post);
+                let newNumVotes = post.numVotes - 1;
+                console.log(newNumVotes);
+                this.props.editPost({ numVotes: newNumVotes})
+            })
+        }
+    }
+
+   
     renderList() {
         return this.props.posts.map(post => {
-            return <Post showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
+            return <Post numVotes = {post.numVotes} showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} 
+            onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} 
+            onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
+            voteCls = {this.renderVoteClass(post)} onVote = {() => {this.handleVote(post)}}
             cls = {this.renderFeedbackClass(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} />
         })
     }
@@ -56,8 +91,10 @@ class PostList extends React.Component {
 const mapStateToProps = (state) => {
     return {
         posts: Object.values(state.postState.posts),
-        selectedPosts: state.postState.selectedPosts
+        selectedPosts: state.postState.selectedPosts,
+        votes: Object.values(state.voteState.votes)
     }
 }
 
-export default connect(mapStateToProps, { retrievePosts, selectPost, deletePost, setCurrentPost })(PostList);
+export default connect(mapStateToProps, { retrievePosts, selectPost, deletePost, 
+    setCurrentPost, editPost, createVote, deleteVote })(PostList);

@@ -56,16 +56,19 @@ getPost = (req, res) => {
 
 editPost = (req, res) => {
     const { id } = req.params;
-    const { title, body, progress, forumID, bucketID, personaIDs, url } = req.body;
+    const { title, body, progress, forumID, bucketID, personaIDs, url, numVotes } = req.body;
+    console.log(numVotes);
     let update = {};
     if (title) update.title = title;
     if (body) update.body = body;
     if (progress) update.progress = progress;
     if (forumID) update.forum = ObjectId(forumID);
     if (bucketID) update.bucket = ObjectId(bucketID); 
+    if (numVotes !== undefined) update.numVotes = numVotes;
     if (url) update.url = url
     Post.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
+        console.log(post);
         return res.json(post);
     });
 }

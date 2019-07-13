@@ -21,6 +21,9 @@ class VModal extends React.Component {
           <Modal.Body>
             {this.props.renderForm}
           </Modal.Body>
+          <Modal.Footer>
+            {this.props.renderFooter}
+          </Modal.Footer>
         </Modal>
       );
     }

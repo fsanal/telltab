@@ -25,6 +25,8 @@ export default (state = INITIAL_STATE, action) => {
             posts[action.payload._id] = action.payload
             return { ...state, posts };
         case EDIT_POST:
+            console.log("AFTER EDIT")
+            console.log(action.payload)
             posts[action.payload._id] = action.payload
             return { ...state, posts };
         case DELETE_POST:
@@ -49,7 +51,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, posts, currentPost };    
         case SET_CURRENT_POST:
             currentPost = action.payload;
-            console.log("Setting current post");
             return { ...state, currentPost };    
         default:
             return state;

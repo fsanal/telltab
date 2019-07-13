@@ -8,7 +8,7 @@ import tagReducer from './global_reducers/Tag_Reducer';
 import forumReducer from './forum_reducers/Forum_Reducer';
 import bucketReducer from './forum_reducers/Bucket_Reducer';
 import postReducer from './forum_reducers/Post_Reducer';
-
+import voteReducer from './forum_reducers/Vote_Reducer';
 //roadmap reducers
 import initiativeReducer from './roadmap_reducers/Initiative_Reducer';
 import requirementReducer from './roadmap_reducers/Requirement__Reducer';
@@ -29,6 +29,7 @@ export default combineReducers({
     forumState: forumReducer,
     bucketState: bucketReducer,
     postState: postReducer,
+    voteState: voteReducer,
 
     initiativeState: initiativeReducer,
     requirementState: requirementReducer,

@@ -6,6 +6,9 @@ const Post = (props) => {
     return (
         <div>
             <div className = {props.cls}>
+                <div onClick = {props.onVote} className = {props.voteCls}>
+                        {props.numVotes}
+                </div>
                 <div onClick = {props.showPost}  onContextMenu = {props.onSelect} className = "feedback__content">
                     <div className = "feedback__content-title">
                         {props.title}

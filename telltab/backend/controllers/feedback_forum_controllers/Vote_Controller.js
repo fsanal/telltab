@@ -17,9 +17,12 @@ createVote = (req, res) => {
     } else if (commentID) {
         vote.comment = ObjectId(commentID)
     }
-    vote.save((err) => {
+    vote.save((err, vote) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(vote);
+        vote.populate('user').populate('post', (err, vote) => {
+            if (err) return res.json(err);
+            return res.json(vote);
+        });
     });
 }
 
@@ -40,7 +43,7 @@ deleteVote = (req, res) => {
 }
 
 retrieveVotes = (req, res) => {
-    let { secret, userID, forumID, postID, commentID, limit, skip } = req.body;
+    let { secret, userID, forumID, postID, newReleaseID, commentID, limit, skip } = req.body;
     let query = Vote.find();
     if (userID) query.where('user').equals(userID);
     if (forumID) query.where('forum').equals(forumID);

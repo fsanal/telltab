@@ -5,6 +5,7 @@ import Toolbar from './Toolbar';
 import BucketBox from './bucketbox/BucketBox';
 import ForumUtility from './ForumUtility';
 import CreatePost from './CreatePost';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
 import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
@@ -43,17 +44,14 @@ class Forum extends React.Component {
     }
 
     render() {
+        console.log("test" + this.props.currentProduct);
         return (
             <div className="prodash__rightcontent">
                 <div>
                     <div className="dashcontent">
                         <ForumNav />
                         <ForumUtility />
-                        {/*<ButtonToolbar>
-                            <Button variant="primary" size="lg" onClick={() => this.openModal()}>
-                                Create Requirement
-    				        </Button>
-                        </ButtonToolbar>    GET BUTTON TO REDIRECT CORRECTLY W/ REACT ROUTER*/}
+                        <Link to={`/${this.state.product}/roadmap`}></Link>
                         <Toolbar />
                         <div className="dashcontent__boxes">
                             <div className="dashcontent__create" onClick={this.openCreatePostModal}>

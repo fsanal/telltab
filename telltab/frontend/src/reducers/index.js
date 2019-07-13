@@ -4,6 +4,8 @@ import { combineReducers } from 'redux';
 import productReducer from './global_reducers/Product_Reducer';
 import authReducer from './global_reducers/Auth_Reducer';
 import tagReducer from './global_reducers/Tag_Reducer';
+import commentReducer from './global_reducers/Comment_Reducer';
+
 //forum reducers
 import forumReducer from './forum_reducers/Forum_Reducer';
 import bucketReducer from './forum_reducers/Bucket_Reducer';
@@ -25,6 +27,7 @@ export default combineReducers({
 
     tagState: tagReducer,
     productState: productReducer,
+    commentState: commentReducer,
     
     forumState: forumReducer,
     bucketState: bucketReducer,

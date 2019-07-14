@@ -42,12 +42,17 @@ export default (state = INITIAL_STATE, action) => {
                 return {...state, selectedPosts};
             }
         case ADD_POST_TAG:
+            console.log(posts);
+            console.log("NEXT");
             posts[action.payload._id] = action.payload;
+            console.log(currentPost)
             currentPost = action.payload;
+            console.log(currentPost)
             return { ...state, posts, currentPost };
         case DELETE_POST_TAG:
             posts[action.payload._id] = action.payload;
             currentPost = action.payload;
+            console.log(currentPost);
             return { ...state, posts, currentPost };    
         case SET_CURRENT_POST:
             currentPost = action.payload;

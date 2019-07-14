@@ -24,6 +24,7 @@ export default ( state = INITIAL_STATE, action ) => {
             currentTag = action.payload;
             return { ...state, currentTag };
         case DELETE_TAG:
+            console.log(action.payload);
             tags = _.omit(tags, action.payload._id);
             return { ...state, tags };
         default:

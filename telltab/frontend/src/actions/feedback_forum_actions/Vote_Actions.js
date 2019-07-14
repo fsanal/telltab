@@ -8,7 +8,6 @@ import api from '../../apis/api';
 import history from '../../history';
 
 export const createVote = (post) => async (dispatch, getState) => {
-    console.log("Am i called?")
     const { userID } = getState().auth;
     const { currentForum } = getState().forumState
     let forumID;
@@ -20,7 +19,10 @@ export const createVote = (post) => async (dispatch, getState) => {
 
 export const retrieveVotes = () => async (dispatch, getState) => {
     const { userID } = getState().auth;
-    const response = await api.post('/votes/retrieve', { userID });
+    const { currentForum } = getState().forumState
+    let forumID;
+    if (currentForum) forumID = currentForum._id;
+    const response = await api.post('/votes/retrieve', { userID, forumID });
     dispatch({type: RETRIEVE_VOTES, payload: response.data});
 } 
 

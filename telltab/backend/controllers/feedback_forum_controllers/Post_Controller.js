@@ -68,7 +68,12 @@ editPost = (req, res) => {
     if (url) update.url = url
     Post.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas')
+        .populate('author').populate('visibility').populate('requirements').populate('assignments')
+        .populate('tags').populate('roadmap', (err, post) => {
+            if (err) return res.json(err);
+            return res.json(post);
+        });
     });
 }
 
@@ -219,7 +224,12 @@ addTag = (req, res) => {
     if (tagID) update.tags = ObjectId(tagID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas')
+        .populate('author').populate('visibility').populate('requirements').populate('assignments')
+        .populate('tags').populate('roadmap', (err, post) => {
+            if (err) return res.json(err);
+            return res.json(post);
+        });
     });
 }
 
@@ -230,7 +240,12 @@ deleteTag = (req, res) => {
     if (tagID) update.tags = ObjectId(tagID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas')
+        .populate('author').populate('visibility').populate('requirements').populate('assignments')
+        .populate('tags').populate('roadmap', (err, post) => {
+            if (err) return res.json(err);
+            return res.json(post);
+        });
     });
 }
 

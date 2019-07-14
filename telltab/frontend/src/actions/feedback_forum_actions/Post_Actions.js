@@ -29,10 +29,12 @@ export const createPost = (formValues) => async (dispatch, getState) => {
     const { title, body } = formValues;
     const { currentForum } = getState().forumState;
     const { currentBucket } = getState().bucketState;
-    let forumID, bucketID;
+    const { userID } = getState().auth;
+    let forumID, bucketID, authorID;
     if (currentForum) forumID = currentForum._id;
     if (currentBucket) bucketID = currentBucket._id;
-    const response = await api.post('/posts/create', { ...formValues, forumID, bucketID });
+    authorID = userID
+    const response = await api.post('/posts/create', { ...formValues, forumID, bucketID, authorID });
     dispatch({type: CREATE_POST, payload: response.data});
 }
 
@@ -78,7 +80,9 @@ export const addPostTag = (tagID) => async (dispatch, getState) => {
 
 export const deletePostTag = (tagID) => async (dispatch, getState) => {
     // const { secret } = getState().auth;
-    const { currentPost } = getState().productState;
+    console.log("ENTERED HERE SIR")
+    const { currentPost } = getState().postState;
+    console.log(currentPost);
     let id;
     if (currentPost) id = currentPost._id; else return;
     const response = await api.put(`/posts/delete_tag/${id}`, {tagID});

@@ -4,8 +4,8 @@ import { createComment, retrieveComments } from '../../actions/global_actions/Co
 import VModal from '../general/VModal';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Button } from 'react-bootstrap';
-import { editPost } from '../../actions/feedback_forum_actions/Post_Actions';
-
+import { editPost, deletePostTag } from '../../actions/feedback_forum_actions/Post_Actions';
+import { deleteTag} from '../../actions/global_actions/Tag_Actions';
 class ShowPostInfo extends React.Component {
     constructor(){
         super();
@@ -23,10 +23,21 @@ class ShowPostInfo extends React.Component {
         return "";
     }
 
+    handleDeleteTag = (tag) => {
+        console.log(tag);
+        console.log("ENTERED HERE")
+        this.props.deletePostTag(tag._id);
+    }
+
     renderTags = () => {
         if (this.props.currentPost) {
             return this.props.currentPost.tags.map(tag => {
-                return <h5 key = {tag}>{tag}</h5>
+                return (
+                    <div>
+                        <h4 key = {tag._id}>{tag.name}</h4>
+                        <Button onClick = {() => this.handleDeleteTag(tag)}>delete tag</Button>
+                    </div>
+                )
             })
         }
     }
@@ -70,7 +81,7 @@ class ShowPostInfo extends React.Component {
                             {body}
                         </h3>
                         <h4>
-                            {author}
+                            Author: George's Mom
                         </h4>
                         {this.renderTags()}
                     </div>
@@ -85,7 +96,7 @@ class ShowPostInfo extends React.Component {
 
     changeToForm(){
         this.setState((prevState) => ({
-            showForm: true
+            showForm: !(prevState.showForm)
         }));
     }
 
@@ -161,4 +172,4 @@ const mapStateToProps = (state) => {
 
 export default reduxForm({
     form: 'show_post_form'
-})(connect(mapStateToProps, { editPost, createComment, retrieveComments })(ShowPostInfo))
+})(connect(mapStateToProps, { editPost, createComment, retrieveComments, deleteTag, deletePostTag })(ShowPostInfo))

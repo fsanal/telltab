@@ -44,15 +44,22 @@ class Home extends React.Component {
 
 
     render() {
-        return <div>
+        return (
+            <div>
+                <div>
                     <Link to = "/login">
                         <button>Login</button>
                     </Link>
-                    <Link to = "/create_product" >
-                        <button>Create a Product</button>
+                    <Link to = "/logout">
+                        <button>Logout</button>
                     </Link>
-                    {this.renderList()}
-               </div>
+                </div>
+                <Link to = "/create_product" >
+                    <button>Create a Product</button>
+                </Link>
+                {this.renderList()}
+            </div>
+        );
     }
 
 

@@ -24,13 +24,7 @@ class VModal extends React.Component {
 				</Modal.Body>
 
 				<Modal.Footer>
-					<div>
-						{this.props.renderCommentInput}
-					</div> 
-					<br></br>
-					<div>
-						{this.props.renderComments}
-					</div>
+					{this.props.renderFooter}
 				</Modal.Footer>
 			</Modal>
 		);

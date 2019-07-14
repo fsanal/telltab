@@ -10,11 +10,12 @@ createComment = (req, res) => {
 		created: new Date(),
 		content
 	})
+	if (parentID) {
+		comment.parent = ObjectId(parentID);
+	}
 	if (postID) { 
 		comment.post = ObjectId(postID);
 		comment.source = ObjectId(postID);
-	} else if (parentID) {
-		comment.parent = ObjectId(parentID);
 	} else if (requirementID) {
 		comment.requirement = ObjectId(requirementID);
 	} else if (newReleaseID) {

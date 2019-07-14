@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createComment, retrieveComments } from '../../actions/global_actions/Comment_Actions';
+import { createComment, retrieveComments, createReply, selectComment } from '../../actions/global_actions/Comment_Actions';
 import VModal from '../general/VModal';
+import SingleField from '../general/SingleField';
 import { Button, Form } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
 
 class ShowPostInfo extends React.Component {
-
-    componentDidMount() {
-        this.props.retrieveComments(this.props.currentPost);
-	}
 
     renderTitle = () => {
         if (this.props.currentPost) return this.props.currentPost.title;
@@ -45,9 +42,9 @@ class ShowPostInfo extends React.Component {
         )
     }
 
-    renderInput = ({input, label, meta}) => {
+    renderInput = ({ input, label, meta }) => {
         const className = `field ${meta.error && meta.touched ? 'error' : ''}`
-        return(
+        return (
             <Form.Group>
                 <Form.Label>{label}</Form.Label>
                 <Form.Control {...input} type="text" />
@@ -59,45 +56,74 @@ class ShowPostInfo extends React.Component {
         this.props.createComment(formValues);
     }
 
+    replySubmit = (formValues) => {
+        this.props.createReply(formValues);
+    }
+
     renderCommentInput = () => {
         return (
             <div>
-                <Form onSubmit={this.props.handleSubmit(this.commentSubmit)}>
-                    <Field name="content" component={this.renderInput} />
-                    <Button onClick={this.props.onHide} variant="primary" type="submit">Post</Button>
-                    <Button variant="outline-secondary">Cancel</Button>
-                </Form>
+                <SingleField onSubmit={this.props.handleSubmit(this.commentSubmit)} name={"content"}
+                renderInput={this.renderInput} title={'Comment'} description={'Add a comment...'} submitText={'Post'}/>
             </div>
         );
     }
 
     //Replace with a CommentList.js?
     renderComments = () => {
-        const entries = Object.entries(this.props.comments);
-        const values = Object.values(entries);
-        for (const val of values) {
-            return <div>{val[1].content}</div>;
-        }
+        return (
+            this.props.comments.map(comment => {
+                return (
+
+                    // CAN REPLY CORRECTLY BUT WEIRD FIELD POPULATE BUGS
+                    <div>
+                        <Button onClick={() => this.props.selectComment(comment)}>
+                            {comment.content}
+                        </Button>
+                        <SingleField onSubmit={this.props.handleSubmit(this.replySubmit)} name={`content`}
+                        renderInput={this.renderInput} title={''} description={'Add a reply...'} submitText={'Reply'}/>
+
+                        {/* Why do they both have to be named content? */}
+
+                        {/*<Form onSubmit={this.props.handleSubmit(this.commentSubmit)}>
+                            <Field name="content" component={this.renderInput} />
+                            <Button onClick={this.props.onHide} variant="primary" type="submit">Reply</Button>
+                        </Form>*/}
+                    </div>)
+            })
+        );
     }
 
+    renderAll() {
+        return (
+            <>
+                <div>
+                    {this.renderCommentInput()}
+                </div>
+                <br></br>
+                <div>
+                    {this.renderComments()}
+                </div>
+            </>
+        );
+    }
 
     render() {
         return (
             <VModal show={this.props.show} onHide={this.props.onHide} title={this.renderTitle()}
-                renderForm={this.renderPost()} renderCommentInput={this.renderCommentInput()} renderComments={this.renderComments()} />
+                renderForm={this.renderPost()} renderFooter={this.renderAll()} />
         )
     }
 }
 
-
-
 const mapStateToProps = (state) => {
     return {
+        currentComment: state.commentState.currentComment,
         currentPost: state.postState.currentPost,
-        comments: state.commentState.comments
+        comments: Object.values(state.commentState.comments)
     }
 }
 
 export default reduxForm({
     form: 'create_comment_form'
-})(connect(mapStateToProps, { createComment, retrieveComments })(ShowPostInfo))
+})(connect(mapStateToProps, { createComment, retrieveComments, createReply, selectComment })(ShowPostInfo))

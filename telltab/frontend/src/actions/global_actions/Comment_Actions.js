@@ -3,7 +3,8 @@ import {
     RETRIEVE_COMMENTS,
     SELECT_COMMENT,
     EDIT_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    CREATE_REPLY
 } from '../types/global_types';
 import api from '../../apis/api';
 import history from '../../history';
@@ -16,14 +17,11 @@ export const selectComment = (comment) => {
 }
 
 //Add more functionality as touch different components i.e requirement, parent(merge)
-export const retrieveComments = (post) => async (dispatch, getState) => {
+export const retrieveComments = () => async (dispatch, getState) => {
     const { currentPost } = getState().postState;
-    let postID, authorID;
-    if (currentPost) {
-        postID = currentPost._id;
-        authorID = currentPost.author;
-    }
-    const response = await api.post('/comments/retrieve', { postID, authorID });
+    let postID;
+    if (currentPost) postID = currentPost._id;
+    const response = await api.post('/comments/retrieve', { postID });
     dispatch({type: RETRIEVE_COMMENTS, payload: response.data});
 }
 
@@ -33,6 +31,18 @@ export const createComment = (formValues) => async (dispatch, getState) => {
     if (currentPost) postID = currentPost._id; else return;
     const response = await api.post('/comments/create', { ...formValues, postID });
     dispatch({ type: CREATE_COMMENT, payload: response.data });
+}
+
+export const createReply = (formValues) => async (dispatch, getState) => {
+    const { currentPost } = getState().postState;
+    const { currentComment } = getState().commentState;
+    const { currentAuthor } = getState().auth;
+    let authorID, postID, parentID;
+    if (currentAuthor) authorID = currentAuthor.userId; //change later
+    if (currentPost) postID = currentPost._id;
+    if (currentComment) parentID = currentComment._id;
+    const response = await api.post('/comments/create', { ...formValues, authorID, postID, parentID});
+    dispatch({ type: CREATE_REPLY, payload: response.data });
 }
 
 export const editComment = (id, content) => async (dispatch, getState) => {

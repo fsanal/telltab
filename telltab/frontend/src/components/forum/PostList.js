@@ -34,6 +34,7 @@ class PostList extends React.Component {
 
     showPostModal = (post) => {
         this.props.setCurrentPost(post);
+        console.log(this.props.currentPost);
         this.props.openShowPostModal();
     }
 
@@ -56,7 +57,8 @@ class PostList extends React.Component {
 const mapStateToProps = (state) => {
     return {
         posts: Object.values(state.postState.posts),
-        selectedPosts: state.postState.selectedPosts
+        selectedPosts: state.postState.selectedPosts,
+        currentPost: state.postState.currentPost
     }
 }
 

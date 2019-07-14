@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
 import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
 import { retrieveBuckets } from '../../actions/feedback_forum_actions/Bucket_Actions';
+import { retrieveComments } from '../../actions/global_actions/Comment_Actions';
 import history from '../../history';
 
 import Button from 'react-bootstrap/Button';
@@ -56,6 +57,7 @@ class Forum extends React.Component {
 
     openShowPostModal = () => {
         this.setState({showPostModal: true})
+        this.props.retrieveComments();
     }
 
     closeShowPostModal = () => {
@@ -95,4 +97,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { getProductForum, retrievePosts, retrieveBuckets })(Forum);
+export default connect(mapStateToProps, { getProductForum, retrievePosts, retrieveBuckets, retrieveComments })(Forum);

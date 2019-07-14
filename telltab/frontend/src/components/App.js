@@ -13,6 +13,7 @@ import CreateRequirement from './roadmap/CreateRequirement';
 import VModal from './general/VModal';
 import Login from './authentication/Login';
 import Logout from './authentication/Logout';
+import Signup from './authentication/Signup';
 
 const App = () => {
     return (<>
@@ -26,6 +27,7 @@ const App = () => {
                     <Route path = "/:name/roadmap" exact component = {Roadmap} />
                     <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />
                     <Route path = "/login" exact component = {Login} />
+                    <Route path = "/signup" exact component = {Signup} />
                     <Route path = "/logout" exact component = {Logout} />
                 </Router>     
             </>)

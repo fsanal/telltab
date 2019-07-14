@@ -50,6 +50,9 @@ class Home extends React.Component {
                     <Link to = "/login">
                         <button>Login</button>
                     </Link>
+                    <Link to = "/signup">
+                        <button>Signup</button>
+                    </Link>
                     <Link to = "/logout">
                         <button>Logout</button>
                     </Link>

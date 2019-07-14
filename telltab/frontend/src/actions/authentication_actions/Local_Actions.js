@@ -17,3 +17,9 @@ export const logout = () => async dispatch => {
     dispatch({type: LOCAL_LOGOUT, payload: response.data});
     return response.data;
 }
+
+export const signup = (formValues) => async dispatch => {
+    const response = await api.post('/authenticate/signup', {...formValues});
+    dispatch({type: LOCAL_SIGNUP, payload: response.data});
+    return response.data;
+}

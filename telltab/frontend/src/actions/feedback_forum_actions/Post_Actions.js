@@ -80,9 +80,7 @@ export const addPostTag = (tagID) => async (dispatch, getState) => {
 
 export const deletePostTag = (tagID) => async (dispatch, getState) => {
     // const { secret } = getState().auth;
-    console.log("ENTERED HERE SIR")
     const { currentPost } = getState().postState;
-    console.log(currentPost);
     let id;
     if (currentPost) id = currentPost._id; else return;
     const response = await api.put(`/posts/delete_tag/${id}`, {tagID});

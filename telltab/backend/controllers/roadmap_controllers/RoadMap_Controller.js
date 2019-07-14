@@ -34,12 +34,9 @@ getProductRoadMap = (req, res) => {
     const { productID } = req.body;
     let query = RoadMap.find();
     query.where('product').equals(productID);
-    query.exec((err, roadmap) => {
+    query.populate('product').exec((err, roadmap) => {
 		if (err) return res.json({success: false, error: err });
-		roadmap.populate('product', (err, roadmap) => {
-            if (err) return res.json({success: false, error: err});
-            return res.json(roadmap);
-        });
+		return res.json(roadmap);
 	});
 }
 

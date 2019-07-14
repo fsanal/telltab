@@ -33,12 +33,9 @@ getProductForum = (req, res) => {
     const { productID } = req.body;
     let query = Forum.find();
     query.where('product').equals(productID);
-    query.exec((err, forum) => {
+    query.populate('product').exec((err, forum) => {
 		if (err) return res.json({success: false, error: err });
-		forum.populate('product', (err, forum) => {
-            if (err) return res.json({ success: false, error: err });
-            return res.json(forum);
-        });
+		return res.json(forum);
 	});
 }
 

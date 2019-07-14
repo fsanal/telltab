@@ -221,11 +221,12 @@ retrieveRequirements = (req, res) => {
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
             aggregate.sort({ ordering : 1 });
-            aggregate.populate('roadmap').populate('initiative').populate('timeblock')
-            .populate('persona').populate('author').populate('visibility').populate('tags')
-            .populate('assignments').exec( (err, requirements) => {
+            aggregate.exec( (err, requirements) => {
                 if (err) return res.json({success: false, error: err });
-                return res.json(requirements);
+                Requirement.populate(requirements, {path: "roadmap initiative timeblock persona author visibility tags assignment"}, (err, requirements) => {
+                    if (err) return res.json({success: false, error: err });
+                    return res.json(requirements);
+                });
             });
         });
     }

@@ -12,6 +12,7 @@ import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Acti
 import { retrievePosts } from '../../actions/feedback_forum_actions/Post_Actions';
 import { retrieveBuckets } from '../../actions/feedback_forum_actions/Bucket_Actions';
 import { retrieveComments } from '../../actions/global_actions/Comment_Actions';
+import { retrieveVotes } from '../../actions/feedback_forum_actions/Vote_Actions';
 import history from '../../history';
 
 import Button from 'react-bootstrap/Button';
@@ -32,12 +33,10 @@ class Forum extends React.Component {
         promise.then((result) => {
             this.props.retrievePosts();
             this.props.retrieveBuckets();
+            this.props.retrieveVotes();
         });
     }
 
-    componentDidUpdate() {
-        this.props.retrievePosts();
-    }
 
     openCreatePostModal = () => {
         this.setState({ showCreatePostModal: true })
@@ -90,11 +89,6 @@ class Forum extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        currentBucket: state.bucketState.currentBucket
-    }
-}
 
 
-export default connect(mapStateToProps, { getProductForum, retrievePosts, retrieveBuckets, retrieveComments })(Forum);
+export default connect(null, { getProductForum, retrievePosts, retrieveBuckets, retrieveVotes, retrieveComments })(Forum);

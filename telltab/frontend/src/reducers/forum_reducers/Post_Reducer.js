@@ -25,11 +25,15 @@ export default (state = INITIAL_STATE, action) => {
             posts[action.payload._id] = action.payload
             return { ...state, posts };
         case EDIT_POST:
+            console.log("AFTER EDIT")
+            console.log(action.payload)
             posts[action.payload._id] = action.payload
             return { ...state, posts };
         case DELETE_POST:
+            currentPost = null;
             posts = _.omit(posts, action.payload._id);
-            return { ...state, posts };
+            selectedPosts = _.omit(posts, action.payload._id);
+            return { ...state, posts, currentPost, selectedPosts };
         case SELECT_POST:
             let post = action.payload;
             if (!(selectedPosts.hasOwnProperty(post._id))) {
@@ -40,16 +44,20 @@ export default (state = INITIAL_STATE, action) => {
                 return {...state, selectedPosts};
             }
         case ADD_POST_TAG:
+            console.log(posts);
+            console.log("NEXT");
             posts[action.payload._id] = action.payload;
+            console.log(currentPost)
             currentPost = action.payload;
+            console.log(currentPost)
             return { ...state, posts, currentPost };
         case DELETE_POST_TAG:
             posts[action.payload._id] = action.payload;
             currentPost = action.payload;
+            console.log(currentPost);
             return { ...state, posts, currentPost };    
         case SET_CURRENT_POST:
             currentPost = action.payload;
-            console.log("Setting current post");
             return { ...state, currentPost };    
         default:
             return state;

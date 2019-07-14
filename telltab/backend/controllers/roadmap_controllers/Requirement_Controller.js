@@ -44,8 +44,12 @@ createRequirement = (req, res) => {
     console.log("1: " + requirement);
     requirement.save((err, requirement) => {
         if (err) res.json({success: false, error: err});
-        console.log(requirement);
-        res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -68,7 +72,12 @@ editRequirement = (req, res) => {
     if (authorID) update.author = ObjectId(authorID);
     Requirement.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -76,7 +85,12 @@ deleteRequirement = (req, res) => {
     const { id } = req.params;
     Requirement.findByIdAndRemove(id, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -87,7 +101,12 @@ addVisibility = (req, res) => {
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -98,7 +117,12 @@ removeVisibility = (req, res) => {
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -109,7 +133,12 @@ addTag = (req, res) => {
     if (tagID) update.tags = ObjectId(tagID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -120,7 +149,12 @@ deleteTag = (req, res) => {
     if (tagID) update.tags = ObjectId(tagID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -131,7 +165,12 @@ addAssignment = (req, res) => {
     if (assignmentID) update.assignments = ObjectId(assignmentID);
     Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -142,7 +181,12 @@ deleteAssignment = (req, res) => {
     if (assignmentID) update.assignments = ObjectId(assignmentID);
     Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(requirement);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -151,9 +195,14 @@ createCustomField = (req, res) => {
     const { fieldID } = req.body;
     let update = {};
     if (fieldID) update.customFields = ObjectId(fieldID);
-    Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, req) => {
+    Requirement.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(req);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -162,9 +211,14 @@ deleteCustomField = (req, res) => {
     const { fieldID } = req.body;
     let update = {};
     if (fieldID) update.customFields = ObjectId(fieldID);
-    Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, req) => {
+    Requirement.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, requirement) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(req);
+        requirement.populate('roadmap').populate('initiative').populate('timeblock')
+        .populate('persona').populate('author').populate('visibility').populate('tags')
+        .populate('assignments', (err, requirement) => {
+            if (err) res.json({success: false, error: err});
+            return res.json(requirement);
+        });
     });
 }
 
@@ -221,11 +275,12 @@ retrieveRequirements = (req, res) => {
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
             aggregate.sort({ ordering : 1 });
-            aggregate.populate('roadmap').populate('initiative').populate('timeblock')
-            .populate('persona').populate('author').populate('visibility').populate('tags')
-            .populate('assignments').exec( (err, requirements) => {
+            aggregate.exec( (err, requirements) => {
                 if (err) return res.json({success: false, error: err });
-                return res.json(requirements);
+                Requirement.populate(requirements, {path: "roadmap initiative timeblock persona author visibility tags assignment"}, (err, requirements) => {
+                    if (err) return res.json({success: false, error: err });
+                    return res.json(requirements);
+                });
             });
         });
     }

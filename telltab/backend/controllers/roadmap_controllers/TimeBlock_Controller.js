@@ -21,9 +21,12 @@ createTimeBlock = (req, res) => {
     );
     if (beginDate) timeblock.beginDate = beginDate;
     if (endDate) timeblock.endDate = endDate;
-    timeblock.save((err) => {
+    timeblock.save((err, timeblock) => {
         if (err) return res.json({success: false, error: err});
-        return res.json(timeblock);
+        timeblock.populate('roadmap', (err, timeblock) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(timeblock);
+        });
     });
 }
 
@@ -36,7 +39,10 @@ editTimeBlock = (req, res) => {
     if (endDate) update.endDate = endDate;
     TimeBlock.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, timeblock) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(timeblock);
+        timeblock.populate('roadmap', (err, timeblock) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(timeblock);
+        });
     });
 }
 
@@ -44,7 +50,10 @@ deleteTimeBlock = (req, res) => {
     const id = req.params.id;
     TimeBlock.findByIdAndRemove(id, (err, timeblock) => {
         if (err) return res.send(err);
-        return res.json(timeblock);
+        timeblock.populate('roadmap', (err, timeblock) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(timeblock);
+        });
     });
 }
 

@@ -32,3 +32,9 @@ export const EDIT_BUCKET = 'EDIT_BUCKET';
 export const RETRIEVE_BUCKETS = 'RETRIEVE_BUCKET';
 export const SELECT_BUCKET = 'SELECT_BUCKET';
 
+
+//vote action types
+export const CREATE_VOTE = 'CREATE_VOTE';
+export const GET_VOTE = 'GET_VOTE';
+export const DELETE_VOTE = 'DELETE_VOTE';
+export const RETRIEVE_VOTES = 'RETRIEVE_VOTES';

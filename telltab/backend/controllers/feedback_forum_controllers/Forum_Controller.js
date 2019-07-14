@@ -13,9 +13,12 @@ createForum = (req, res) => {
     );
     if (productID) forum.product = ObjectId(productID) 
     if (url) forum.url = url;
-    forum.save((err) => {
+    forum.save((err, forum) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(forum);
+        forum.populate('product', (err, forum) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(forum);
+        });
     });
 }
 
@@ -30,7 +33,7 @@ getProductForum = (req, res) => {
     const { productID } = req.body;
     let query = Forum.find();
     query.where('product').equals(productID);
-    query.exec((err, forum) => {
+    query.populate('product').exec((err, forum) => {
 		if (err) return res.json({success: false, error: err });
 		return res.json(forum);
 	});
@@ -44,7 +47,10 @@ editForum = (req, res) => {
     if (productID) update.product = ObjectId(productID);
     Forum.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, forum) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(forum);
+        forum.populate('product', (err, forum) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(forum);
+        });
     });
 }
 
@@ -52,7 +58,10 @@ deleteForum = (req, res) => {
     const { id } = req.params;
     Forum.findByIdAndRemove(id, (err, forum) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(forum);
+        forum.populate('product', (err, forum) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(forum);
+        });
     });
 }
 

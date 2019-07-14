@@ -17,9 +17,13 @@ createNewRelease = (req, res) => {
     if (url) newRelease.url = url;
     if (bucketID) newRelease.bucket = ObjectId(bucketID);
     if (formID) newRelease.form = ObjectId(formID);
-    newRelease.save((err) => {
+    newRelease.save((err, newRelease) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(newRelease);
+        newRelease.populate('requirement').populate('forum').populate('author')
+        .populate('form', (err, newRelease) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(newRelease);
+        });
     });
 }
 
@@ -43,7 +47,11 @@ editNewRelease = (req, res) => {
     if (url) update.url = url
     NewRelease.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, newRelease) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(newRelease);
+        newRelease.populate('requirement').populate('forum').populate('author')
+        .populate('form', (err, newRelease) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(newRelease);
+        });
     });
 }
 
@@ -51,7 +59,11 @@ deleteNewRelease = (req, res) => {
     const { id } = req.params;
     NewRelease.findByIdAndRemove(id, (err, newRelease) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(newRelease);
+        newRelease.populate('requirement').populate('forum').populate('author')
+        .populate('form', (err, newRelease) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(newRelease);
+        });
     });
 }
 

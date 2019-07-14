@@ -13,9 +13,12 @@ createRoadMap = (req, res) => {
     );
     if (url) roadmap.url = url;
     if (productID) roadmap.product = ObjectId(productID);
-    roadmap.save((err) => {
+    roadmap.save((err, roadmap) => {
         if (err) return res.json({success: false, error: err});
-        return res.json(roadmap);
+        roadmap.populate('product', (err, roadmap) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(roadmap);
+        });
     });
 }
 
@@ -31,7 +34,7 @@ getProductRoadMap = (req, res) => {
     const { productID } = req.body;
     let query = RoadMap.find();
     query.where('product').equals(productID);
-    query.exec((err, roadmap) => {
+    query.populate('product').exec((err, roadmap) => {
 		if (err) return res.json({success: false, error: err });
 		return res.json(roadmap);
 	});
@@ -46,7 +49,10 @@ editRoadMap = (req, res) => {
     if (productID) update.product = ObjectId(productID);
     RoadMap.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, roadmap) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(roadmap);
+        roadmap.populate('product', (err, roadmap) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(roadmap);
+        });
     });
 }
 
@@ -54,7 +60,10 @@ deleteRoadMap = (req, res) => {
     const id = req.params.id;
     RoadMap.findByIdAndRemove(id, (err, roadmap) => {
         if (err) return res.send(err);
-        return res.json(roadmap);
+        roadmap.populate('product', (err, roadmap) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(roadmap);
+        });
     });
 }
 

@@ -21,9 +21,12 @@ createInitiative = (req, res) => {
             roadmap: ObjectId(roadmapID)
         }
     );
-    initiative.save((err) => {
+    initiative.save((err, initiative) => {
         if (err) return res.json({success: false, error: err});
-        return res.json(initiative);
+        initiative.populate('roadmap', (err, initiative) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(initiative);
+        });
     });
 }
 
@@ -36,7 +39,10 @@ editInitiative = (req, res) => {
     if (roadmapID) update.roadmap = ObjectId(roadmapID);
     Initiative.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, initiative) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(initiative);
+        initiative.populate('roadmap', (err, initiative) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(initiative);
+        });
     });
 }
 
@@ -44,7 +50,10 @@ deleteInitiative = (req, res) => {
     const id = req.params.id;
     Initiative.findByIdAndRemove(id, (err, initiative) => {
         if (err) return res.send(err);
-        return res.json(initiative);
+        initiative.populate('roadmap', (err, initiative) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(initiative);
+        });
     });
 }
 

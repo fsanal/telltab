@@ -6,9 +6,9 @@ class VModal extends React.Component {
 	render() {
 		return (
 			<Modal
-				id={this.props.ModalId}
-				onHide={this.props.onHide}
-				show={this.props.show}
+				id = {this.props.ModalId}
+				onHide = {this.props.onHide}
+				show = {this.props.show}
 				size="lg"
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
@@ -18,11 +18,9 @@ class VModal extends React.Component {
 						{this.props.title}
 					</Modal.Title>
 				</Modal.Header>
-
 				<Modal.Body>
 					{this.props.renderForm}
 				</Modal.Body>
-
 				<Modal.Footer>
 					{this.props.renderFooter}
 				</Modal.Footer>
@@ -30,5 +28,7 @@ class VModal extends React.Component {
 		);
 	}
 }
+
+
 
 export default VModal;

@@ -10,22 +10,22 @@ createTag = (req, res) => {
 		created: new Date()
 	})
 	if (url) tag.url = url;
-	tag.save((err) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(tag)
+	tag.save((err, tag) => {
+		if (err) return res.json({success: false, error: err});
+		return res.json(tag);
 	});
 }
 
 getTag = (req, res) => {
 	Tag.findById(req.params.id, (err, tag) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(tag)
+		if (err) return res.json({success: false, error: err});
+		return res.json(tag);
 	});
 }
 
 deleteTag = (req, res) => {
 	Tag.findByIdAndRemove ( req.params.id, ( err, tag) => {
-		if (err) return res.json({success: false, error: err})
+		if (err) return res.json({success: false, error: err});
 		return res.json(tag)
 	});
 }
@@ -41,6 +41,7 @@ retrieveTags = (req, res) => {
 		return res.json(tags);
 	});
 }
+
 
 findTag = (req, res) => {
 	const { productID, name } = req.body;

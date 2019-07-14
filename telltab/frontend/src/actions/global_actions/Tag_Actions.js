@@ -42,6 +42,7 @@ export const retrieveTags = () => async (dispatch, getState) => {
 export const deleteTag = (tag) => async (dispatch, getState) => {
     const { secret } = getState().auth;
     let id = tag._id;
+    console.log("ENTERED DELETE TAG");
     const response = await api.delete(`/tags/delete/${id}`);
     dispatch({ type: DELETE_TAG, payload: response.data });
 }

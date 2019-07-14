@@ -21,9 +21,12 @@ createWidget = (req, res) => {
     if (backgroundColor) widget.backgroundColor = backgroundColor;
     if (color) widget.color = color;
     if (embeddableIDs) widget.embeddables = embeddableIDs.map(embeddableID => ObjectId(embeddableID));
-    widget.save((err) => {
+    widget.save((err, widget) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(widget);
+        widget.populate('forum').populate('embeddables').populate('form', (err, widget) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(widget);
+        });
     });
 }
 
@@ -52,7 +55,10 @@ editWidget = (req, res) => {
     Widget.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(widget);
+        widget.populate('forum').populate('embeddables').populate('form', (err, widget) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(widget);
+        });
     });
 }
 
@@ -61,7 +67,10 @@ deleteWidget = (req, res) => {
     Widget.findByIdAndRemove(id, 
         (err, widget) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(widget);
+        widget.populate('forum').populate('embeddables').populate('form', (err, widget) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(widget);
+        });
     });
 }
 
@@ -73,7 +82,10 @@ addEmbeddable = (req, res) => {
     Widget.findByIdAndUpdate(id, {$push: update}, 
         {new: true}, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(widget);
+        widget.populate('forum').populate('embeddables').populate('form', (err, widget) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(widget);
+        });
     });
 }
 
@@ -85,7 +97,10 @@ deleteEmbeddable = (req, res) => {
     Widget.findByIdAndUpdate(id, {$pull: update}, 
         {new: true}, (err, widget) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(widget);
+        widget.populate('forum').populate('embeddables').populate('form', (err, widget) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(widget);
+        });
     });
 }
 

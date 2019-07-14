@@ -16,9 +16,12 @@ createForm = (req, res) => {
     if (color) form.color = color;
     if (formElementIDs) form.formElements = formElementIDs.map(formElementID => 
         ObjectId(formElementID));
-    form.save((err) => {
+    form.save((err, form) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(form);
+        form.populate('formElements', (err, form) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(form);
+        });
     });
 }
 
@@ -41,7 +44,10 @@ editForm = (req, res) => {
     Form.findByIdAndUpdate(id, {$set: update}, 
         {new: true}, (err, form) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(form);
+        form.populate('formElements', (err, form) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(form);
+        });
     });
 }
 
@@ -50,7 +56,10 @@ deleteForm = (req, res) => {
     Form.findByIdAndRemove(id, 
         (err, form) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(form);
+        form.populate('formElements', (err, form) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(form);
+        });
     });
 }
 
@@ -62,7 +71,10 @@ addFormElement = (req, res) => {
     Form.findByIdAndUpdate(id, {$push: update}, 
         {new: true}, (err, form) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(form);
+        form.populate('formElements', (err, form) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(form);
+        });
     });
 }
 
@@ -74,7 +86,10 @@ deleteFormElement = (req, res) => {
     Form.findByIdAndUpdate(id, {$pull: update}, 
         {new: true}, (err, form) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(form);
+        form.populate('formElements', (err, form) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(form);
+        });
     });
 }
 

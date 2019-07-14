@@ -20,8 +20,8 @@ createVote = (req, res) => {
     if (forumID) vote.forum = ObjectId(forumID);
     vote.save((err, vote) => {
         if (err) return res.json({ success: false, error: err });
-        vote.populate('user').populate('forum').populate('post', (err, vote) => {
-            if (err) return res.json(err);
+        vote.populate('user').populate('forum').populate('comment').populate('post', (err, vote) => {
+            if (err) return res.json({ success: false, error: err });
             return res.json(vote);
         });
     });
@@ -29,7 +29,7 @@ createVote = (req, res) => {
 
 getVote = (req, res) => {
     Vote.findById(req.params.id).populate('user').populate('post').populate('comment')
-    .exec(function(err, vote) {
+    .populate('forum').exec(function(err, vote) {
         if (err) return res.json({ success: false, error: err });
         return res.json(vote);
     });
@@ -39,7 +39,10 @@ deleteVote = (req, res) => {
     const { id } = req.params;
     Vote.findByIdAndRemove(id, (err, vote) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(vote);
+        vote.populate('user').populate('forum').populate('comment').populate('post', (err, vote) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(vote);
+        });
     });
 }
 

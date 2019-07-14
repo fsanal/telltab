@@ -15,16 +15,19 @@ createPersona = (req, res) => {
 	if (roadMapConfig) persona.roadMapConfig = roadMapConfig;
     isPM ? persona.isPM = isPM : persona.isPM = false;
     isAdmin ? persona.isAdmin = isAdmin : persona.isAdmin = false;
-	persona.save((err) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(persona)
+	persona.save((err, persona) => {
+		if (err) return res.json({success: false, error: err});
+		persona.populate('tags').populate('product', (err, persona) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(persona);
+		});
 	});
 }
 
 getPersona = (req, res) => {
 	Persona.findById(req.params.id).populate('tags').populate('product')
 	.exec(function(err, persona) {
-		if (err) return res.json({success: false, error: err})
+		if (err) return res.json({success: false, error: err});
 		return res.json(persona);
 	});
 }
@@ -39,15 +42,21 @@ editPersona = (req, res) => {
 	if (roadMapConfig) update.roadMapConfig = roadMapConfig;
 	if (isAdmin) update.isAdmin = isAdmin;
 	Persona.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, persona) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(persona)
+		if (err) return res.json({success: false, error: err});
+		persona.populate('tags').populate('product', (err, persona) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(persona);
+		});
 	});
 }
 
 deletePersona = (req, res) => {
-	Persona.findByIdAndRemove ( req.params.id, ( err, persona) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(persona)
+	Persona.findByIdAndRemove ( req.params.id, (err, persona) => {
+		if (err) return res.json({success: false, error: err});
+		persona.populate('tags').populate('product', (err, persona) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(persona);
+		});
 	});
 }
 
@@ -56,9 +65,12 @@ addTag = (req, res) => {
 	const { tagID } = req.body;
 	update = {};
 	update.tags = ObjectId(tagID);
-    Persona.findByIdAndUpdate ( id, { $push: update }, { new: true }, ( err, persona) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(persona)
+    Persona.findByIdAndUpdate ( id, { $push: update }, { new: true }, (err, persona) => {
+		if (err) return res.json({success: false, error: err});
+		persona.populate('tags').populate('product', (err, persona) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(persona);
+		});
 	});
 }
 
@@ -67,9 +79,12 @@ deleteTag = (req, res) => {
 	const { tagID } = req.body;
 	update = {};
 	update.tags = ObjectId(tagID)
-    Persona.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, persona) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(persona)
+    Persona.findByIdAndUpdate ( id, { $pull: update }, { new: true }, (err, persona) => {
+		if (err) return res.json({success: false, error: err});
+		persona.populate('tags').populate('product', (err, persona) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(persona);
+		});
 	});
 }
 

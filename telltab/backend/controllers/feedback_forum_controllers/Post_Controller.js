@@ -38,9 +38,14 @@ createPost = (req, res) => {
     if (requirementIDs) {
         post.requirements = requirementIDs.map(requirementID => ObjectId(requirementID));
     }
-    post.save((err) => {
+    post.save((err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -81,10 +86,12 @@ deletePost = (req, res) => {
     const { id } = req.params;
     Post.findByIdAndRemove(id, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        post.remove((err) => {
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
             if (err) return res.json({ success: false, error: err });
+            return res.json(post);
         });
-        return res.json(post);
     });
 }
 
@@ -179,7 +186,12 @@ addPersona = (req, res) => {
     if (personaID) update.personas = ObjectId(personaID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -190,7 +202,12 @@ deletePersona = (req, res) => {
     if (personaID) update.personas = ObjectId(personaID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -202,7 +219,12 @@ addVisibility = (req, res) => {
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -213,7 +235,12 @@ removeVisibility = (req, res) => {
     if (visibilityID) update.visibility = ObjectId(visibilityID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -257,7 +284,12 @@ assignPost = (req, res) => {
     if (userID) update.assignments = ObjectId(userID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -268,7 +300,12 @@ deassignPost = (req, res) => {
     if (userID) update.assignments = ObjectId(userID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -279,7 +316,12 @@ addRequirement = (req, res) => {
     if (reqID) update.requirements = ObjectId(reqID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -290,7 +332,12 @@ deleteRequirement = (req, res) => {
     if (reqID) update.requirements = ObjectId(reqID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -301,7 +348,12 @@ createCustomField = (req, res) => {
     if (fieldID) update.customFields = ObjectId(fieldID);
     Post.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 
@@ -312,7 +364,12 @@ deleteCustomField = (req, res) => {
     if (fieldID) update.customFields = ObjectId(fieldID);
     Post.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, post) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(post);
+        post.populate('forum').populate('bucket').populate('personas').populate('author')
+        .populate('visibility').populate('requirements').populate('assignments').populate('tags')
+        .populate('roadmap', (err, post) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(post);
+        });
     });
 }
 

@@ -14,24 +14,30 @@ createCustomField = (req, res) => {
     if (fieldname) field.fieldname = fieldname;
     if (data) field.data = data;
 
-	field.save((err) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(field)
+	field.save((err, field) => {
+        if (err) return res.json({success: false, error: err});
+        field.populate('post').populate('requirement').populate('user', (err, field) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(field);
+        });
     });
 }
 
 getCustomField = (req, res) => {
     CustomField.findById(req.params.id).populate('post').populate('requirement')
     .populate('user').exec(function(err, field) {
-        if (err) return res.json({success: false, error: err})
-		return res.json(field)
+        if (err) return res.json({success: false, error: err});
+		return res.json(field);
     });
 }
 
 deleteCustomField = (req, res) => {
     CustomField.findByIdAndRemove(req.params.id, (err, field) => {
-        if (err) return res.json({success: false, error: err})
-        return res.json(field)
+        if (err) return res.json({success: false, error: err});
+        field.populate('post').populate('requirement').populate('user', (err, field) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(field);
+        });
     });
 }
 

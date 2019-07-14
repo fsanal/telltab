@@ -17,16 +17,19 @@ createUser = (req, res) => {
     if (notificationPref) user.notificationPref = notificationPref;
     if (url) user.url = url;
     if (imageUrl) user.imageUrl = imageUrl;
-	user.save((err) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(user)
+	user.save((err, user) => {
+		if (err) return res.json({success: false, error: err});
+		user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
 	});
 }
 
 getUser = (req, res) => {
 	User.findById(req.params.id).populate('personas').exec(function(err, user) {
-		if (err) return res.json({success: false, error: err})
-		return res.json(user)
+		if (err) return res.json({success: false, error: err});
+		return res.json(user);
 	});
 }
 
@@ -39,16 +42,22 @@ editUser = (req, res) => {
 	if (url) update.url = url;
 	if (imageUrl) update.imageUrl = imageUrl;
 	if (password) update.password = password;
-	User.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, user) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(user)
+	User.findByIdAndUpdate ( id, { $set: update }, { new: true }, (err, user) => {
+		if (err) return res.json({success: false, error: err});
+		user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
 	});
 }
 
 deleteUser = (req, res) => {
-	User.findByIdAndRemove ( req.params.id, ( err, user) => {
-	    if (err) return res.json({success: false, error: err})
-		return res.json(user)
+	User.findByIdAndRemove ( req.params.id, (err, user) => {
+	    if (err) return res.json({success: false, error: err});
+		user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
 	});
 }
 
@@ -57,9 +66,12 @@ addPersona = (req, res) => {
 	const { personaID } = req.body
 	update = {}
 	update.personas = ObjectId(personaID)
-    User.findByIdAndUpdate ( id, { $push: update }, { new: true }, ( err, user) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(user)
+    User.findByIdAndUpdate ( id, { $push: update }, { new: true }, (err, user) => {
+		if (err) return res.json({success: false, error: err});
+		user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
 	});
 }
 
@@ -68,9 +80,12 @@ deletePersona = (req, res) => {
 	const { personaID } = req.body
 	update = {}
 	update.personas = ObjectId(personaID)
-    User.findByIdAndUpdate ( id, { $pull: update }, { new: true }, ( err, user) => {
-		if (err) return res.json({success: false, error: err})
-		return res.json(user)
+    User.findByIdAndUpdate ( id, { $pull: update }, { new: true }, (err, user) => {
+		if (err) return res.json({success: false, error: err});
+		user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
 	});
 }
 
@@ -81,7 +96,10 @@ createCustomField = (req, res) => {
     if (fieldID) update.customFields = ObjectId(fieldID);
     User.findByIdAndUpdate(id, {$push: update}, {new: true}, (err, user) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(user);
+        user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
     });
 }
 
@@ -92,7 +110,10 @@ deleteCustomField = (req, res) => {
     if (fieldID) update.customFields = ObjectId(fieldID);
     User.findByIdAndUpdate(id, {$pull: update}, {new: true}, (err, user) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(user);
+        user.populate('personas', (err, user) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(user);
+		});
     });
 }
 

@@ -20,9 +20,13 @@ createComment = (req, res) => {
 	} else if (newReleaseID) {
 		comment.newRelease = ObjectId(newReleaseID);
 	}
-	comment.save((err) => {
+	comment.save((err, comment) => {
 		if (err) return res.json({success: false, error: err})
-		return res.json(comment)
+		comment.populate('post').populate('requirement').populate('newRelease')
+		.populate('parent').populate('source').populate('author', (err, comment) => {
+			if (err) return res.json({success: false, error: err})
+			return res.json(comment)
+		});
 	});
 }
 
@@ -41,14 +45,22 @@ editComment = (req, res) => {
 	if (content) update.content = content;
 	Comment.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, comment) => {
 		if (err) return res.json({success: false, error: err})
-		return res.json(comment)
+		comment.populate('post').populate('requirement').populate('newRelease')
+		.populate('parent').populate('source').populate('author', (err, comment) => {
+			if (err) return res.json({success: false, error: err})
+			return res.json(comment)
+		});
 	});
 }
 
 deleteComment = (req, res) => {
 	Comment.findByIdAndRemove ( req.params.id, ( err, comment) => {
 		if (err) return res.json({success: false, error: err})
-		return res.json(comment)
+		comment.populate('post').populate('requirement').populate('newRelease')
+		.populate('parent').populate('source').populate('author', (err, comment) => {
+			if (err) return res.json({success: false, error: err})
+			return res.json(comment)
+		});
 	});
 }
 

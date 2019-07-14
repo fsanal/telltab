@@ -13,9 +13,12 @@ createBucket = (req, res) => {
         }
     );
     if (url) bucket.url = url;
-    bucket.save((err) => {
+    bucket.save((err, bucket) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(bucket);
+        bucket.populate('forum', (err, bucket) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(bucket);
+        });
     });
 }
 
@@ -35,7 +38,10 @@ editBucket = (req, res) => {
     if (url) update.url = url
     Bucket.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, bucket) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(bucket);
+        bucket.populate('forum', (err, bucket) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(bucket);
+        });
     });
 }
 
@@ -43,7 +49,10 @@ deleteBucket = (req, res) => {
     const { id } = req.params;
     Bucket.findByIdAndRemove(id, (err, bucket) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(bucket);
+        bucket.populate('forum', (err, bucket) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json(bucket);
+        });
     });
 }
 

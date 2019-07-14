@@ -10,7 +10,7 @@ const Post = (props) => {
                         {props.numVotes}
                 </div>
                 <div >
-                    <DropdownButton title = {"" + props.progress} id = "post__dropdown2" >
+                    <DropdownButton title = {props.progress} id = "post__dropdown2" >
                             <Dropdown.Item onClick = {() => {props.changeProgress(props.post, "Under Review")}}>Under Review</Dropdown.Item>
                             <Dropdown.Item onClick = {() => {props.changeProgress(props.post, "In Progress")}}>In Progress</Dropdown.Item>
                             <Dropdown.Item onClick = {() => {props.changeProgress(props.post, "Complete")}}>Complete</Dropdown.Item>

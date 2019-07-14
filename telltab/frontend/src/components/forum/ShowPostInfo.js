@@ -2,10 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createComment, retrieveComments } from '../../actions/global_actions/Comment_Actions';
 import VModal from '../general/VModal';
-import { Button, Form } from 'react-bootstrap';
-import { reduxForm, Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { Form, Button } from 'react-bootstrap';
+import { editPost } from '../../actions/feedback_forum_actions/Post_Actions';
 
 class ShowPostInfo extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            showForm: false
+        }
+    }
 
     componentDidMount() {
         this.props.retrieveComments(this.props.currentPost);
@@ -18,40 +25,94 @@ class ShowPostInfo extends React.Component {
 
     renderTags = () => {
         if (this.props.currentPost) {
-            return this.props.currentPost.tags.forEach(tag => {
-                return <h5>{tag}</h5>
+            return this.props.currentPost.tags.map(tag => {
+                return <h5 key = {tag}>{tag}</h5>
             })
         }
     }
 
+    onSubmit = (formValues) => {
+        this.props.editPost(formValues);
+     }
+ 
+     renderInput = ({input, label, meta}) => {
+         return(
+             <Form.Group>
+                 <Form.Label>{label}</Form.Label>
+                 <Form.Control {...input} type = "text" />
+             </Form.Group>
+         )
+     }
+ 
+     renderForm = (title) => {
+         return(
+             <Form onSubmit = {this.props.handleSubmit(this.onSubmit)}>
+                 <Field name = "title" component = {this.renderInput} label = "Title" />
+                 <Field name = "body" component = {this.renderInput} label = "Body" />
+                 <Button onClick = {this.props.onHide} variant="primary" type="submit">Submit</Button>
+             </Form>
+         )
+     }
+
     renderPost = () => {
-        if (this.props.currentPost) {
-            const { title, body, author, tags } = this.props.currentPost;
-            //console.log(tags);
+        if (this.props.currentPost){
+            const {title, body, author, tags} = this.props.currentPost;
+            if (this.state.showForm) {
+                return(
+                    <>
+                        {this.renderForm(title)}
+                    </>
+                )
+            } else {
+                return(
+                    <div>
+                        <h3>
+                            {body}
+                        </h3>
+                        <h4>
+                            {author}
+                        </h4>
+                        {this.renderTags()}
+                    </div>
+                )
+            } 
+        } else {
             return (
-                <div>
-                    <h3>
-                        {body}
-                    </h3>
-                    <h4>
-                        {author}
-                    </h4>
-                    {this.renderTags()}
-                </div>
+                <div></div>
             )
         }
-        return (
-            <div></div>
+    }
+
+    changeToForm(){
+        this.setState((prevState) => ({
+            showForm: true
+        }));
+    }
+
+    changeToProfile(){
+        this.setState((prevState) => ({
+            showForm: false
+        }));
+    }
+/*
+    onHide(){
+        {this.props.onHide};
+        this.changeToProfile();
+    }
+
+    */
+    renderEdit = () => {
+        return(
+            <Button onClick = {() => {this.changeToForm()}}>Edit</Button>
         )
     }
 
-    renderInput = ({input, label, meta}) => {
-        const className = `field ${meta.error && meta.touched ? 'error' : ''}`
+    renderBody = () => {
         return(
-            <Form.Group>
-                <Form.Label>{label}</Form.Label>
-                <Form.Control {...input} type="text" />
-            </Form.Group>
+            <>
+                {this.renderPost()}
+                {this.renderEdit()}
+            </>
         )
     }
 
@@ -84,7 +145,7 @@ class ShowPostInfo extends React.Component {
     render() {
         return (
             <VModal show={this.props.show} onHide={this.props.onHide} title={this.renderTitle()}
-                renderForm={this.renderPost()} renderCommentInput={this.renderCommentInput()} renderComments={this.renderComments()} />
+                renderForm={this.renderBody()} />
         )
     }
 }
@@ -99,5 +160,5 @@ const mapStateToProps = (state) => {
 }
 
 export default reduxForm({
-    form: 'create_comment_form'
-})(connect(mapStateToProps, { createComment, retrieveComments })(ShowPostInfo))
+    form: 'show_post_form'
+})(connect(mapStateToProps, { editPost, createComment, retrieveComments })(ShowPostInfo))

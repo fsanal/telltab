@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types
 
 // how to make sure vote doesnt have both post and comment ID
 createVote = (req, res) => {
-    let { userID, postID, commentID, url } = req.body;
+    let { userID, postID, forumID, commentID, url } = req.body;
     let vote = new Vote(
         {
             user: ObjectId(userID),
@@ -17,9 +17,13 @@ createVote = (req, res) => {
     } else if (commentID) {
         vote.comment = ObjectId(commentID)
     }
-    vote.save((err) => {
+    if (forumID) vote.forum = ObjectId(forumID);
+    vote.save((err, vote) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json(vote);
+        vote.populate('user').populate('forum').populate('post', (err, vote) => {
+            if (err) return res.json(err);
+            return res.json(vote);
+        });
     });
 }
 
@@ -40,7 +44,7 @@ deleteVote = (req, res) => {
 }
 
 retrieveVotes = (req, res) => {
-    let { secret, userID, forumID, postID, commentID, limit, skip } = req.body;
+    let { secret, userID, forumID, postID, newReleaseID, commentID, limit, skip } = req.body;
     let query = Vote.find();
     if (userID) query.where('user').equals(userID);
     if (forumID) query.where('forum').equals(forumID);

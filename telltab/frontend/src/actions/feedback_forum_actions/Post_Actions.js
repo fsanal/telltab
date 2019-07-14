@@ -53,6 +53,17 @@ export const deletePost = (post) => async (dispatch, getState) => {
     dispatch({ type: DELETE_POST, payload: response.data });
 }
 
+export const editPost = (formValues) => async (dispatch, getState) => {
+    const { currentPost } = getState().postState;
+    if (!currentPost) return;
+    console.log(formValues);
+    console.log("BEFORE EDIT");
+    console.log(currentPost);
+    let id = currentPost._id;
+    const response = await api.put(`/posts/edit/${id}`, formValues);
+    dispatch({ type: EDIT_POST, payload: response.data });
+}
+
 
 export const addPostTag = (tagID) => async (dispatch, getState) => {
    // const { secret } = getState().auth;

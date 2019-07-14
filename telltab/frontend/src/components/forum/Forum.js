@@ -36,9 +36,6 @@ class Forum extends React.Component {
         });
     }
 
-    componentDidUpdate() {
-        this.props.retrievePosts();
-    }
 
     openCreatePostModal = () => {
         this.setState({ showCreatePostModal: true })
@@ -71,11 +68,6 @@ class Forum extends React.Component {
                     <div className="dashcontent">
                         <ForumNav />
                         <ForumUtility />
-                        {/*<ButtonToolbar>
-                            <Button variant="primary" size="lg" onClick={() => this.openModal()}>
-                                Create Requirement
-    				        </Button>
-                        </ButtonToolbar>    GET BUTTON TO REDIRECT CORRECTLY W/ REACT ROUTER*/}
                         <Toolbar />
                         <div className="dashcontent__boxes">
                             <div className="dashcontent__create" onClick={this.openCreatePostModal}>
@@ -95,11 +87,6 @@ class Forum extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        currentBucket: state.bucketState.currentBucket
-    }
-}
 
 
-export default connect(mapStateToProps, { getProductForum, retrievePosts, retrieveBuckets, retrieveVotes })(Forum);
+export default connect(null, { getProductForum, retrievePosts, retrieveBuckets, retrieveVotes })(Forum);

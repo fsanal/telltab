@@ -10,8 +10,11 @@ import history from '../../history';
 export const createVote = (post) => async (dispatch, getState) => {
     console.log("Am i called?")
     const { userID } = getState().auth;
+    const { currentForum } = getState().forumState
+    let forumID;
+    if (currentForum) forumID = currentForum._id;
     let postID = post._id;
-    const response = await api.post('/votes/create', { userID, postID });
+    const response = await api.post('/votes/create', { userID, postID, forumID });
     dispatch({type: CREATE_VOTE, payload: response.data});
 }
 

@@ -2,12 +2,14 @@ import React from 'react';
 import Bucket from './Bucket'
 import { connect } from 'react-redux';
 import { selectBucket, createBucket, deleteBucket } from '../../../actions/feedback_forum_actions/Bucket_Actions';
+import { retrievePosts } from '../../../actions/feedback_forum_actions/Post_Actions';
 import history from '../../../history';
 
 class BucketBox extends React.Component {
 
     handleSelectBucket(bucket) {
         this.props.selectBucket(bucket);
+        this.props.retrievePosts();
     }
 
     renderBuckets(){
@@ -40,4 +42,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { selectBucket, createBucket, 
-    deleteBucket })(BucketBox);
+    deleteBucket, retrievePosts })(BucketBox);

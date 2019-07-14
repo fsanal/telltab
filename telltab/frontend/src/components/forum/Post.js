@@ -6,8 +6,15 @@ const Post = (props) => {
     return (
         <div>
             <div className = {props.cls}>
-                <div onClick = {props.onVote} className = {props.voteCls}>
+                <div onClick = {props.onVote} className = {`feedback__votes ${props.voteCls}`}>
                         {props.numVotes}
+                </div>
+                <div >
+                    <DropdownButton title = {props.progress} id = "post__dropdown2" >
+                            <Dropdown.Item onClick = {() => {props.changeProgress(props.post, "Under Review")}}>Under Review</Dropdown.Item>
+                            <Dropdown.Item onClick = {() => {props.changeProgress(props.post, "In Progress")}}>In Progress</Dropdown.Item>
+                            <Dropdown.Item onClick = {() => {props.changeProgress(props.post, "Complete")}}>Complete</Dropdown.Item>
+                    </DropdownButton>
                 </div>
                 <div onClick = {props.showPost}  onContextMenu = {props.onSelect} className = "feedback__content">
                     <div className = "feedback__content-title">

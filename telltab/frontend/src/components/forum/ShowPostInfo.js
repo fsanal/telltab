@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createComment, retrieveComments } from '../../actions/global_actions/Comment_Actions';
 import VModal from '../general/VModal';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Button } from 'react-bootstrap';
@@ -12,6 +13,10 @@ class ShowPostInfo extends React.Component {
             showForm: false
         }
     }
+
+    componentDidMount() {
+        this.props.retrieveComments(this.props.currentPost);
+	}
 
     renderTitle = () => {
         if (this.props.currentPost) return this.props.currentPost.title;
@@ -102,22 +107,58 @@ class ShowPostInfo extends React.Component {
         )
     }
 
-    render(){
+    renderBody = () => {
         return(
-           < VModal show = {this.props.show} onHide = {this.props.onHide} title = {this.renderTitle()} renderForm = {this.renderPost()} renderFooter = {this.renderEdit()}/>
+            <>
+                {this.renderPost()}
+                {this.renderEdit()}
+            </>
         )
-    }   
+    }
+
+    commentSubmit = (formValues) => {
+        this.props.createComment(formValues);
+    }
+
+    renderCommentInput = () => {
+        return (
+            <div>
+                <Form onSubmit={this.props.handleSubmit(this.commentSubmit)}>
+                    <Field name="content" component={this.renderInput} />
+                    <Button onClick={this.props.onHide} variant="primary" type="submit">Post</Button>
+                    <Button variant="outline-secondary">Cancel</Button>
+                </Form>
+            </div>
+        );
+    }
+
+    //Replace with a CommentList.js?
+    renderComments = () => {
+        const entries = Object.entries(this.props.comments);
+        const values = Object.values(entries);
+        for (const val of values) {
+            return <div>{val[1].content}</div>;
+        }
+    }
+
+
+    render() {
+        return (
+            <VModal show={this.props.show} onHide={this.props.onHide} title={this.renderTitle()}
+                renderForm={this.renderBody()} />
+        )
+    }
 }
 
 
 
 const mapStateToProps = (state) => {
     return {
-        currentPost: state.postState.currentPost
+        currentPost: state.postState.currentPost,
+        comments: state.commentState.comments
     }
 }
 
 export default reduxForm({
-    form: 'edit_post_form'
-})(connect(mapStateToProps, { editPost })(ShowPostInfo))
-
+    form: 'show_post_form'
+})(connect(mapStateToProps, { editPost, createComment, retrieveComments })(ShowPostInfo))

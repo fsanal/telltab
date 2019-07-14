@@ -45,7 +45,7 @@ class CreatePost extends React.Component {
 
     render(){
         return(
-           < VModal show = {this.props.show} onHide = {this.props.onHide} title = "Create Post" renderForm = {this.renderForm()} />
+            < VModal show = {this.props.show} onHide = {this.props.onHide} title = "Create Post" renderForm = {this.renderForm()} />
         )
     }   
 }

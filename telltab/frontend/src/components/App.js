@@ -11,6 +11,7 @@ import CreatePost from './forum/CreatePost';
 import CreateBucket from './forum/bucketbox/CreateBucket';
 import CreateRequirement from './roadmap/CreateRequirement';
 import VModal from './general/VModal';
+import Login from './authentication/Login';
 
 const App = () => {
     return (<>
@@ -23,6 +24,7 @@ const App = () => {
                     <Route path = "/:name/forum/createBucket" exact component = {CreateBucket} />
                     <Route path = "/:name/roadmap" exact component = {Roadmap} />
                     <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />
+                    <Route path = "/login" exact component = {Login} />
                 </Router>     
             </>)
 }

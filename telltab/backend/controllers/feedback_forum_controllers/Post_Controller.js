@@ -138,11 +138,12 @@ retrievePosts = (req, res) => {
             aggregate.match({ _id : { $in: idArr }});
             aggregate.addFields({ ordering : { $indexOfArray : [ idArr, "$_id" ]}});
             aggregate.sort({ ordering : 1 });
-            aggregate.populate('forum').populate('bucket').populate('personas')
-            .populate('author').populate('visibility').populate('requirements').populate('assignments')
-            .populate('tags').populate('roadmap').exec( (err, posts) => {
+            aggregate.exec( (err, posts) => {
                 if (err) return res.json({success: false, error: err });
-                return res.json(posts);
+                Post.populate(posts, {path: "forum bucket personas author visibility requirements assignments tags roadmap"}, (err, posts) => {
+                    if (err) return res.json({success: false, error: err });
+                    return res.json(posts);
+                });
             });
         });
     } else {

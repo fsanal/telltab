@@ -122,6 +122,7 @@ class ShowPostInfo extends React.Component {
                 <Form.Label>{label}</Form.Label>
                 <Form.Control {...input} type="text" />
             </Form.Group>
+        );
     }
     
     renderBody = () => {

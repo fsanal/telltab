@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 
 createComment = (req, res) => {
 	const { requirementID, postID, newReleaseID,
-			parentID, authorID, content } = req.body
+			parentID, sourceCommentID, authorID, content } = req.body
 	let comment = new Comment({
 		author: ObjectId(authorID),
 		created: new Date(),
@@ -13,9 +13,12 @@ createComment = (req, res) => {
 	if (parentID) {
 		comment.parent = ObjectId(parentID);
 	}
+	if (sourceCommentID) {
+		comment.sourceComment = ObjectId(sourceCommentID);
+	}
 	if (postID) { 
 		comment.post = ObjectId(postID);
-		comment.source = ObjectId(postID);
+		comment.sourcePost = ObjectId(postID);
 	} else if (requirementID) {
 		comment.requirement = ObjectId(requirementID);
 	} else if (newReleaseID) {
@@ -66,20 +69,37 @@ deleteComment = (req, res) => {
 }
 
 retrieveComments = (req, res) => {
-	const { postID, requirementID, newReleaseID, parentID, authorID, sort, limit, skip } = req.body;
+	const { postID, requirementID, newReleaseID, parentID, authorID, sourceCommentID, sort, limit, skip } = req.body;
 	let query = Comment.find();
 	if (postID) query.where('post').equals(postID);
 	if (requirementID) query.where('requirement').equals(requirementID);
 	if (newReleaseID) query.where('newRelease').equals(newReleaseID);
 	if (parentID) query.where('parent').equals(parentID);
 	if (authorID) query.where('author').equals(authorID);
+	if (sourceCommentID) query.where('sourceComment').equals(sourceCommentID);
 	if (limit) query.limit(Number(limit));
 	if (skip) query.skip(Number(skip));
 	query.populate('post').populate('requirement').populate('newRelease')
-	.populate('parent').populate('source').populate('author').exec((err, comments) => {
+	.populate('parent').populate('sourcePost').populate('sourceComment').populate('author').exec((err, comments) => {
 		if (err) return res.json({success: false, error: err });
-		return res.json(comments);
+		let structuredComments = commentSortHelper(comments);
+		return res.json(structuredComments);
 	});
+}
+
+commentSortHelper = (comments) => {
+	let result = {};
+	comments.forEach((comment) => {
+		if (comment.sourceComment == null) {
+			let key = String(comment._id);
+			result[key] = [comment];
+		} else {
+			let arr = result[String(comment.sourceComment._id)];
+			arr.push(comment);
+			result[String(comment.sourceComment._id)] = arr;
+		}
+	});
+	return result;
 }
 
 

@@ -39,7 +39,7 @@ class PostList extends React.Component {
     }
 
     checkVote = (post) => {
-        console.log(this.props.votes);
+        //console.log(this.props.votes);
         let votePosts = this.props.votes.map((vote) => {if (vote.post) return vote.post._id});
         let index = votePosts.indexOf(post._id);
         if (index != -1) return this.props.votes[index] ; else return null;

@@ -29,6 +29,7 @@ export const createComment = (formValues) => async (dispatch, getState) => {
     const { currentPost } = getState().postState;
     let postID;
     if (currentPost) postID = currentPost._id; else return;
+    delete Object.assign(formValues, {['content']: formValues['commentContent'] })['commentContent']; //replace key to match controller param
     const response = await api.post('/comments/create', { ...formValues, postID });
     dispatch({ type: CREATE_COMMENT, payload: response.data });
 }
@@ -37,11 +38,19 @@ export const createReply = (formValues) => async (dispatch, getState) => {
     const { currentPost } = getState().postState;
     const { currentComment } = getState().commentState;
     const { currentAuthor } = getState().auth;
-    let authorID, postID, parentID;
+    let authorID, postID, parentID, sourceCommentID;
     if (currentAuthor) authorID = currentAuthor.userId; //change later
     if (currentPost) postID = currentPost._id;
     if (currentComment) parentID = currentComment._id;
-    const response = await api.post('/comments/create', { ...formValues, authorID, postID, parentID});
+    if (currentComment) {
+        if (currentComment.sourceComment == null) {
+            sourceCommentID = currentComment._id;
+        } else {
+            sourceCommentID = currentComment.sourceComment;
+        }
+    }
+    delete Object.assign(formValues, {['content']: formValues['replyContent'] })['replyContent'];
+    const response = await api.post('/comments/create', { ...formValues, authorID, postID, parentID, sourceCommentID});
     dispatch({ type: CREATE_REPLY, payload: response.data });
 }
 

@@ -4,7 +4,7 @@ import { retrieveProducts, editProduct, selectProduct, deleteProduct } from '../
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
 import { getProductRoadmap } from '../../actions/roadmap_actions/RoadMap_Actions';
 import { Link } from 'react-router-dom';
-
+import api from '../../apis/api';
 
 class Home extends React.Component {
     componentDidMount() {
@@ -21,6 +21,11 @@ class Home extends React.Component {
 
     handleDeleteProduct(product) {
         this.props.deleteProduct(product)
+    }
+
+    handleFacebookAuth() {
+        console.log('FB');
+        api.get('/authenticate/facebook');
     }
 
     renderList() {
@@ -56,6 +61,11 @@ class Home extends React.Component {
                     <Link to = "/logout">
                         <button>Logout</button>
                     </Link>
+                </div>
+                <div>
+                    <button class="loginBtn loginBtn--facebook" onClick= {() => {this.handleFacebookAuth()}}>
+                        Login with Facebook
+                    </button>
                 </div>
                 <Link to = "/create_product" >
                     <button>Create a Product</button>

@@ -115,6 +115,16 @@ class ShowPostInfo extends React.Component {
         )
     }
 
+    renderInput = ({ input, label, meta }) => {
+        const className = `field ${meta.error && meta.touched ? 'error' : ''}`
+        return (
+            <Form.Group>
+                <Form.Label>{label}</Form.Label>
+                <Form.Control {...input} type="text" />
+            </Form.Group>
+        );
+    }
+    
     renderBody = () => {
         return (
             <>

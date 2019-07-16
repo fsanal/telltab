@@ -17,7 +17,6 @@ const Feedback = styled.div`
     height: 10rem;
     width: 75rem;
     margin-left: 2rem;
-    box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.2);
 `
 
 

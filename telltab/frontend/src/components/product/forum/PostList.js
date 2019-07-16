@@ -25,7 +25,7 @@ class PostList extends React.Component {
 
 
     renderBorder(post){
-        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#DADCE0 solid 0.1rem";
+        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#DADCE0 solid 0.2rem";
         return border
     }
 

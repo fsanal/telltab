@@ -6,8 +6,7 @@ import styled, {keyframes} from "styled-components";
 
 
 const Feedback = styled.div`
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-left: 2rem
     margin-bottom: 1rem; 
     cursor:pointer;
     border: ${props => props.border};
@@ -16,8 +15,8 @@ const Feedback = styled.div`
     display: flex;
     color: black;
     height: 10rem;
-    width: 70rem;
-    margin-left: 1rem;
+    width: 75rem;
+    margin-left: 2rem;
     box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.2);
 `
 

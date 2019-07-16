@@ -8,8 +8,13 @@ import styled, {keyframes} from "styled-components";
 
 const List = styled.div`
     display: flex;
+    width: 79rem;
     flex-direction: column;
-    margin-top: 2rem;
+    background-color: #F4F5F7;
+    border-radius: 1rem;
+    > div:nth-of-type(1) {
+        margin-top: 1rem;
+    }
 `
 
 

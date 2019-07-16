@@ -185,16 +185,18 @@ body {
     height: 2rem;
     width: 2.1rem;
     margin-right: 4rem;
-    font-size: 2rem;
-    margin-top: 1.5rem;
+    font-size: 2.2rem;
+    vertical-align: middle;
+    line-height: 5rem;
+    color: #575fcf; 
 }
 
 .toolbar-item:first-of-type {
-    margin-left: 4rem;
+    margin-left: 3.5rem;
 }
 
 .toolbar-item:hover {
-    color: #1EBE6B;
+    color: #3c40c6;
 }
 
 .dashcontent__boxes {
@@ -424,6 +426,10 @@ body {
     vertical-align: middle;
     line-height: 6rem;
     margin-left: 1rem;
+}
+
+.purple {
+    color: #3c40c6;
 }
 
 

@@ -34,13 +34,27 @@ const RightBox = styled.div`
     width: 100%;
 `
 
+const UtilityBox = styled.div`
+    background-color: #F4F5F7;
+    width: 35rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    > div:nth-of-type(1) {
+        margin-top: 1rem;
+    }
+    > div:last-of-type {
+        margin-bottom: 1rem;
+    }
+`
 const Utility = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 1.5rem;
     margin-left: auto;
     margin-right: auto;
-    height: 60rem;
+    height: 40rem;
     width: 30rem;
     background-color: white;
     border-radius: 0.5rem;
@@ -163,6 +177,8 @@ class Forum extends React.Component {
             <>
                 <ForumContainer>
                     <LeftBox>
+                        <UtilityBox>
+                            <Toolbar/>
                             <Utility>
                                 <UtilitySection height = "10rem">
                                     <CreateContainer onClick={this.openCreatePostModal}>
@@ -171,9 +187,9 @@ class Forum extends React.Component {
                                     </CreateContainer>
                                 </UtilitySection>
                             </Utility>
+                        </UtilityBox>
                     </LeftBox>
                     <RightBox>
-                            <Toolbar/>
                             <PostList openCreateTagModal = {this.openCreateTagModal}  openShowPostModal = {this.openShowPostModal} />
                     </RightBox>
                 </ForumContainer>

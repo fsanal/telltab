@@ -16,14 +16,15 @@ const session = require('express-session');
 
 // this is our MongoDB database
 
+
 const dbRoute =
   'mongodb+srv://admin:UYeKdxqhRrHQDziB@cluster0-gp8ab.mongodb.net/test?retryWrites=true&w=majority';
 
-//mongoose.connect('mongodb://localhost:27017/myDatabase');
+mongoose.connect('mongodb://localhost:27017/myDatabase');
 
 
 // connects our back end code with the database
-
+/*
 mongoose.connect(dbRoute, { useNewUrlParser: true });
 
 let db = mongoose.connection;
@@ -32,7 +33,7 @@ db.once('open', () => console.log('connected to the database'));
 
 // checks if connection with the database is successful
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
+*/
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));

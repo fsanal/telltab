@@ -10,10 +10,10 @@ const SideNav = styled.div`
     width: 10rem;
     background-color: white;
     height: 100vh;
-    border-right: 2px solid #F4F5F7;
     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
     padding-right: 5rem;
     overflow: hidden;
+    margin-right: 1rem;
 `;
 
 const StyledLink = styled(Link)`

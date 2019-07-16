@@ -8,10 +8,11 @@ const Bar = styled.div`
      background-color: white;
      height: 5rem;
      border-radius: 0.5rem;
-     margin-left: 1rem;
-     margin-top: 1.5rem;
+     margin-left: auto;
+     margin-right: auto;
+     margin-bottom: 2rem;
      box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
-     width: 58rem;
+     width: 30rem;
 `
 
 
@@ -29,19 +30,15 @@ class Toolbar extends React.Component {
                this.props.deletePost(post);
           })
      }    
-    
+     class="far fa-trash-alt"
     render(){
          return (
                     <Bar>
-                         <i onClick = {this.handleMultiDelete} class="toolbar-item fas fa-trash"></i>
-                         <i class="toolbar-item fas fa-angle-right"></i>
-                         <i class="toolbar-item fas fa-eye"></i>
-                         <i class="toolbar-item fas fa-address-book"></i>
-                         <i class="toolbar-item fas fa-suitcase"></i>
-                         <i class="toolbar-item fas fa-tag"></i>
-                         <i class="toolbar-item fas fa-comment-dots"></i>
-                         <i class="toolbar-item fas fa-bell"></i>
-                         <i class="toolbar-item fas fa-star"></i>
+                         <i onClick = {this.handleMultiDelete} className="toolbar-item far fa-trash-alt"></i>
+                         <i className="toolbar-item fas fa-tag"></i>
+                         <i className="toolbar-item fas fa-angle-right"></i>
+                         <i className="toolbar-item material-icons">remove_red_eye</i>
+                         <i className="toolbar-item fas fa-address-book"></i>
                     </Bar>
 
          /*

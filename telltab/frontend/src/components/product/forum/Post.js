@@ -6,7 +6,7 @@ import styled, {keyframes} from "styled-components";
 
 
 const Feedback = styled.div`
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     margin-left: 2rem
     margin-bottom: 1rem; 
     cursor:pointer;

@@ -20,6 +20,7 @@ const StyledLink = styled(Link)`
     border-radius: 50%;
     :hover {
         background-color: #DADCE0;
+        color: #3c40c6;
     }
     width: 8rem;
     height: 8rem;
@@ -29,7 +30,8 @@ const StyledLink = styled(Link)`
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: white;
+    color: #575fcf;
+    font-size: 3.5rem;
 `;
 
 const ProductSideNav = () => {

@@ -59,39 +59,12 @@ body {
     text-align: center;
 }
 
-.fa-comments{
-    font-size: 3.5rem;
-    color: #575fcf;
-}
 
 .fa-cog { 
     font-size: 5rem;
 }
 
-.fa-map {
-    color: #575fcf;
-    font-size: 3.5rem;
-}
 
-.fa-clipboard-list {
-    color: #575fcf;
-    font-size: 3.5rem;
-}
-
-.fa-chart-pie {
-    color: #575fcf;
-    font-size: 3.5rem;
-}
-
-.fa-briefcase {
-    color: #575fcf;
-    font-size: 3.5rem;
-}
-
-.fa-poll {
-
-    font-size: 2rem;
-}
 
 .prodash__rightcontent{
     width:100%;

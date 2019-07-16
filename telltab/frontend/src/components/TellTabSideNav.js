@@ -19,10 +19,10 @@ const StyledLink = styled(Link)`
     :hover {
         background-color: #575fcf;
     }
-    margin-left: 0.75rem;
+    margin-left: 0.5rem;
     margin-top: ${props => props.margintop};
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 6rem;
+    height: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;

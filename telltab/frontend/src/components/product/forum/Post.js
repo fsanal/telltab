@@ -39,7 +39,7 @@ const FeedbackContent = styled.div`
 `
 
 const FeedbackTitle = styled.div` 
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     color: #172B4D;
     font-weight: bold;
     height: 2rem;

@@ -1,6 +1,6 @@
 import React from 'react';
-import history from '../../history';
-import { createRequirement } from '../../actions/roadmap_actions/Requirement_Actions';
+import history from '../../../history';
+import { createRequirement } from '../../../actions/roadmap_actions/Requirement_Actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 

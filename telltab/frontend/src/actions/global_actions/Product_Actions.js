@@ -14,7 +14,7 @@ export const createProduct = (formValues) => async (dispatch, getState) => {
     const { secret } = getState().auth;
     const response = await api.post('/products/create', {secret, name});
     dispatch({ type: CREATE_PRODUCT, payload: response.data });
-    history.push('/')
+    history.push('/home/products')
 }
 
 export const retrieveProducts = () => async (dispatch, getState) => {
@@ -41,4 +41,5 @@ export const deleteProduct = (product) => async (dispatch, getState) => {
     let id = product._id;
     const response = await api.delete(`/products/delete/${id}`);
     dispatch({ type: DELETE_PRODUCT, payload: response.data });
+    history.push('/home/products')
 }

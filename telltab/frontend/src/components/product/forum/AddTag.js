@@ -1,12 +1,13 @@
 import React from 'react';
-import history from '../../history';
-import { createPost } from '../../actions/feedback_forum_actions/Post_Actions';
+import history from '../../../history';
+import { createTag, findTag } from '../../../actions/global_actions/Tag_Actions';
+import { addPostTag } from '../../../actions/feedback_forum_actions/Post_Actions'
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Button } from 'react-bootstrap';
-import VModal from '../general/VModal';
+import VModal from '../../general/VModal';
 
-class CreatePost extends React.Component {
+class AddTag extends React.Component {
 
     renderError({ error, touched }) {
         if (touched && error) {
@@ -19,7 +20,17 @@ class CreatePost extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        this.props.createPost(formValues);
+       this.props.findTag(formValues.name).then((result) => {
+           if (result) {
+               console.log("TAG ID:")
+               console.log("result._id");
+               this.props.addPostTag(result._id);
+           } else {
+               this.props.createTag(formValues).then((result2) => {
+                   this.props.addPostTag(result2._id);
+               })
+           }
+       });
     }
 
     renderInput = ({input, label, meta}) => {
@@ -35,8 +46,7 @@ class CreatePost extends React.Component {
     renderForm = () => {
         return(
             <Form onSubmit = {this.props.handleSubmit(this.onSubmit)}>
-                <Field name = "title" bogus = "Title" component = {this.renderInput} label = "Title" />
-                <Field name = "body" component = {this.renderInput} label = "Body" />
+                <Field name = "name" component = {this.renderInput} label = "Title" />
                 <Button onClick = {this.props.onHide} variant="primary" type="submit">Submit</Button>
             </Form>
         )
@@ -45,7 +55,7 @@ class CreatePost extends React.Component {
 
     render(){
         return(
-            < VModal show = {this.props.show} onHide = {this.props.onHide} title = "Create Post" renderForm = {this.renderForm()} />
+           < VModal show = {this.props.show} onHide = {this.props.onHide} title = "Add Tag" renderForm = {this.renderForm()} />
         )
     }   
 }
@@ -61,4 +71,4 @@ const validate = (formValues) => {
 
 export default reduxForm({
     form: 'create_post_form'
-})(connect(null, { createPost })(CreatePost))
+})(connect(null, { createTag, findTag, addPostTag })(AddTag))

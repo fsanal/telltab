@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createComment, retrieveComments, createReply, selectComment } from '../../actions/global_actions/Comment_Actions';
-import VModal from '../general/VModal';
-import SingleField from '../general/SingleField';
+import { createComment, retrieveComments, createReply, selectComment } from '../../../actions/global_actions/Comment_Actions';
+import VModal from '../../general/VModal';
+import SingleField from '../../general/SingleField';
 import { Button, Form } from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
-import { editPost, deletePostTag } from '../../actions/feedback_forum_actions/Post_Actions';
-import { deleteTag} from '../../actions/global_actions/Tag_Actions';
+import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions/Post_Actions';
+import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
 class ShowPostInfo extends React.Component {
     constructor(){
         super();
@@ -122,7 +122,8 @@ class ShowPostInfo extends React.Component {
                 <Form.Label>{label}</Form.Label>
                 <Form.Control {...input} type="text" />
             </Form.Group>
-    }
+        )
+    } 
     
     renderBody = () => {
         return(

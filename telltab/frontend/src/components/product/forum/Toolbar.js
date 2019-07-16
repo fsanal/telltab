@@ -1,6 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deletePost } from '../../actions/feedback_forum_actions/Post_Actions'
+import { deletePost } from '../../../actions/feedback_forum_actions/Post_Actions'
+import styled, {keyframes} from "styled-components";
+
+const Bar = styled.div`
+     display: flex;
+     background-color: white;
+     height: 5rem;
+     border-radius: 0.5rem;
+     margin-left: 1rem;
+     margin-top: 1.5rem;
+     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+     width: 58rem;
+`
+
+
+ 
+
+
+
+
 class Toolbar extends React.Component {
 
 
@@ -13,8 +32,7 @@ class Toolbar extends React.Component {
     
     render(){
          return (
-               <div className = "dashcontent__toolbar">
-                    <div className = "dashcontent__toolbar-box">
+                    <Bar>
                          <i onClick = {this.handleMultiDelete} class="toolbar-item fas fa-trash"></i>
                          <i class="toolbar-item fas fa-angle-right"></i>
                          <i class="toolbar-item fas fa-eye"></i>
@@ -24,8 +42,8 @@ class Toolbar extends React.Component {
                          <i class="toolbar-item fas fa-comment-dots"></i>
                          <i class="toolbar-item fas fa-bell"></i>
                          <i class="toolbar-item fas fa-star"></i>
-                    </div>
-               </div>
+                    </Bar>
+
          /*
         <div className = "toolbar">
            <div className = "toolbar__item">

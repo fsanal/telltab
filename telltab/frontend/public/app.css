@@ -16,6 +16,7 @@ html {
 
 
 body {
+      user-select: none;
       box-sizing: border-box;
       font-family: 'Muli', sans-serif;
       font-weight: 500;
@@ -182,6 +183,7 @@ body {
 }
 
 .toolbar-item {
+    cursor: pointer;
     height: 2rem;
     width: 2.1rem;
     margin-right: 4rem;

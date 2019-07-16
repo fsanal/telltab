@@ -24,16 +24,18 @@ const Feedback = styled.div`
 
 const VoteBox = styled.div` 
     width: 3rem;
-    font-size: 1.5rem;
-    color: #1EBE6B;
-    margin-left: 1rem;
-    margin-top: 2.5rem;
+    font-size: 2rem;
+    margin-left: 1.5rem;
+    margin-top: 2.3rem;
     text-align: center;
+    font-weight: 600;
+    color: #DADCE0;
 `
 
 const FeedbackContent = styled.div` 
-    margin-left: 3px;
+    margin-left: 1rem;
     width: 100%;
+    margin-top: 1rem;
 `
 
 const FeedbackTitle = styled.div` 
@@ -41,7 +43,6 @@ const FeedbackTitle = styled.div`
     color: #172B4D;
     font-weight: bold;
     height: 2rem;
-    margin-top: 0.5rem;
 `
 
 const FeedbackDescription = styled.div`
@@ -55,8 +56,8 @@ const Post = (props) => {
     return (
         <div>
             <Feedback border = {props.border}>
-                <VoteBox onClick = {props.onVote} >
-                        <i class="far fa-caret-square-up fa-2x"></i>
+                <VoteBox className = {props.voteCls} >
+                        <i onClick = {props.onVote} class="far fa-caret-square-up fa-2x"></i>
                         <div>{props.numVotes}</div>
                 </VoteBox>
                 <FeedbackContent onClick = {props.showPost}  onContextMenu = {props.onSelect} className = "feedback__content">

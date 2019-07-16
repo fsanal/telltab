@@ -16,7 +16,19 @@ var userSchema = new Schema({
 	notificationPref: {type: [Boolean]},
 	url: String,
 	imageUrl: String,
-	customFields: { type: [ObjectId], index: true, ref: 'CustomField'}
+	customFields: { type: [ObjectId], index: true, ref: 'CustomField'},
+	facebook: {
+		id: String,
+		token: String,
+		name: String,
+		email: String
+	},
+	google: {
+		id: String,
+		token: String,
+		name: String,
+		email: String
+	}
 });
 
 var esClient = new elasticsearch.Client({host: 'https://tr0wmngsvx:sv307a66pr@tt-5489597012.us-east-1.bonsaisearch.net:443'});

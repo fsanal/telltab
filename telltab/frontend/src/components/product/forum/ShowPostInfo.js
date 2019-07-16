@@ -8,7 +8,7 @@ import { reduxForm, Field } from 'redux-form';
 import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions/Post_Actions';
 import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
 class ShowPostInfo extends React.Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             showForm: false
@@ -31,8 +31,8 @@ class ShowPostInfo extends React.Component {
             return this.props.currentPost.tags.map(tag => {
                 return (
                     <div>
-                        <h4 key = {tag._id}>{tag.name}</h4>
-                        <Button onClick = {() => this.handleDeleteTag(tag)}>delete tag</Button>
+                        <h4 key={tag._id}>{tag.name}</h4>
+                        <Button onClick={() => this.handleDeleteTag(tag)}>delete tag</Button>
                     </div>
                 )
             })
@@ -41,38 +41,38 @@ class ShowPostInfo extends React.Component {
 
     onSubmit = (formValues) => {
         this.props.editPost(formValues);
-     }
- 
-     renderInput = ({input, label, meta}) => {
-         return(
-             <Form.Group>
-                 <Form.Label>{label}</Form.Label>
-                 <Form.Control {...input} type = "text" />
-             </Form.Group>
-         )
-     }
- 
-     renderForm = (title) => {
-         return(
-             <Form onSubmit = {this.props.handleSubmit(this.onSubmit)}>
-                 <Field name = "title" component = {this.renderInput} label = "Title" />
-                 <Field name = "body" component = {this.renderInput} label = "Body" />
-                 <Button onClick = {this.props.onHide} variant="primary" type="submit">Submit</Button>
-             </Form>
-         )
-     }
+    }
+
+    renderInput = ({ input, label, meta }) => {
+        return (
+            <Form.Group>
+                <Form.Label>{label}</Form.Label>
+                <Form.Control {...input} type="text" />
+            </Form.Group>
+        )
+    }
+
+    renderForm = (title) => {
+        return (
+            <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                <Field name="title" component={this.renderInput} label="Title" />
+                <Field name="body" component={this.renderInput} label="Body" />
+                <Button onClick={this.props.onHide} variant="primary" type="submit">Submit</Button>
+            </Form>
+        )
+    }
 
     renderPost = () => {
-        if (this.props.currentPost){
-            const {title, body, author, tags} = this.props.currentPost;
+        if (this.props.currentPost) {
+            const { title, body, author, tags } = this.props.currentPost;
             if (this.state.showForm) {
-                return(
+                return (
                     <>
                         {this.renderForm(title)}
                     </>
                 )
             } else {
-                return(
+                return (
                     <div>
                         <h3>
                             {body}
@@ -83,7 +83,7 @@ class ShowPostInfo extends React.Component {
                         {this.renderTags()}
                     </div>
                 )
-            } 
+            }
         } else {
             return (
                 <div></div>
@@ -91,27 +91,27 @@ class ShowPostInfo extends React.Component {
         }
     }
 
-    changeToForm(){
+    changeToForm() {
         this.setState((prevState) => ({
             showForm: !(prevState.showForm)
         }));
     }
 
-    changeToProfile(){
+    changeToProfile() {
         this.setState((prevState) => ({
             showForm: false
         }));
     }
-/*
-    onHide(){
-        {this.props.onHide};
-        this.changeToProfile();
-    }
-
-    */
+    /*
+        onHide(){
+            {this.props.onHide};
+            this.changeToProfile();
+        }
+    
+        */
     renderEdit = () => {
-        return(
-            <Button onClick = {() => {this.changeToForm()}}>Edit</Button>
+        return (
+            <Button onClick={() => { this.changeToForm() }}>Edit</Button>
         )
     }
 
@@ -126,7 +126,7 @@ class ShowPostInfo extends React.Component {
     } 
     
     renderBody = () => {
-        return(
+        return (
             <>
                 {this.renderPost()}
                 {this.renderEdit()}
@@ -134,44 +134,51 @@ class ShowPostInfo extends React.Component {
         )
     }
 
+    //Comment Rendering
+
     commentSubmit = (formValues) => {
         this.props.createComment(formValues);
     }
 
     replySubmit = (formValues) => {
-        this.props.createReply(formValues);
+        this.props.createReply(formValues) //reset form after successful submit?
     }
 
     renderCommentInput = () => {
         return (
             <div>
-                <SingleField onSubmit={this.props.handleSubmit(this.commentSubmit)} name={"content"}
-                renderInput={this.renderInput} title={'Comment'} description={'Add a comment...'} submitText={'Post'}/>
+                <SingleField onSubmit={this.props.handleSubmit(this.commentSubmit)} name={"commentContent"}
+                    renderInput={this.renderInput} title={'Comment'} submitText={'Post'} />
             </div>
         );
     }
 
-    //Replace with a CommentList.js?
+    renderReplyInput(comment) {
+        if (this.props.currentComment !== undefined && this.props.currentComment !== null) {
+            if (this.props.currentComment._id == comment._id) {
+                return (
+                    <div>
+                        <SingleField onSubmit={this.props.handleSubmit(this.replySubmit)} name={`replyContent`}
+                                    renderInput={this.renderInput} title={''} submitText={'Reply'} />
+                    </div>
+                )
+            }
+        }
+    }
+
     renderComments = () => {
         return (
             this.props.comments.map(comment => {
                 return (
-
-                    // CAN REPLY CORRECTLY BUT WEIRD FIELD POPULATE BUGS
                     <div>
                         <Button onClick={() => this.props.selectComment(comment)}>
                             {comment.content}
                         </Button>
-                        <SingleField onSubmit={this.props.handleSubmit(this.replySubmit)} name={`content`}
-                        renderInput={this.renderInput} title={''} description={'Add a reply...'} submitText={'Reply'}/>
-
-                        {/* Why do they both have to be named content? */}
-
-                        {/*<Form onSubmit={this.props.handleSubmit(this.commentSubmit)}>
-                            <Field name="content" component={this.renderInput} />
-                            <Button onClick={this.props.onHide} variant="primary" type="submit">Reply</Button>
-                        </Form>*/}
-                    </div>)
+                        {
+                            this.renderReplyInput(comment)
+                        }
+                    </div>
+                );
             })
         );
     }
@@ -208,5 +215,5 @@ const mapStateToProps = (state) => {
 
 export default reduxForm({
     form: 'create_comment_form',
-    form: 'show_post_form'
+    postForm: 'show_post_form'
 })(connect(mapStateToProps, { editPost, createComment, retrieveComments, createReply, selectComment, deleteTag, deletePostTag })(ShowPostInfo))

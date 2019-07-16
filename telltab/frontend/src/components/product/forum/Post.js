@@ -6,6 +6,7 @@ import styled, {keyframes} from "styled-components";
 
 
 const Feedback = styled.div`
+    font-family: 'Rubik', sans-serif;
     margin-left: 2rem
     margin-bottom: 1rem; 
     cursor:pointer;
@@ -47,6 +48,7 @@ const FeedbackTitle = styled.div`
 const FeedbackDescription = styled.div`
     padding-top: 1.2rem;
     font-size: 2rem;
+    font-weight: 400;
 `
 
 

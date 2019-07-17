@@ -6,19 +6,19 @@ import styled, {keyframes} from "styled-components";
 
 
 const Feedback = styled.div`
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     margin-left: 2rem
-    margin-bottom: 1rem; 
+    margin-bottom: 0.7rem; 
     cursor:pointer;
     border: ${props => props.border};
     border-radius: 0.5rem;
     background-color: white;
     display: flex;
     color: black;
-    height: 10rem;
+    min-height: 7rem;
     width: 75rem;
     margin-left: 2rem;
-    box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
 `
 
 
@@ -26,29 +26,32 @@ const VoteBox = styled.div`
     width: 3rem;
     font-size: 2rem;
     margin-left: 1.5rem;
-    margin-top: 2.3rem;
+    margin-top: 1.2rem;
     text-align: center;
     font-weight: 600;
     color: #DADCE0;
 `
 
 const FeedbackContent = styled.div` 
-    margin-left: 1rem;
+    margin-left: 2rem;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+    color: #172B4D;
 `
 
 const FeedbackTitle = styled.div` 
     font-size: 2.3rem;
-    color: #172B4D;
-    font-weight: bold;
     height: 2rem;
+    font-weight: bold;
 `
 
 const FeedbackDescription = styled.div`
-    padding-top: 1.2rem;
-    font-size: 2rem;
+    padding-top: 0.7rem;
+    font-size: 2.3rem;
     font-weight: 400;
+    width: 50rem;
+    word-wrap: break-word;
 `
 
 
@@ -61,11 +64,11 @@ const Post = (props) => {
                         <i onClick = {props.onVote} class="far fa-caret-square-up fa-2x"></i>
                         <div>{props.numVotes}</div>
                 </VoteBox>
-                <FeedbackContent onClick = {props.showPost}  onContextMenu = {props.onSelect} className = "feedback__content">
+                <FeedbackContent onClick = {props.showPost}  onContextMenu = {props.onSelect}>
                     <FeedbackTitle>
                         {props.title}
                     </FeedbackTitle>
-                    <FeedbackDescription className = "feedback__content-description">
+                    <FeedbackDescription>
                         {props.body}
                     </FeedbackDescription>
                 </FeedbackContent>

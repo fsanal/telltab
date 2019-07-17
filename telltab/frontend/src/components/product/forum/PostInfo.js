@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createComment, editComment, deleteComment, retrieveComments, createReply, selectComment } from '../../../actions/global_actions/Comment_Actions';
+//import { createComment, editComment, deleteComment, retrieveComments, createReply, selectComment } from '../../../actions/global_actions/Comment_Actions';
 import VModal from '../../general/VModal';
 import SingleField from '../../general/SingleField';
 import { reduxForm, Field } from 'redux-form';
@@ -75,7 +75,8 @@ const InputContainer = styled.div`
     font-weight: 600;
     margin-top: ${props => props.marginTop};
 `
-
+//   <Button width = "10rem" >
+   // <Button width = "8rem">
 const Button = styled.button`
     background-color:#3c40c6;
     color: white;
@@ -114,9 +115,11 @@ const RightContainer = styled.div`
 `
 
 const AuthorContainer = styled.div`
-    padding-left: 1rem;
+    margin-left: 1rem;
     font-size: 2.5rem;
     height: 4rem;
+
+    
 `
 
 const Author = styled.span`
@@ -273,5 +276,4 @@ class PostInfo extends React.Component {
     export default reduxForm({
         form: 'create_comment_form',
         form: 'show_post_form'
-    })(connect(mapStateToProps, { editPost, createComment, editComment, deleteComment,
-        retrieveComments, createReply, selectComment, deleteTag, deletePostTag })(PostInfo))
+    })(connect(mapStateToProps, { editPost, deleteTag, deletePostTag })(PostInfo))

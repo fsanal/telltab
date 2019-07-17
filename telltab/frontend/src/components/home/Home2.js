@@ -18,18 +18,30 @@ const Background = styled.div`
     overflow: auto;
 `;
 
-const Box = styled.div`
-    background-color: white;
-    width: 90rem;
-    border: 3px solid #575fcf;
-    border-radius: 1rem;
-    left: 50%;
-    top: 10%;
+const BoxContainer = styled.div`
+    background-color: #F1F3F4;
+    width: 100rem;
+    margin-bottom: 5rem;
     position: absolute;
-    margin-left: -45rem;
+    top: 10%;
+    left: 50%;
+    margin-left: -50rem;
+    border-radius: 0.5rem;
+`
+
+
+const Box = styled.div`
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    background-color: white;
+    width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    border: #DADCE0 solid 0.05rem;
+    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
     :last-child {
         border: none;
     }
@@ -62,7 +74,6 @@ const Card = styled.div`
     height: ${props => props.height} 
     border-bottom: 0px solid #DADCE0;
     display: flex;
-
     :hover {
         background-color: ${props => props.hoverColor};
     }
@@ -71,6 +82,7 @@ const Card = styled.div`
 const Header = styled.div`
     color: #3c40c6;
     font-size: 5rem;
+    font-weight: bold;
     vertical-align: middle;
     line-height: 10rem;
     margin-left: 3rem;
@@ -86,6 +98,7 @@ const CardProductName = styled.div`
     vertical-align: middle;
     line-height: 6rem;
     margin-left: 5rem;
+    
 `
 
 
@@ -139,7 +152,7 @@ class Home2 extends React.Component {
                     <StyledLink  key = {product._id} to = {`/home/products/${product.name}/forum`} onClick = {() => {this.handleSelectProduct(product)}} >
                         <Card hoverColor = "#FAFBFC" height = "6rem">
                             <CardProductName>{product.name}</CardProductName>
-                            <Button marginLeft = "40%" marginTop = "1rem" height = "4rem" width = "4rem" onClick = {() => {this.handleDeleteProduct(product)}}>
+                            <Button marginLeft = "35%" marginTop = "1rem" height = "4rem" width = "4rem" onClick = {() => {this.handleDeleteProduct(product)}}>
                                 <i class="fas fa-trash"></i>
                             </Button>
                         </Card>
@@ -155,13 +168,15 @@ class Home2 extends React.Component {
         return (
             <>
                 <Background>
-                    <Box>   
-                        <Card height = "10rem" >
-                            <Header>Products</Header>
-                            <Button onClick = {() => this.handleOpenCreateModal()} marginLeft = "55rem" marginTop = "2.5rem" height = "5rem" width = "14rem">Create Product</Button>
-                        </Card>
-                        {this.renderList()}
-                    </Box>
+                    <BoxContainer>
+                        <Box>   
+                            <Card height = "10rem" >
+                                <Header>Products</Header>
+                                <Button onClick = {() => this.handleOpenCreateModal()} marginLeft = "45rem" marginTop = "2.5rem" height = "5rem" width = "14rem">Create Product</Button>
+                            </Card>
+                            {this.renderList()}
+                        </Box>
+                    </BoxContainer>
                 </Background>
                 <Modal height = "40rem" width = "65rem" renderContent = {this.renderCreate()} show = {this.state.showCreatePost} onDismiss = {() => this.handleCloseCreateModal()}/>
             </>

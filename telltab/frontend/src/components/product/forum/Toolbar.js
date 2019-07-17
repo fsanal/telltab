@@ -11,7 +11,8 @@ const Bar = styled.div`
      margin-left: auto;
      margin-right: auto;
      margin-bottom: 2rem;
-     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+     border: #DADCE0 solid 0.05rem;
+     box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
      width: 30rem;
 `
 

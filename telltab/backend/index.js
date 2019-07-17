@@ -22,7 +22,6 @@ const dbRoute =
 
 //mongoose.connect('mongodb://localhost:27017/myDatabase');
 
-
 // connects our back end code with the database
 mongoose.connect(dbRoute, { useNewUrlParser: true });
 

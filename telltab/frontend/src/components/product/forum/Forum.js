@@ -19,6 +19,7 @@ const ForumContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
+    margin-top: 2rem;
 `
 
 const LeftBox = styled.div`
@@ -35,13 +36,13 @@ const RightBox = styled.div`
 `
 
 const UtilityBox = styled.div`
-    background-color: #F4F5F7;
+    background-color: #F1F3F4; /*#F1F0F0; #F4F5F7;*/
     width: 35rem;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     > div:nth-of-type(1) {
         margin-top: 1rem;
     }
@@ -58,8 +59,8 @@ const Utility = styled.div`
     width: 30rem;
     background-color: white;
     border-radius: 0.5rem;
-    border: #DADCE0 solid 0.2rem;
-    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+    border: #DADCE0 solid 0.05rem;
+    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
 
 `
 
@@ -70,7 +71,7 @@ const UtilitySection = styled.div`
 const CreateContainer =  styled.div`
     display: flex;
     background-color: white
-    border: 4px solid #3c40c6;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
     cursor:pointer;
     margin-top: 2rem;
     margin-left: auto;
@@ -79,6 +80,7 @@ const CreateContainer =  styled.div`
     width: 17rem;
     align-items:center;
     border-radius: 3rem;
+    border: 1.5px solid #3c40c6;
 `
 
 const CreateContent = styled.div`

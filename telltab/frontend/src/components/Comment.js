@@ -7,7 +7,7 @@ import { Button, Form } from 'react-bootstrap';
 import { reduxForm, Field, reset } from 'redux-form';
 import { editPost, deletePostTag } from '../../actions/feedback_forum_actions/Post_Actions';
 import { deleteTag } from '../../actions/global_actions/Tag_Actions';
-class ShowPostInfo extends React.Component {
+class Comment extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -15,124 +15,16 @@ class ShowPostInfo extends React.Component {
         }
     }
 
-    renderTitle = () => {
-        if (this.props.currentPost) return this.props.currentPost.title;
-        return "";
-    }
-
-    handleDeleteTag = (tag) => {
-        console.log(tag);
-        console.log("ENTERED HERE")
-        this.props.deletePostTag(tag._id);
-    }
-
-    renderTags = () => {
-        if (this.props.currentPost) {
-            return this.props.currentPost.tags.map(tag => {
-                return (
-                    <div>
-                        <h4 key={tag._id}>{tag.name}</h4>
-                        <Button onClick={() => this.handleDeleteTag(tag)}>delete tag</Button>
-                    </div>
-                )
-            })
-        }
-    }
-
-    onSubmit = (formValues) => {
-        this.props.editPost(formValues);
-    }
-
-    renderInput = ({ input, label, meta }) => {
-        return (
-            <Form.Group>
-                <Form.Label>{label}</Form.Label>
-                <Form.Control {...input} type="text" />
-            </Form.Group>
-        )
-    }
-
-    renderForm = (title) => {
-        return (
-            <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-                <Field name="title" component={this.renderInput} label="Title" />
-                <Field name="body" component={this.renderInput} label="Body" />
-                <Button onClick={this.props.onHide} variant="primary" type="submit">Submit</Button>
-            </Form>
-        )
-    }
-
-    renderPost = () => {
-        if (this.props.currentPost) {
-            const { title, body, author, tags } = this.props.currentPost;
-            if (this.state.showForm) {
-                return (
-                    <>
-                        {this.renderForm(title)}
-                    </>
-                )
-            } else {
-                return (
-                    <div>
-                        <h3>
-                            {body}
-                        </h3>
-                        <h4>
-                            Author: George's Mom
-                        </h4>
-                        {this.renderTags()}
-                    </div>
-                )
-            }
-        } else {
-            return (
-                <div></div>
-            )
-        }
-    }
-
-    changeToForm() {
-        this.setState((prevState) => ({
-            showForm: !(prevState.showForm)
-        }));
-    }
-
-    changeToProfile() {
-        this.setState((prevState) => ({
-            showForm: false
-        }));
-    }
-    /*
-        onHide(){
-            {this.props.onHide};
-            this.changeToProfile();
-        }
     
-        */
-    renderEdit = () => {
-        return (
-            <Button onClick={() => { this.changeToForm() }}>Edit</Button>
-        )
-    }
-
     renderInput = ({ input, label, meta }) => {
-        const className = `field ${meta.error && meta.touched ? 'error' : ''}`
         return (
             <Form.Group>
                 <Form.Label>{label}</Form.Label>
                 <Form.Control {...input} type="text" />
             </Form.Group>
-        );
-    }
-
-    renderBody = () => {
-        return (
-            <>
-                {this.renderPost()}
-                {this.renderEdit()}
-            </>
         )
     }
+
 
     //Comment Rendering
 
@@ -148,8 +40,20 @@ class ShowPostInfo extends React.Component {
         this.props.editComment(formValues);
     }
 
+    /*
+    <Form onSubmit={this.props.onSubmit}>
+                <Form.Group controlId="formGeneralInput">
+                    <Form.Label>{this.props.title}</Form.Label>
+                    <Field name={this.props.name} component={this.props.renderInput} placeholder={this.props.description}/>
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    {this.props.submitText}
+                </Button>
+            </Form>
+    */
     renderCommentInput = () => {
         return (
+            
             <div>
                 <SingleField onSubmit={this.props.handleSubmit(this.commentSubmit)} name={"commentContent"}
                     renderInput={this.renderInput} title={'Comment'} submitText={'Post'} />
@@ -162,7 +66,7 @@ class ShowPostInfo extends React.Component {
             if (this.props.currentComment._id == comment._id) {
                 return (
                     <div>
-                        <SingleField onSubmit={this.props.handleSubmit(this.replySubmit)} name={`replyContent`}
+                        <SingleField form = "1" onSubmit={this.props.handleSubmit(this.replySubmit)} name={`replyContent`}
                             renderInput={this.renderInput} title={''} submitText={'Reply'} />
                     </div>
                 )
@@ -175,7 +79,7 @@ class ShowPostInfo extends React.Component {
             if (this.props.currentComment._id == comment._id) {
                 return (
                     <div>
-                        <SingleField onSubmit={this.props.handleSubmit(this.editCommentSubmit)} name={`editContent`}
+                        <SingleField form = "2" onSubmit={this.props.handleSubmit(this.editCommentSubmit)} name={`editContent`}
                             renderInput={this.renderInput} title={''} submitText={'Edit'} />
                     </div>
                 )
@@ -294,8 +198,6 @@ const mapStateToProps = (state) => {
 
 export default reduxForm({
     form: 'create_comment_form',
-    postForm: 'show_post_form'
 })(connect(mapStateToProps, {
-    editPost, createComment, retrieveComments, editComment, deleteComment,
-    createReply, selectComment, deleteTag, deletePostTag
-})(ShowPostInfo))
+    createComment, retrieveComments, editComment, deleteComment, createReply, selectComment
+})(Comment))

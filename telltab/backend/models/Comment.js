@@ -9,7 +9,6 @@ var commentSchema = new Schema({
 	parent: {type: ObjectId, ref: 'Comment'},
 	post: {type: ObjectId, ref: 'Post'},
 	sourcePost: {type: ObjectId, ref: 'Post'},
-	sourceComment: {type: ObjectId, ref: 'Comment'},
 	requirement: {type: ObjectId, ref: 'Requirement'},
 	newRelease: {type: ObjectId, ref: 'NewRelease'},
 	numVotes: Number,

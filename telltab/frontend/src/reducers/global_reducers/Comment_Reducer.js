@@ -2,6 +2,7 @@ import {
     CREATE_COMMENT,
     SELECT_COMMENT,
     DELETE_COMMENT,
+    EDIT_COMMENT,
     RETRIEVE_COMMENTS,
     CREATE_REPLY
 } from '../../actions/types/global_types';
@@ -12,8 +13,8 @@ const INITIAL_STATE = {
     comments: {}
 }
 
-export default ( state = INITIAL_STATE, action ) => {
-    let {currentComment, comments} = state;
+export default (state = INITIAL_STATE, action) => {
+    let { currentComment, comments } = state;
     switch (action.type) {
         case CREATE_COMMENT:
             comments[action.payload._id] = action.payload;
@@ -27,10 +28,16 @@ export default ( state = INITIAL_STATE, action ) => {
         case SELECT_COMMENT:
             currentComment = action.payload;
             return { ...state, currentComment };
-        case DELETE_COMMENT:
-            comments = _.omit(comments, action.payload._id);
+        case EDIT_COMMENT:
+            comments[action.payload._id] = action.payload
             return { ...state, comments };
+        case DELETE_COMMENT:
+            currentComment = null;
+            comments = _.omit(comments, action.payload._id);
+            return { ...state, comments, currentComment };
         default:
             return state;
     }
 };
+
+//Do the organization here before setting state (helper)

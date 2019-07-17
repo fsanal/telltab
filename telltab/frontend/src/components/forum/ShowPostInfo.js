@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createComment, retrieveComments, createReply, selectComment } from '../../actions/global_actions/Comment_Actions';
+import { createComment, retrieveComments, editComment, deleteComment, createReply, selectComment } from '../../actions/global_actions/Comment_Actions';
 import VModal from '../general/VModal';
 import SingleField from '../general/SingleField';
 import { Button, Form } from 'react-bootstrap';
@@ -124,7 +124,7 @@ class ShowPostInfo extends React.Component {
             </Form.Group>
         );
     }
-    
+
     renderBody = () => {
         return (
             <>
@@ -144,6 +144,10 @@ class ShowPostInfo extends React.Component {
         this.props.createReply(formValues) //reset form after successful submit?
     }
 
+    editCommentSubmit = (formValues) => {
+        this.props.editComment(formValues);
+    }
+
     renderCommentInput = () => {
         return (
             <div>
@@ -159,27 +163,102 @@ class ShowPostInfo extends React.Component {
                 return (
                     <div>
                         <SingleField onSubmit={this.props.handleSubmit(this.replySubmit)} name={`replyContent`}
-                                    renderInput={this.renderInput} title={''} submitText={'Reply'} />
+                            renderInput={this.renderInput} title={''} submitText={'Reply'} />
                     </div>
                 )
             }
         }
     }
 
-    renderComments = () => {
-        return (
-            this.props.comments.map(comment => {
+    renderEditInput(comment) {
+        if (this.props.currentComment != undefined && this.props.currentComment != null) {
+            if (this.props.currentComment._id == comment._id) {
                 return (
                     <div>
-                        <Button onClick={() => this.props.selectComment(comment)}>
-                            {comment.content}
-                        </Button>
-                        {
-                            this.renderReplyInput(comment)
-                        }
+                        <SingleField onSubmit={this.props.handleSubmit(this.editCommentSubmit)} name={`editContent`}
+                            renderInput={this.renderInput} title={''} submitText={'Edit'} />
                     </div>
-                );
-            })
+                )
+            }
+        }
+    }
+
+    //Make comments its own component
+
+    orderComments(comments) {
+        let newComments = new Map();
+        comments.forEach(comment => {
+            if (!comment.parent) {
+                newComments.set(comment._id, [comment]);
+            } else {
+                if (newComments.has(comment.parent._id)) {
+                    let value = newComments.get(comment.parent._id);
+                    value.push(comment);
+                    newComments.set(comment.parent._id, value);
+                } else {
+                    newComments.set(comment.parent._id, [comment]);
+                }
+            }
+        })
+        return newComments;
+    }
+
+
+    renderComments = () => {
+        const commentMap = this.orderComments(this.props.comments);
+        let commentBlocks = [];
+        let iterator = commentMap[Symbol.iterator]();
+        for (let item of iterator) {
+            commentBlocks.push(item[1]);
+        }
+        //console.log(commentBlocks);
+        return (
+            <div>
+                {
+                    commentBlocks.map(block => {
+                        let temp = block.slice(1);
+                        return (
+                            <div>
+                                <Button onClick={() => this.props.selectComment(block[0])}>
+                                    {block[0].content}
+                                </Button>
+                                <Button onClick={() => this.props.selectComment(block[0])} variant="secondary" size="sm" >
+                                    Edit
+                                    {this.renderEditInput(block[0])}
+                                </Button>
+                                <Button onClick={() => this.props.deleteComment(block[0])} variant="secondary" size="sm">
+                                    Delete
+                                </Button>
+                                {
+                                    this.renderReplyInput(block[0])
+                                }
+                                {
+                                    temp.map(comment => {
+                                        return (
+                                            <div>
+                                                <hr></hr>
+                                                <Button onClick={() => this.props.selectComment(comment)}>
+                                                    {comment.content}
+                                                </Button>
+                                                <Button onClick={() => this.props.selectComment(comment)} variant="secondary" size="sm">
+                                                    Edit
+                                                    {this.renderEditInput(comment)}
+                                                </Button>
+                                                <Button onClick={() => this.props.deleteComment(comment)} variant="secondary" size="sm">
+                                                    Delete
+                                                </Button>
+                                                {
+                                                    this.renderReplyInput(comment)
+                                                }
+                                            </div>
+                                        );
+                                    })
+                                }
+                            </div>
+                        )
+                    })
+                }
+            </div>
         );
     }
 
@@ -216,4 +295,7 @@ const mapStateToProps = (state) => {
 export default reduxForm({
     form: 'create_comment_form',
     postForm: 'show_post_form'
-})(connect(mapStateToProps, { editPost, createComment, retrieveComments, createReply, selectComment, deleteTag, deletePostTag })(ShowPostInfo))
+})(connect(mapStateToProps, {
+    editPost, createComment, retrieveComments, editComment, deleteComment,
+    createReply, selectComment, deleteTag, deletePostTag
+})(ShowPostInfo))

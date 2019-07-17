@@ -4,18 +4,13 @@ const { ObjectId } = mongoose.Types;
 
 createComment = (req, res) => {
 	const { requirementID, postID, newReleaseID,
-			parentID, sourceCommentID, authorID, content } = req.body
+			parentID, authorID, content } = req.body
 	let comment = new Comment({
 		author: ObjectId(authorID),
 		created: new Date(),
 		content
 	})
-	if (parentID) {
-		comment.parent = ObjectId(parentID);
-	}
-	if (sourceCommentID) {
-		comment.sourceComment = ObjectId(sourceCommentID);
-	}
+	if (parentID) comment.parent = ObjectId(parentID);
 	if (postID) { 
 		comment.post = ObjectId(postID);
 		comment.sourcePost = ObjectId(postID);
@@ -47,7 +42,7 @@ editComment = (req, res) => {
 	const { content } = req.body;
 	let update = {};
 	if (content) update.content = content;
-	Comment.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, comment) => {
+	Comment.findByIdAndUpdate ( id, { $set: update }, { new: true }, (err, comment) => {
 		if (err) return res.json({success: false, error: err})
 		comment.populate('post').populate('requirement').populate('newRelease')
 		.populate('parent').populate('source').populate('author', (err, comment) => {
@@ -82,24 +77,8 @@ retrieveComments = (req, res) => {
 	query.populate('post').populate('requirement').populate('newRelease')
 	.populate('parent').populate('sourcePost').populate('sourceComment').populate('author').exec((err, comments) => {
 		if (err) return res.json({success: false, error: err });
-		let structuredComments = commentSortHelper(comments);
-		return res.json(structuredComments);
+		return res.json(comments);
 	});
-}
-
-commentSortHelper = (comments) => {
-	let result = {};
-	comments.forEach((comment) => {
-		if (comment.sourceComment == null) {
-			let key = String(comment._id);
-			result[key] = [comment];
-		} else {
-			let arr = result[String(comment.sourceComment._id)];
-			arr.push(comment);
-			result[String(comment.sourceComment._id)] = arr;
-		}
-	});
-	return result;
 }
 
 

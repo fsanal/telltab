@@ -30,6 +30,7 @@ export const createComment = (formValues) => async (dispatch, getState) => {
     let postID;
     if (currentPost) postID = currentPost._id; else return;
     delete Object.assign(formValues, {['content']: formValues['commentContent'] })['commentContent']; //replace key to match controller param
+    //console.log(formValues);
     const response = await api.post('/comments/create', { ...formValues, postID });
     dispatch({ type: CREATE_COMMENT, payload: response.data });
 }
@@ -38,30 +39,33 @@ export const createReply = (formValues) => async (dispatch, getState) => {
     const { currentPost } = getState().postState;
     const { currentComment } = getState().commentState;
     const { currentAuthor } = getState().auth;
-    let authorID, postID, parentID, sourceCommentID;
+    let authorID, postID, parentID;
     if (currentAuthor) authorID = currentAuthor.userId; //change later
     if (currentPost) postID = currentPost._id;
-    if (currentComment) parentID = currentComment._id;
     if (currentComment) {
-        if (currentComment.sourceComment == null) {
-            sourceCommentID = currentComment._id;
+        if (!currentComment.parent) {
+            parentID = currentComment._id;
         } else {
-            sourceCommentID = currentComment.sourceComment;
+            parentID = currentComment.parent._id;
         }
     }
     delete Object.assign(formValues, {['content']: formValues['replyContent'] })['replyContent'];
-    const response = await api.post('/comments/create', { ...formValues, authorID, postID, parentID, sourceCommentID});
+    const response = await api.post('/comments/create', { ...formValues, authorID, postID, parentID});
     dispatch({ type: CREATE_REPLY, payload: response.data });
 }
 
-export const editComment = (id, content) => async (dispatch, getState) => {
-    const response = await api.put(`/comments/edit/${id}`, { content });
+export const editComment = (formValues) => async (dispatch, getState) => {
+    const { currentComment } = getState().commentState;
+    if (!currentComment) return;
+    delete Object.assign(formValues, {['content']: formValues['editContent'] })['editContent'];
+    let id = currentComment._id;
+    const response = await api.put(`/comments/edit/${id}`, { ...formValues });
     dispatch({ type: EDIT_COMMENT, payload: response.data });
 }
 
 export const deleteComment = (comment) => async (dispatch, getState) => {
     let id = comment._id;
     const response = await api.delete(`/comments/delete/${id}`);
-    dispatch({ type: DELETE_COMMENT, payload: id });
+    dispatch({ type: DELETE_COMMENT, payload: response.data });
 }
 

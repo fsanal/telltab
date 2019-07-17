@@ -10,10 +10,14 @@ const List = styled.div`
     display: flex;
     width: 79rem;
     flex-direction: column;
-    background-color: #F4F5F7;
-    border-radius: 1rem;
+    background-color: #F1F3F4; /*#F1F0F0;*/
+    border-radius: 0.5rem;
     > div:nth-of-type(1) {
         margin-top: 1rem;
+    }
+
+    > div:last-of-type {
+        margin-bottom: 0.7rem;
     }
 `
 
@@ -25,7 +29,7 @@ class PostList extends React.Component {
 
 
     renderBorder(post){
-        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#DADCE0 solid 0.2rem";
+        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#DADCE0 solid 0.05rem";
         return border
     }
 

@@ -6,7 +6,7 @@ class SingleField extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.props.onSubmit}>
+            <Form form = {this.props.form} onSubmit={this.props.onSubmit}>
                 <Form.Group controlId="formGeneralInput">
                     <Form.Label>{this.props.title}</Form.Label>
                     <Field name={this.props.name} component={this.props.renderInput} placeholder={this.props.description}/>

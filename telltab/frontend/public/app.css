@@ -16,9 +16,11 @@ html {
 
 
 body {
+      user-select: none;
       box-sizing: border-box;
-      font-family: "Roboto", sans-serif;
-      font-weight: 400;
+      font-family: 'Muli', sans-serif;
+      font-weight: 500;
+      overflow: hidden;
   /*font-size: 16px;*/
       line-height: 1.7;
       color: #777;
@@ -27,6 +29,10 @@ body {
 
 #root {
     height: 100%;
+}
+
+.container {
+    display: flex;
 }
 
 .prodash{
@@ -53,30 +59,12 @@ body {
     text-align: center;
 }
 
-.fa-map {
-    height: 0px;
-    font-size: 2rem;
+
+.fa-cog { 
+    font-size: 5rem;
 }
 
-.fa-clipboard-list {
-    height: 0px;
-    font-size: 2rem;
-}
 
-.fa-chart-pie {
-    height: 0px;
-    font-size: 2rem;
-}
-
-.fa-briefcase {
-    height: 0px;
-    font-size: 2rem;
-}
-
-.fa-poll {
-    height: 0px;
-    font-size: 2rem;
-}
 
 .prodash__rightcontent{
     width:100%;
@@ -126,18 +114,6 @@ body {
     font-weight: bold;
 }
 
-.dashcontent__create {
-    display: flex;
-    background-color: #1EBE6B;
-    cursor:pointer;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-    margin-top: 2rem;
-    margin-left: 1rem;
-    height: 6rem;
-    width: 20rem;
-    align-items:center;
-    border-radius: 3rem;
-}
 
 .dashcontent__create:hover {
     background-color: rgb(30, 182, 101);
@@ -164,7 +140,7 @@ body {
 .dashcontent__toolbar {
     background-color: #F1F3F4;
     grid-row: 2 / 3;
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
     
 }
 
@@ -180,25 +156,27 @@ body {
 }
 
 .toolbar-item {
+    cursor: pointer;
     height: 2rem;
     width: 2.1rem;
     margin-right: 4rem;
-    font-size: 2rem;
-    margin-top: 1.5rem;
+    font-size: 2.2rem;
+    vertical-align: middle;
+    line-height: 5rem;
+    color: #575fcf; 
 }
 
 .toolbar-item:first-of-type {
-    margin-left: 4rem;
+    margin-left: 3.5rem;
 }
 
 .toolbar-item:hover {
-    color: #1EBE6B;
+    color: #3c40c6;
 }
 
 .dashcontent__boxes {
 
-    grid-column: 1 / 2;
-    grid-row: 2 / -1;
+    height: 0px;
     background-color: white;
     
 }
@@ -207,7 +185,7 @@ body {
  
     display: flex;
     flex-direction: column;
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
     grid-row: 3 / -1;
     background-color: #F4F5F7;
 }
@@ -270,9 +248,7 @@ body {
     width: 58rem;
 }
 
-.feedback__content:hover {
-    background-color: #FAFBFC;
-}
+
 
 .feedback__checkbox {
     height: 8.8rem;
@@ -298,10 +274,7 @@ body {
     color: #1EBE6B;
 }
 
-.fa-caret-square-up {
-    width: 4rem;
-    height: 0.1rem;
-}
+
 
 .feedback__votes > div {
     flex: 1;
@@ -409,13 +382,38 @@ body {
 
 
 .feedback-voted {
-    color: #1DB665;
+    color: #1DB665 !important;
 }
 
 .feedback__vote {
     
 }
 
+.productdash__search {
+    font-size: 3rem;
+    margin-left: 2rem;
+    
+}
+
+.forum__createicon {
+    color: #3c40c6;
+    font-size: 5rem;
+    vertical-align: middle;
+    line-height: 6rem;
+    margin-left: 1rem;
+}
+
+.purple {
+    color: #3c40c6;
+}
+
+
+.fa-user-circle{
+    color: #1EBE6B;
+    font-size: 5rem;
+    vertical-align: middle;
+    line-height: 4rem;
+}
 /* Shared */
 .loginBtn {
     box-sizing: border-box;

@@ -1,15 +1,32 @@
 import React from 'react';
 import Post from './Post'
 import { connect } from 'react-redux';
-import { retrievePosts, selectPost, deletePost, setCurrentPost, editPost } from '../../actions/feedback_forum_actions/Post_Actions';
-import { createVote, deleteVote } from '../../actions/feedback_forum_actions/Vote_Actions';
+import { retrievePosts, selectPost, deletePost, setCurrentPost, editPost } from '../../../actions/feedback_forum_actions/Post_Actions';
+import { createVote, deleteVote } from '../../../actions/feedback_forum_actions/Vote_Actions';
+import styled, {keyframes} from "styled-components";
+
+
+const List = styled.div`
+    display: flex;
+    width: 79rem;
+    flex-direction: column;
+    background-color: #F4F5F7;
+    border-radius: 1rem;
+    > div:nth-of-type(1) {
+        margin-top: 1rem;
+    }
+`
+
+
+
+
 class PostList extends React.Component {
 
 
 
-    renderFeedbackClass(post){
-        let cls = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "feedback-selected" : "feedback";
-        return cls
+    renderBorder(post){
+        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#DADCE0 solid 0.2rem";
+        return border
     }
 
     handleSelectPost = (post, e) => {
@@ -69,6 +86,7 @@ class PostList extends React.Component {
         this.props.editPost({progress})
     }
 
+
    
     renderList() {
         return this.props.posts.map(post => {
@@ -76,16 +94,16 @@ class PostList extends React.Component {
             onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} 
             onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
             voteCls = {this.renderVoteClass(post)} onVote = {() => {this.handleVote(post)}}
-            cls = {this.renderFeedbackClass(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} 
+            border = {this.renderBorder(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} 
             progress = {post.progress} changeProgress = {this.handleChangeProgress}/>
         })
     }
 
     render() {
         return (
-            <div className = "dashcontent__feedbacklist">
+            <List>
                 {this.renderList()}
-            </div>
+            </List>
         )
     }
 }

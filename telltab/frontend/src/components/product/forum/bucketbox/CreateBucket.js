@@ -1,7 +1,7 @@
 import React from 'react';
-import history from '../../../history';
-import { createBucket } from '../../../actions/feedback_forum_actions/Bucket_Actions';
-import { retrievePosts } from '../../../actions/feedback_forum_actions/Post_Actions';
+import history from '../../../../history';
+import { createBucket } from '../../../../actions/feedback_forum_actions/Bucket_Actions';
+import { retrievePosts } from '../../../../actions/feedback_forum_actions/Post_Actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 

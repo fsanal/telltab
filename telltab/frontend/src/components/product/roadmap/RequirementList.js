@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { retrieveRequirements } from '../../actions/roadmap_actions/Requirement_Actions';
+import { retrieveRequirements } from '../../../actions/roadmap_actions/Requirement_Actions';
 
 class RequirementList extends React.Component {
 

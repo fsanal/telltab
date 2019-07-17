@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createComment, retrieveComments, createReply, selectComment } from '../../../actions/global_actions/Comment_Actions';
+import { createComment, editComment, deleteComment, retrieveComments, createReply, selectComment } from '../../../actions/global_actions/Comment_Actions';
 import VModal from '../../general/VModal';
 import SingleField from '../../general/SingleField';
 import { reduxForm, Field } from 'redux-form';
@@ -272,4 +272,5 @@ class PostInfo extends React.Component {
     export default reduxForm({
         form: 'create_comment_form',
         form: 'show_post_form'
-    })(connect(mapStateToProps, { editPost, createComment, retrieveComments, createReply, selectComment, deleteTag, deletePostTag })(PostInfo))
+    })(connect(mapStateToProps, { editPost, createComment, editComment, deleteComment,
+        retrieveComments, createReply, selectComment, deleteTag, deletePostTag })(PostInfo))

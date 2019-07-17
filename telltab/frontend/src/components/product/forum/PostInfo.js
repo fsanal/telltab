@@ -129,7 +129,8 @@ const Author = styled.span`
 const TagContainer = styled.div`
     
 `
-
+//Notes:
+//Add borders to help visualize, think in boxes of vertical and horizontal, use padding for spacing, vertical-align: middle, idifferent line heights
 
 class PostInfo extends React.Component {
     constructor(){

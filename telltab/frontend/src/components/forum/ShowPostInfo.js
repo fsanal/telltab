@@ -7,6 +7,7 @@ import { Button, Form } from 'react-bootstrap';
 import { reduxForm, Field, reset } from 'redux-form';
 import { editPost, deletePostTag } from '../../actions/feedback_forum_actions/Post_Actions';
 import { deleteTag } from '../../actions/global_actions/Tag_Actions';
+
 class ShowPostInfo extends React.Component {
     constructor() {
         super();

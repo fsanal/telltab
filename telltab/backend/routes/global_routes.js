@@ -50,7 +50,14 @@ router.delete('/products/delete/:id', product_controller.deleteProduct);
 const customfield_controller = require('../controllers/CustomField_Controller');
 router.post('/customfields/create', customfield_controller.createCustomField);
 router.get('/customfields/get/:id', customfield_controller.getCustomField);
-router.put('/customfields/delete/:id', customfield_controller.deleteCustomField);
+router.delete('/customfields/delete/:id', customfield_controller.deleteCustomField);
+router.put('/customfields/edit/:id', customfield_controller.editCustomField);
+
+const globalfield_controller = require('../controllers/GlobalField_Controller');
+router.post('/globalfields/create', globalfield_controller.createGlobalField);
+router.get('/globalfields/get/:id', globalfield_controller.getGlobalField);
+router.delete('/globalfields/delete/:id', globalfield_controller.deleteGlobalField);
+router.put('/globalfields/edit/:id', globalfield_controller.editGlobalField);
 
 // Export API routes
 module.exports = router;

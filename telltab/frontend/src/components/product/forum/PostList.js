@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import { retrievePosts, selectPost, deletePost, setCurrentPost, editPost } from '../../../actions/feedback_forum_actions/Post_Actions';
 import { createVote, deleteVote } from '../../../actions/feedback_forum_actions/Vote_Actions';
 import styled, {keyframes} from "styled-components";
-
+import _ from 'lodash';
 
 const List = styled.div`
     display: flex;
     width: 79rem;
     flex-direction: column;
-    background-color: #F1F3F4; /*#F1F0F0;*/
+    background-color: #F4F5F7; /* #F1F3F4;*/ /*#F1F0F0;*/
     border-radius: 0.5rem;
     > div:nth-of-type(1) {
-        margin-top: 1rem;
+        margin-top: 2rem;
     }
 
     > div:last-of-type {
-        margin-bottom: 0.7rem;
+        margin-bottom: 2rem;
     }
+
 `
 
 
@@ -29,7 +30,7 @@ class PostList extends React.Component {
 
 
     renderBorder(post){
-        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#DADCE0 solid 0.05rem";
+        let border = (this.props.selectedPosts.hasOwnProperty(post._id)) ? "#3c40c6 solid 0.2rem" : "#BFBFBF solid 0.05rem";
         return border
     }
 
@@ -70,6 +71,11 @@ class PostList extends React.Component {
         let cls = (this.checkVote(post)) ? "feedback-voted" : "";
         return cls
     }
+
+    renderTags(post) {
+        let booba = post.tags.map(tag => tag.name);
+        return booba;
+    }
     
     handleVote = (post) => {
         let vote = this.checkVote(post);
@@ -94,7 +100,7 @@ class PostList extends React.Component {
    
     renderList() {
         return this.props.posts.map(post => {
-            return <Post post = {post} numVotes = {post.numVotes} showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} 
+            return <Post post = {post} tags = {this.renderTags(post)} numVotes = {post.numVotes} showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} 
             onSetCurrent = {() => this.handleSetCurrentPost(post)} onDelete = {() => {this.handleDeletePost(post)}} 
             onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
             voteCls = {this.renderVoteClass(post)} onVote = {() => {this.handleVote(post)}}

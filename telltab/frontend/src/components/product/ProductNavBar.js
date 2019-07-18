@@ -9,7 +9,7 @@ const NavContainer = styled.div`
     background-color: white;
     font-family: 'Muli', sans-serif;
     display: flex;
-    
+    margin-top: 1rem;
    
 `
 

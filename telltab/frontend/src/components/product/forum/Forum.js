@@ -36,18 +36,19 @@ const RightBox = styled.div`
 `
 
 const UtilityBox = styled.div`
-    background-color: #F1F3F4; /*#F1F0F0; #F4F5F7;*/
-    width: 35rem;
+    background-color: #F4F5F7; /*#F1F3F4;*/ /*#F1F0F0; #F4F5F7;*/
+    
+    width: 33rem;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
     border-radius: 0.5rem;
     > div:nth-of-type(1) {
-        margin-top: 1rem;
+        margin-top: 2rem;
     }
     > div:last-of-type {
-        margin-bottom: 1rem;
+        margin-bottom: 3rem;
     }
 `
 const Utility = styled.div`
@@ -59,7 +60,7 @@ const Utility = styled.div`
     width: 30rem;
     background-color: white;
     border-radius: 0.5rem;
-    border: #DADCE0 solid 0.05rem;
+    border: "#BFBFBF solid 0.03rem";
     box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
 
 `
@@ -152,6 +153,14 @@ class Forum extends React.Component {
             </>
         )
     }
+
+    renderAddTag() {
+        return (
+            <>
+                <AddTag onDismiss = {() => this.closeCreateTagModal()}/>
+            </>
+        )
+    }
     /*
     <div className="dashcontent__boxes">
                             <div className="dashcontent__create" onClick={this.openCreatePostModal}>
@@ -195,7 +204,7 @@ class Forum extends React.Component {
                             <PostList openCreateTagModal = {this.openCreateTagModal}  openShowPostModal = {this.openShowPostModal} />
                     </RightBox>
                 </ForumContainer>
-                
+                <Modal height = "40rem" width = "65rem" renderContent = {this.renderAddTag()} show = {this.state.showCreateTagModal} onDismiss = {() => this.closeCreateTagModal()}/>
                 <Modal height = "40rem" width = "65rem" renderContent = {this.renderCreatePost()} show = {this.state.showCreatePostModal} onDismiss = {() => this.closeCreatePostModal()}/>
                 <Modal height = "60rem" width = "100rem" renderContent = {this.renderPostInfo()} show = {this.state.showPostModal} onDismiss = {() => this.closeShowPostModal()}/>
            </>

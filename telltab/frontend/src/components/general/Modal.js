@@ -30,7 +30,7 @@ export const ModalBox = styled.div`
     right: 0;
     width: ${props => props.width};
     height: ${props => props.height};
-    overflow: hidden;
+    overflow-y: auto;
     padding:16px;
     margin: 8rem auto;
     box-sizing:border-box;

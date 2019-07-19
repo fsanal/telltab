@@ -10,6 +10,8 @@ import Login from './authentication/Login';
 import Logout from './authentication/Logout';
 import Signup from './authentication/Signup';
 
+import Comment from './Comment';
+
 const App = () => {
     return (<>
                 <Router history = {history}>

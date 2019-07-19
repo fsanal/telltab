@@ -73,7 +73,8 @@ class ForumUtility extends React.Component {
         return(
             <SearchBarContainer color = {this.state.color} border = {this.state.border}>
                 <i className={this.state.className}>search</i>
-                <SearchBar placeholder = {this.state.placeholder} color = {this.state.color} onBlur = {() => this.onBlur()} onFocus = {() => this.onFocus()} onChange = {this.handleChange} type = "text" />
+                <SearchBar placeholder = {this.state.placeholder} color = {this.state.color} 
+                onBlur = {() => this.onBlur()} onFocus = {() => this.onFocus()} onChange = {this.handleChange} type = "text" />
             </SearchBarContainer>
         )
     }   

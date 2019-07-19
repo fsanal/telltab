@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import { createComment, editComment, deleteComment, retrieveComments, createReply, selectComment } from '../../../actions/global_actions/Comment_Actions';
 import VModal from '../../general/VModal';
-import SingleField from '../../general/SingleField';
+import Comment from '../../Comment';
 import { reduxForm, Field } from 'redux-form';
 import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions/Post_Actions';
-import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
+import { deleteTag } from '../../../actions/global_actions/Tag_Actions';
 import styled, { keyframes } from "styled-components";
 
 
@@ -105,7 +104,6 @@ const Container = styled.div`
     margin-right: 3rem;
 `
 
-
 const LeftContainer = styled.div`
     width: 65rem;
     margin-top: 2rem;
@@ -133,7 +131,7 @@ const TagContainer = styled.div`
     
 `
 //Notes:
-//Add borders to help visualize, think in boxes of vertical and horizontal, use padding for spacing, vertical-align: middle, idifferent line heights
+//Add borders to help visualize, think in boxes of vertical and horizontal, use padding for spacing, vertical-align: middle, different line heights
 
 class PostInfo extends React.Component {
     constructor(){
@@ -216,6 +214,7 @@ class PostInfo extends React.Component {
                                 <InputContainer marginTop = "0.5rem">
                                     <StyledInput2 spellCheck = "false" type= "textarea" rows="1" cols="50" defaultValue = {body}/>
                                 </InputContainer>
+                                <Comment/>
                             </LeftContainer>
                             <RightContainer>
                             </RightContainer>
@@ -260,20 +259,17 @@ class PostInfo extends React.Component {
         return(
             <>
                 {this.renderBody()}
-            </>
+            </> 
         )
     }
 }
 
     const mapStateToProps = (state) => {
         return {
-            currentComment: state.commentState.currentComment,
             currentPost: state.postState.currentPost,
-            comments: Object.values(state.commentState.comments)
         }
     }
     
     export default reduxForm({
-        form: 'create_comment_form',
         form: 'show_post_form'
     })(connect(mapStateToProps, { editPost, deleteTag, deletePostTag })(PostInfo))

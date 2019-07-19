@@ -48,20 +48,13 @@ export const retrievePosts = (search) => async (dispatch, getState) => {
     dispatch({type: RETRIEVE_POSTS, payload: response.data});
 } 
 
-export const deletePost = (post) => async (dispatch, getState) => {
+export const deletePost = (id) => async (dispatch, getState) => {
     const { secret } = getState().auth;
-    let id = post._id;
     const response = await api.delete(`/posts/delete/${id}`);
     dispatch({ type: DELETE_POST, payload: response.data });
 }
 
-export const editPost = (formValues) => async (dispatch, getState) => {
-    const { currentPost } = getState().postState;
-    if (!currentPost) return;
-    console.log(formValues);
-    console.log("BEFORE EDIT");
-    console.log(currentPost);
-    let id = currentPost._id;
+export const editPost = (id, formValues) => async (dispatch, getState) => {
     const response = await api.put(`/posts/edit/${id}`, formValues);
     dispatch({ type: EDIT_POST, payload: response.data });
 }
@@ -78,11 +71,8 @@ export const addPostTag = (tagID) => async (dispatch, getState) => {
     dispatch({ type: ADD_POST_TAG, payload: response.data });
 }
 
-export const deletePostTag = (tagID) => async (dispatch, getState) => {
+export const deletePostTag = (id, tagID) => async (dispatch, getState) => {
     // const { secret } = getState().auth;
-    const { currentPost } = getState().postState;
-    let id;
-    if (currentPost) id = currentPost._id; else return;
     const response = await api.put(`/posts/delete_tag/${id}`, {tagID});
     dispatch({ type: DELETE_POST_TAG, payload: response.data });
  }

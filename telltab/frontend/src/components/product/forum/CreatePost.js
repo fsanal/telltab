@@ -3,8 +3,7 @@ import { createPost } from '../../../actions/feedback_forum_actions/Post_Actions
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import styled from "styled-components";
-
-
+import Modal from '../../general/Modal';
 
 const CreateHeader = styled.div`
     font-size: 4rem;
@@ -98,12 +97,20 @@ class CreatePost extends React.Component {
         )
     }
 
+    renderBody(){
+        return(
+            <>
+                <CreateHeader>Create a Post</CreateHeader>
+                {this.renderForm()}
+            </>
+        )
+    }
+
 
     render(){
         return(
             <>  
-                <CreateHeader>Create a Post</CreateHeader>
-                {this.renderForm()}
+                <Modal height = "40rem" width = "65rem" renderContent = {this.renderBody()} show = {this.props.show} onDismiss = {this.props.onDismiss}/>
             </>
         )
     }   

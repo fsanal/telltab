@@ -3,6 +3,7 @@ import styled, {keyframes} from "styled-components";
 import ProductSideNav from './ProductSideNav';
 import ProductNavBar from './ProductNavBar'
 import Forum from './forum/Forum';
+import PostInfo from './forum/PostInfo';
 import { Router, Route } from 'react-router-dom';
 import history from '../../history';
 //import Auth from './Auth';
@@ -24,7 +25,8 @@ const ProductDash = () => {
             <ProductContainer>
                 <ProductNavBar/>
                 <Router history = {history}>
-                    <Route path = "/home/products/:name/forum" component = {Forum}/>
+                    <Route path = "/products/:productID/forum" component = {Forum}/>
+                    <Route path = "/products/:productID/forum/p/:postID" component = {PostInfo}/>
                 </Router>
             </ProductContainer>
         </>

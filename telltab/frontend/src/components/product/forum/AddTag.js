@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Modal from '../../general/Modal';
 import styled from "styled-components";
-
+import { withRouter } from 'react-router';
 
 
 const TagHeader = styled.div`
@@ -77,14 +77,12 @@ class AddTag extends React.Component {
         }
     }
 
-    onSubmit = (formValues) => {    
+    onSubmit = (formValues) => {
+        let productID = this.props.match.params.productID;    
         this.props.onDismiss();
-        this.props.findTag(formValues.name).then((result) => {
-           if (result) {
-               console.log("TAG ID:")
-               console.log("result._id");
-           } else {
-               this.props.createTag(formValues).then((result2) => {
+        this.props.findTag(productID, formValues).then((result) => {
+           if (!result) {
+               this.props.createTag(productID, formValues).then((result2) => {
                    this.props.addPostTag(result2._id);
                })
            }
@@ -114,16 +112,16 @@ class AddTag extends React.Component {
     render(){
         return(
             <>
-                {this.renderForm()}
+                <Modal height = "40rem" width = "65rem" renderContent = {this.renderForm()} show = {this.props.show} onDismiss = {this.props.onDismiss}/>
             </>
         )
     }
 }
 
 
-export default reduxForm({
+export default withRouter(reduxForm({
     form: 'create_tag_form'
-})(connect(null, { createTag, findTag, addPostTag })(AddTag))
+})(connect(null, { createTag, findTag, addPostTag })(AddTag)))
 
 
 

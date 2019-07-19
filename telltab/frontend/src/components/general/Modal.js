@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { keyframes } from "styled-components";
-
  
 const moveInTop = keyframes`
     0% {

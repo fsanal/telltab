@@ -4,6 +4,7 @@ export const RETRIEVE_PRODUCTS = 'RETRIEVE_PRODUCTS';
 export const SELECT_PRODUCT = 'SELECT_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
+export const GET_PRODUCT = 'GET_PRODUCT';
 
 
 //tag action types

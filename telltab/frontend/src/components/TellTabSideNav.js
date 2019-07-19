@@ -38,7 +38,7 @@ const Logo = styled.span`
 const TellTabSideNav = () => {
     return (
         <SideNav>
-            <StyledLink margintop = "3rem" to = "/home/products">
+            <StyledLink margintop = "3rem" to = "/">
                     <Logo>t</Logo>
             </StyledLink>
             <StyledLink margintop = "55rem" to = "/products">

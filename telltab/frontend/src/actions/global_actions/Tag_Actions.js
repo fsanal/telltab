@@ -14,27 +14,18 @@ export const selectTag = (tag) => {
     }
 }
 
-export const findTag = (name) => async (dispatch, getState) => {
-    const { currentProduct } = getState().productState;
-    let productID;
-    if (currentProduct) productID = currentProduct._id;
-    const response = await api.post('/tags/find', { name, productID });
+export const findTag = (productID, formValues) => async () => {
+    const response = await api.post('/tags/find', { ...formValues, productID });
     return response.data;
 }
 
-export const createTag = (formValues) => async (dispatch, getState) => {
-    const { currentProduct } = getState().productState;
-    let productID;
-    if (currentProduct) productID = currentProduct._id; else return;
+export const createTag = (productID, formValues) => async (dispatch) => {
     const response = await api.post('/tags/create', { ...formValues, productID });
     dispatch({type: CREATE_TAG, payload: response.data});
     return response.data;
 }
 
-export const retrieveTags = () => async (dispatch, getState) => {
-    const { currentProduct } = getState().productState;
-    let productID;
-    if (currentProduct) productID = currentProduct._id; else return;
+export const retrieveTags = (productID) => async (dispatch) => {
     const response = await api.post(`/tags/retrieve`, { productID });
     dispatch({type: RETRIEVE_TAGS, payload: response.data});
 } 
@@ -42,7 +33,6 @@ export const retrieveTags = () => async (dispatch, getState) => {
 export const deleteTag = (tag) => async (dispatch, getState) => {
     const { secret } = getState().auth;
     let id = tag._id;
-    console.log("ENTERED DELETE TAG");
     const response = await api.delete(`/tags/delete/${id}`);
     dispatch({ type: DELETE_TAG, payload: response.data });
 }

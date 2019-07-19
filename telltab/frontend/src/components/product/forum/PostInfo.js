@@ -1,11 +1,106 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import VModal from '../../general/VModal';
-import Comment from '../../Comment';
-import { reduxForm, Field } from 'redux-form';
+import history from '../../../history';
+import Modal from '../../general/Modal';
 import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions/Post_Actions';
-import { deleteTag } from '../../../actions/global_actions/Tag_Actions';
-import styled, { keyframes } from "styled-components";
+import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
+import styled from "styled-components";
+
+
+
+class PostInfo extends React.Component {
+    constructor(){
+        super();
+        this.titleInput = React.createRef();
+        this.bodyInput = React.createRef();
+    }
+
+    handleDeleteTag = (tag) => {
+        console.log(tag);
+        this.props.deletePostTag(this.props.post._id, tag._id);
+    }
+
+    renderTags = (tags) => {
+        return tags.map(tag => {
+            return (
+                <TagSubContainer>
+                    <Tag key = {tag._id}>{tag.name}</Tag>
+                    <Button width = "2.3rem" height = "2.3rem" onClick = {() => this.handleDeleteTag(tag)}>X</Button>
+                </TagSubContainer>
+            )
+        })
+    }
+
+    editTitle(e) {
+        if (e.target.value != this.props.post.title) {
+            this.props.editPost(this.props.post._id, {title: e.target.value})
+        }
+    }
+
+    editBody(e) {
+        if (e.target.value != this.props.post.body) {
+            this.props.editPost(this.props.post._id, {body: e.target.value})
+        }
+    }
+
+    renderPostInfo() {
+        const {title, body, author, tags} = this.props.post;
+        return (
+            <>
+                <Container>
+                    <InputContainer marginTop = "2rem">
+                        <StyledInput ref={this.titleInput} onKeyPress = {(e) => {if (e.key === 'Enter') this.titleInput.current.blur();}} onBlur = {e => this.editTitle(e)}
+                        spellCheck = "false" defaultValue = {title}/>
+                    </InputContainer>
+                    <SplitContainer>
+                        <LeftContainer>
+                            <AuthorContainer>
+                                <i class="fas fa-user-circle"></i>
+                                <Author>George Bumass</Author>
+                            </AuthorContainer>
+                            <CreateHeader>Description:</CreateHeader>
+                            <InputContainer marginTop = "0.5rem">
+                                <StyledInput2 ref={this.bodyInput} onKeyPress = {(e) => {if (e.key === 'Enter') this.bodyInput.current.blur();}} onBlur = {e => this.editBody(e)} 
+                                spellCheck = "false" type= "textarea" rows="1" cols="50" defaultValue = {body}/>
+                            </InputContainer>
+                        </LeftContainer>
+                        <RightContainer>
+                            {this.renderTags(tags)}
+                        </RightContainer>
+                    </SplitContainer>
+                </Container>
+            </>
+        )
+    }
+
+    goBackToForum() {
+        history.push(window.location.pathname.slice(0, window.location.pathname.lastIndexOf('/') - 2))
+    }
+
+    render(){
+        if (!this.props.post) {
+            return(
+                <div>
+
+                </div>
+            )
+        }
+        return(
+            <>
+                <Modal show = {true} onDismiss = {this.goBackToForum}
+                height = "60rem" width = "100rem" renderContent = {this.renderPostInfo()}/>
+            </>
+        )
+    }
+}
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        post: state.postState.posts[ownProps.match.params.postID],
+    }
+}
+
+export default connect(mapStateToProps, { editPost, deleteTag, deletePostTag })(PostInfo)
 
 
 const CreateHeader = styled.div`
@@ -155,152 +250,3 @@ const Tag = styled.div`
     font-size: 2rem;
     text-align: center;
 `
-//Notes:
-//Add borders to help visualize, think in boxes of vertical and horizontal, use padding for spacing, vertical-align: middle, different line heights
-
-class PostInfo extends React.Component {
-    constructor(){
-        super();
-        this.state = {
-            showForm: false
-        }
-    }
-
-    renderTitle = () => {
-        if (this.props.currentPost) return this.props.currentPost.title;
-        return "";
-    }
-
-    handleDeleteTag = (tag) => {
-        this.props.deletePostTag(tag._id);
-    }
-
-    /*
-    <Button onClick = {() => this.handleDeleteTag(tag)}>X</Button>
-    */
-    renderTags = () => {
-        if (this.props.currentPost) {
-            return this.props.currentPost.tags.map(tag => {
-                return (
-                    <TagSubContainer>
-                        <Tag key = {tag._id}>{tag.name}</Tag>
-                        <Button width = "2.3rem" height = "2.3rem" onClick = {() => this.handleDeleteTag(tag)}>X</Button>
-                    </TagSubContainer>
-                )
-            })
-        }
-    }
-
-    onSubmit = (formValues) => {
-        this.props.onDismiss();
-        this.props.editPost(formValues);
-     }
- 
-     /*
-     renderInput = ({input, label, meta}) => {
-         return(
-             <Form.Group>
-                 <Form.Label>{label}</Form.Label>
-                 <Form.Control {...input} type = "text" />
-             </Form.Group>
-         )
-     }
- */
-     renderForm = (title) => {
-         return(
-             <>
-                 <InputContainer>
-                    <StyledInput/>
-                 </InputContainer>
-                 
-             </>
-         )
-     }
-
-    renderPost = () => {
-        if (this.props.currentPost){
-            const {title, body, author, tags} = this.props.currentPost;
-            if (this.state.showForm) {
-                return(
-                    <>
-                        {this.renderForm(title)}
-                    </>
-                )
-            } else {
-                return(
-                    <>
-                        <Container>
-                            <InputContainer marginTop = "2rem">
-                                <StyledInput  spellCheck = "false" defaultValue = {title}/>
-                            </InputContainer>
-                            <SplitContainer>
-                                <LeftContainer>
-                                    <AuthorContainer>
-                                        <i class="fas fa-user-circle"></i>
-                                        <Author>George Bumass</Author>
-                                    </AuthorContainer>
-                                    <CreateHeader>Description:</CreateHeader>
-                                    <InputContainer marginTop = "0.5rem">
-                                        <StyledInput2 spellCheck = "false" type= "textarea" rows="1" cols="50" defaultValue = {body}/>
-                                    </InputContainer>
-                                    <Comment />
-                                </LeftContainer>
-                                <RightContainer>
-                                    {this.renderTags()}
-                                </RightContainer>
-                            </SplitContainer>
-                        </Container>
-                    </>
-                )
-            } 
-        } else {
-            return (
-                <div></div>
-            )
-        }
-    }
-
-    changeToForm(){
-        this.setState((prevState) => ({
-            showForm: !(prevState.showForm)
-        }));
-    }
-
-    changeToProfile(){
-        this.setState((prevState) => ({
-            showForm: false
-        }));
-    }
-
-    renderEdit = () => {
-        return(
-            <Button onClick = {() => {this.changeToForm()}}>Edit</Button>
-        )
-    }
-
-    renderBody = () => {
-        return(
-            <>
-                {this.renderPost()}
-            </>
-        )
-    }
-
-    render(){
-        return(
-            <>
-                {this.renderBody()}
-            </> 
-        )
-    }
-}
-
-    const mapStateToProps = (state) => {
-        return {
-            currentPost: state.postState.currentPost,
-        }
-    }
-    
-    export default reduxForm({
-        form: 'show_post_form'
-    })(connect(mapStateToProps, { editPost, deleteTag, deletePostTag })(PostInfo))

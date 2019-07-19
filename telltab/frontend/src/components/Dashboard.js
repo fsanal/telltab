@@ -10,8 +10,8 @@ const Dashboard = () => {
     return (<div className = "container">
                 <TellTabSideNav/>
                 <Router history = {history}>
-                    <Route path = "/home/products" exact component = {Home2}/>
-                    <Route path = "/home/products/:name" component = {ProductDash}/>
+                    <Route path = "/" exact component = {Home2}/>
+                    <Route path = "/products" component = {ProductDash}/>
                 </Router>  
             </div>) 
 }

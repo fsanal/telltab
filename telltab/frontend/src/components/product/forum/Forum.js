@@ -11,9 +11,85 @@ import { retrievePosts } from '../../../actions/feedback_forum_actions/Post_Acti
 import { retrieveBuckets } from '../../../actions/feedback_forum_actions/Bucket_Actions';
 import { retrieveComments } from '../../../actions/global_actions/Comment_Actions';
 import { retrieveVotes } from '../../../actions/feedback_forum_actions/Vote_Actions';
+import { getProduct } from '../../../actions/global_actions/Product_Actions';
 import history from '../../../history';
 import styled, {keyframes} from "styled-components";
 import Modal from '../../general/Modal';
+
+class Forum extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            showCreatePostModal: false,
+            showCreateTagModal: false,
+        };
+    }
+
+    componentDidMount() {
+        this.props.getProduct(this.props.match.params.productID).then((result) => {
+            this.props.getProductForum(this.props.product._id).then((result2) => {
+                    this.props.retrievePosts();
+                    this.props.retrieveBuckets();
+                    this.props.retrieveVotes();
+            });
+        })
+    }
+
+
+    openCreatePostModal = () => {
+        this.setState({ showCreatePostModal: true })
+    }
+
+    closeCreatePostModal = () => {
+        this.setState({ showCreatePostModal: false })
+    }
+
+    openCreateTagModal = () => {
+        this.setState({showCreateTagModal: true})
+    }
+
+    closeCreateTagModal = () => {
+        this.setState({showCreateTagModal: false})
+    }
+
+    render(){
+        return (
+            <>
+                <ForumContainer>
+                    <LeftBox>
+                        <UtilityBox>
+                            <Toolbar/>
+                            <Utility>
+                                <UtilitySection height = "10rem">
+                                    <CreateContainer onClick={this.openCreatePostModal}>
+                                        <i className="material-icons forum__createicon">add</i>
+                                        <CreateContent >Create Post</CreateContent>
+                                    </CreateContainer>
+                                </UtilitySection>
+                            </Utility>
+                        </UtilityBox>
+                    </LeftBox>
+                    <RightBox>
+                            <PostList openCreateTagModal = {this.openCreateTagModal}  openShowPostModal = {this.openShowPostModal} />
+                    </RightBox>
+                </ForumContainer>
+                <AddTag show = {this.state.showCreateTagModal} onDismiss = {() => this.closeCreateTagModal()}/>
+                <CreatePost show = {this.state.showCreatePostModal} onDismiss = {() => this.closeCreatePostModal()}/>
+           </>
+        )
+    }
+}
+
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        product: state.productState.products[ownProps.match.params.productID],
+    }
+}
+
+
+export default connect(mapStateToProps, { getProductForum, retrievePosts, retrieveBuckets, retrieveVotes, retrieveComments, getProduct })(Forum);
+
 
 const ForumContainer = styled.div`
     display: flex;
@@ -93,125 +169,3 @@ const CreateContent = styled.div`
 `
 
 
-class Forum extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            showCreatePostModal: false,
-            showCreateTagModal: false,
-            showPostModal: false
-        };
-    }
-
-    componentDidMount() {
-        const promise = this.props.getProductForum();
-        promise.then((result) => {
-            this.props.retrievePosts();
-            this.props.retrieveBuckets();
-            this.props.retrieveVotes();
-        });
-    }
-
-
-    openCreatePostModal = () => {
-        this.setState({ showCreatePostModal: true })
-    }
-
-    closeCreatePostModal = () => {
-        this.setState({ showCreatePostModal: false })
-    }
-
-    openCreateTagModal = () => {
-        this.setState({showCreateTagModal: true})
-    }
-
-    closeCreateTagModal = () => {
-        this.setState({showCreateTagModal: false})
-    }
-
-    openShowPostModal = () => {
-        this.setState({showPostModal: true})
-        this.props.retrieveComments();
-    }
-
-    closeShowPostModal = () => {
-        this.setState({showPostModal: false})
-    }
-
-    renderCreatePost() {
-        return (
-            <>
-                <CreatePost onDismiss = {() => this.closeCreatePostModal()}/>
-            </>
-        )
-    }
-
-    renderPostInfo() {
-        return (
-            <>
-                <PostInfo onDismiss = {() => this.closeShowPostModal()}/>
-            </>
-        )
-    }
-
-    renderAddTag() {
-        return (
-            <>
-                <AddTag onDismiss = {() => this.closeCreateTagModal()}/>
-            </>
-        )
-    }
-    /*
-    <div className="dashcontent__boxes">
-                            <div className="dashcontent__create" onClick={this.openCreatePostModal}>
-                                <i className="dashcontent__createpost fas fa-plus-circle"></i>
-                                <div className="dashcontent__createpost-content">Create Post</div>
-                            </div>
-                            <BucketBox />
-                        </div>
-
-
-                        <CreatePost show = {this.state.showCreatePostModal} onHide = {this.closeCreatePostModal} />
-                <AddTag show = {this.state.showCreateTagModal} onHide = {this.closeCreateTagModal} />
-                <ShowPostInfo show = {this.state.showPostModal} onHide = {this.closeShowPostModal} />
-
-                <div>
-                    <div className="dashcontent">
-                        <Toolbar />
-                       
-                    </div>
-                </div>
-    */
-
-    render(){
-        return (
-            <>
-                <ForumContainer>
-                    <LeftBox>
-                        <UtilityBox>
-                            <Toolbar/>
-                            <Utility>
-                                <UtilitySection height = "10rem">
-                                    <CreateContainer onClick={this.openCreatePostModal}>
-                                        <i className="material-icons forum__createicon">add</i>
-                                        <CreateContent >Create Post</CreateContent>
-                                    </CreateContainer>
-                                </UtilitySection>
-                            </Utility>
-                        </UtilityBox>
-                    </LeftBox>
-                    <RightBox>
-                            <PostList openCreateTagModal = {this.openCreateTagModal}  openShowPostModal = {this.openShowPostModal} />
-                    </RightBox>
-                </ForumContainer>
-                <Modal height = "40rem" width = "65rem" renderContent = {this.renderAddTag()} show = {this.state.showCreateTagModal} onDismiss = {() => this.closeCreateTagModal()}/>
-                <Modal height = "40rem" width = "65rem" renderContent = {this.renderCreatePost()} show = {this.state.showCreatePostModal} onDismiss = {() => this.closeCreatePostModal()}/>
-                <Modal height = "60rem" width = "100rem" renderContent = {this.renderPostInfo()} show = {this.state.showPostModal} onDismiss = {() => this.closeShowPostModal()}/>
-            </>
-        )
-    }
-}
-
-
-
-export default connect(null, { getProductForum, retrievePosts, retrieveBuckets, retrieveVotes, retrieveComments })(Forum);

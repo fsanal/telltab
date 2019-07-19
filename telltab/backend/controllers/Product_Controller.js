@@ -19,6 +19,7 @@ createProduct = (req, res) => {
 }
 
 getProduct = (req, res) => {
+    console.log(req.params.id);
     Product.findById(req.params.id, (err, product) => {
         if (err) return res.json({ success: false, error: err });
         return res.json(product);

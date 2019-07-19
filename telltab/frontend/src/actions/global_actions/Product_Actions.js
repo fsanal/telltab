@@ -1,4 +1,5 @@
 import {
+    GET_PRODUCT,
     CREATE_PRODUCT,
     RETRIEVE_PRODUCTS,
     SELECT_PRODUCT,
@@ -22,6 +23,14 @@ export const retrieveProducts = () => async (dispatch, getState) => {
     const response = await api.post('/products/retrieve', { secret });
     dispatch({ type: RETRIEVE_PRODUCTS, payload: response.data });
 }
+
+export const getProduct = (id) => async (dispatch) => {
+    console.log(id);
+    const response = await api.get(`/products/get/${id}`);
+    dispatch({ type: GET_PRODUCT, payload: response.data });
+    return response.data;
+}
+
 
 export const editProduct = (id, name) => async (dispatch, getState) => {
     const { secret } = getState().auth;

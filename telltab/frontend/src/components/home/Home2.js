@@ -149,7 +149,7 @@ class Home2 extends React.Component {
         if (products){
             return products.map(product => {
                 return (
-                    <StyledLink  key = {product._id} to = {`/home/products/${product.name}/forum`} onClick = {() => {this.handleSelectProduct(product)}} >
+                    <StyledLink  key = {product._id} to = {`/products/${product._id}/forum`} onClick = {() => {this.handleSelectProduct(product)}} >
                         <Card hoverColor = "#FAFBFC" height = "6rem">
                             <CardProductName>{product.name}</CardProductName>
                             <Button marginLeft = "35%" marginTop = "1rem" height = "4rem" width = "4rem" onClick = {() => {this.handleDeleteProduct(product)}}>

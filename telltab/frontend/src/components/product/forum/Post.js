@@ -1,8 +1,76 @@
 import React from 'react';
-import { DropdownButton } from 'react-bootstrap'
-import { Dropdown } from 'react-bootstrap';
 import styled, {keyframes} from "styled-components";
 import DropDown from '../../general/DropDown';
+import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
+
+class Post extends React.Component {
+
+    renderTags() {
+        return (
+            <TagContainer>
+                {this.props.tags.map(tag => {
+                    return (<Tag>{tag}</Tag>)
+                })}
+            </TagContainer>
+        )
+    }
+
+    renderChangeProgress() {
+        return(
+            <>
+                <DropDownItem onClick = {() => {this.props.changeProgress(this.props.post, "Under Review")}}>Under Review</DropDownItem>
+                <DropDownItem onClick = {() => {this.props.changeProgress(this.props.post, "In Progress")}}>In Progress</DropDownItem>
+                <DropDownItem onClick = {() => {this.props.changeProgress(this.props.post, "Complete")}}>Complete</DropDownItem>
+            </>
+        )
+    }
+
+    renderActions() {
+        return(
+            <>
+                <DropDownItem onClick = {this.props.onDelete} >Delete</DropDownItem>
+                <DropDownItem onClick = {this.props.addPostTag} >Add Tag</DropDownItem>
+                <DropDownItem >Change Visibility</DropDownItem>
+            </>
+        )
+    }
+
+    renderPathName() {
+        return `/products/${this.props.match.params.productID}/forum/p/${this.props.id}`
+    }
+
+    render(){
+        return (
+            <div>
+                <Feedback border = {this.props.border}>
+                    <VoteBox className = {this.props.voteCls} >
+                            <i onClick = {this.props.onVote} class="far fa-caret-square-up fa-2x"></i>
+                            <div>{this.props.numVotes}</div>
+                    </VoteBox>
+                    <StyledLink to = {this.renderPathName()} >
+                        <FeedbackContent onContextMenu = {this.props.onSelect}>
+                            <FeedbackTitle>
+                                {this.props.title}
+                            </FeedbackTitle>
+                            <div>{this.props.progress}</div>
+                            <FeedbackDescription>
+                                {this.props.body}
+                            </FeedbackDescription>
+                            {this.renderTags()}
+                        </FeedbackContent>
+                    </StyledLink>
+                    <DropDown renderBody = {this.renderChangeProgress()} />
+                    <DropDown renderBody = {this.renderActions()} />
+                </Feedback>
+            </div>
+        )
+    }
+}
+
+
+export default withRouter(Post);
+
 
 
 const Feedback = styled.div`
@@ -88,101 +156,6 @@ const Tag = styled.div`
     text-align: center;
 `
 
-
-class Post extends React.Component {
-
-    renderTags() {
-        return (
-            <TagContainer>
-                {this.props.tags.map(tag => {
-                    return (<Tag>{tag}</Tag>)
-                })}
-            </TagContainer>
-        )
-    }
-
-    renderChangeProgress() {
-        return(
-            <>
-                <DropDownItem onClick = {() => {this.props.changeProgress(this.props.post, "Under Review")}}>Under Review</DropDownItem>
-                <DropDownItem onClick = {() => {this.props.changeProgress(this.props.post, "In Progress")}}>In Progress</DropDownItem>
-                <DropDownItem onClick = {() => {this.props.changeProgress(this.props.post, "Complete")}}>Complete</DropDownItem>
-            </>
-        )
-    }
-
-    renderActions() {
-        return(
-            <>
-                <DropDownItem onClick = {this.props.onDelete} >Delete</DropDownItem>
-                <DropDownItem onClick = {this.props.addPostTag} >Add Tag</DropDownItem>
-                <DropDownItem >Change Visibility</DropDownItem>
-            </>
-        )
-    }
-
-
-    render(){
-        return (
-            <div>
-                <Feedback border = {this.props.border}>
-                    <VoteBox className = {this.props.voteCls} >
-                            <i onClick = {this.props.onVote} class="far fa-caret-square-up fa-2x"></i>
-                            <div>{this.props.numVotes}</div>
-                    </VoteBox>
-                    <FeedbackContent onClick = {this.props.showPost}  onContextMenu = {this.props.onSelect}>
-                        <FeedbackTitle>
-                            {this.props.title}
-                        </FeedbackTitle>
-                        <div>{this.props.progress}</div>
-                        <FeedbackDescription>
-                            {this.props.body}
-                        </FeedbackDescription>
-                        {this.renderTags()}
-                    </FeedbackContent>
-                    <DropDown renderBody = {this.renderChangeProgress()} />
-                    <DropDown renderBody = {this.renderActions()} />
-                </Feedback>
-            </div>
-        )
-    }
-}
-
-
-
-/*
-<div >
-                    <DropdownButton title = {this.props.progress} id = "post__dropdown2" >
-                            <Dropdown.Item onClick = {() => {this.props.changeProgress(this.props.post, "Under Review")}}>Under Review</Dropdown.Item>
-                            <Dropdown.Item onClick = {() => {this.props.changeProgress(this.props.post, "In Progress")}}>In Progress</Dropdown.Item>
-                            <Dropdown.Item onClick = {() => {this.props.changeProgress(this.props.post, "Complete")}}>Complete</Dropdown.Item>
-                    </DropdownButton>
-                </div>
-
-
-
-<div className = "feedback__delete">
-                    <DropdownButton title = "" id = "post__dropdown" >
-                            <Dropdown.Item  onClick = {this.props.onDelete} >Delete</Dropdown.Item>
-                            <Dropdown.Item onClick = {this.props.addPostTag} >Add Tag</Dropdown.Item>
-                            <Dropdown.Item >Change Visibility</Dropdown.Item>
-                    </DropdownButton>
-                </div>
-*/
-
-/*
-className = {`feedback__votes ${props.voteCls}`}
-<div className = "feedback__votes">
-                    <i class="far fa-caret-square-up fa-2x"></i>
-                    <div>{props.votes}</div>
-                </div>
-
-<div className = "feedback__person">
-                    <div className = "feedback__person-picture">
-                        <i className="fas fa-user-circle"></i>
-                    </div>
-                    <div className = "feedback__person-name">{props.name}</div>
-                </div>
-*/
-
-export default Post;
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;

@@ -4,15 +4,16 @@ const { ObjectId } = mongoose.Types;
 
 
 createCustomField = (req, res) => {
-    const { postID, reqID, userID, fieldname, type, data } = req.body
+    const { postID, reqID, userID, type, data, globalFieldID } = req.body
 	let field = new CustomField({
 		type
 	})
     if (postID) field.post = ObjectId(postID);
     if (reqID) field.requirement = ObjectId(reqID);
     if (userID) field.user = ObjectId(userID);
-    if (fieldname) field.fieldname = fieldname;
     if (data) field.data = data;
+    if (data) field.markModified('data');
+    if (globalFieldID) field.globalField = ObjectId(globalFieldID);
 
 	field.save((err, field) => {
         if (err) return res.json({success: false, error: err});
@@ -41,4 +42,22 @@ deleteCustomField = (req, res) => {
     });
 }
 
-module.exports = { createCustomField, getCustomField, deleteCustomField };
+editCustomField = (req, res) => {
+    const { id } = req.params;
+    const { postID, reqID, userID, data, globalFieldID } = req.body;
+    let update = {};
+    if (postID) update.post = ObjectId(postID);
+    if (reqID) update.requirement = ObjectId(reqID);
+    if (userID) update.user = ObjectId(userID);
+    if (data) update.data = data;
+    if (globalFieldID) update.globalField = ObjectId(globalFieldID);
+    CustomField.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, field) => {
+		if (err) return res.json({success: false, error: err});
+		field.populate('post').populate('requirement').populate('user', (err, field) => {
+			if (err) return res.json({success: false, error: err});
+			return res.json(field);
+		});
+	});
+}
+
+module.exports = { createCustomField, getCustomField, deleteCustomField, editCustomField };

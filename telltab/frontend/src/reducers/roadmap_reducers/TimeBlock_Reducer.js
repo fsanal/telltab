@@ -3,7 +3,8 @@ import {
     SELECT_TIMEBLOCK,
     DELETE_TIMEBLOCK,
     EDIT_TIMEBLOCK,
-    GET_TIMEBLOCK
+    GET_TIMEBLOCK,
+    RETRIEVE_TIMEBLOCKS
 } from '../../actions/types/roadmap_types';
 import _ from 'lodash';
 
@@ -19,7 +20,9 @@ export default ( state = INITIAL_STATE, action ) => {
             timeblocks[action.payload._id] = action.payload;
             return { ...state, timeblocks }
         case GET_TIMEBLOCK:
-            return { ...state, timeblocks } //test
+            return { ...state, timeblocks }
+        case RETRIEVE_TIMEBLOCKS:
+            return { ...state, timeblocks: _.mapKeys(action.payload, '_id') };
         case SELECT_TIMEBLOCK:
             return { ...state, currentTimeblock: action.payload }
         case EDIT_TIMEBLOCK:

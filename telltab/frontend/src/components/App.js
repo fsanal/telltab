@@ -17,16 +17,18 @@ const App = () => {
     return (<>
                 <Router history = {history}>
                     <Route path = "/create_product" exact component = {CreateProduct}/>
-                    <Route path = "/" exact component = {Dashboard} /> 
+                    <Route path = "/" exact component = {Dashboard} />
                     <Route path = "/dash" component = {Dashboard} />    
                     <Route path = "/:name/forum" exact component = {Forum} />
-                    <Route path = "/:name/roadmap" exact component = {Roadmap} />
-                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />
+                    {/*<Route path = "/:name/roadmap" exact component = {Roadmap} />
+                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} /> */}
                     <Route path = "/login" exact component = {Login} />
                     <Route path = "/signup" exact component = {Signup} />
                     <Route path = "/logout" exact component = {Logout} />
                     <Route path = "/home" component = {Dashboard}/>
                     <Route path = "/dropdown" component = {DropDown}/>
+
+                    <Route path = "/roadmap" exact component = {Roadmap} />
                 </Router>     
             </>)
 }

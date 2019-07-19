@@ -207,7 +207,7 @@ class Forum extends React.Component {
                 <Modal height = "40rem" width = "65rem" renderContent = {this.renderAddTag()} show = {this.state.showCreateTagModal} onDismiss = {() => this.closeCreateTagModal()}/>
                 <Modal height = "40rem" width = "65rem" renderContent = {this.renderCreatePost()} show = {this.state.showCreatePostModal} onDismiss = {() => this.closeCreatePostModal()}/>
                 <Modal height = "60rem" width = "100rem" renderContent = {this.renderPostInfo()} show = {this.state.showPostModal} onDismiss = {() => this.closeShowPostModal()}/>
-           </>
+            </>
         )
     }
 }

@@ -6,8 +6,8 @@ var timeblockSchema = new Schema({
     roadmap: {type: ObjectId, ref: 'RoadMap'},
     created: {type: Date, required: true},
     title: {type: String, required: true},
-    beginDate: Date,
-    endDate: Date
+    beginDate: String,
+    endDate: String
 });
 
 var TimeBlock = mongoose.model("TimeBlock", timeblockSchema);

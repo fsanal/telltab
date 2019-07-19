@@ -19,12 +19,10 @@ const session = require('express-session');
 
 const dbRoute =
   'mongodb+srv://admin:UYeKdxqhRrHQDziB@cluster0-gp8ab.mongodb.net/test?retryWrites=true&w=majority';
-/*
-mongoose.connect('mongodb://localhost:27017/myDatabase');
 
-*/
+//mongoose.connect('mongodb://localhost:27017/myDatabase');
+
 // connects our back end code with the database
-
 mongoose.connect(dbRoute, { useNewUrlParser: true });
 
 let db = mongoose.connection;

@@ -110,6 +110,11 @@ const LeftContainer = styled.div`
 `
 const RightContainer = styled.div`
     margin-left: 3rem;
+    width: 40rem;
+`
+
+const SplitContainer = styled.div`
+    display: flex;
 `
 
 const AuthorContainer = styled.div`
@@ -128,7 +133,27 @@ const Author = styled.span`
 `
 
 const TagContainer = styled.div`
+    margin-top: 1rem;
+`
+
+const TagSubContainer = styled.div`
+    border: #DADCE0 1px solid;
+    margin-right: 0.5rem;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 3rem;
+    height: 3rem;
+    margin-top: 1rem;
+`
+
+const Tag = styled.div`
+    padding-left: 1rem;
+    padding-right: 1rem;
     
+    display: inline-block;
+    font-size: 2rem;
+    text-align: center;
 `
 //Notes:
 //Add borders to help visualize, think in boxes of vertical and horizontal, use padding for spacing, vertical-align: middle, different line heights
@@ -150,14 +175,17 @@ class PostInfo extends React.Component {
         this.props.deletePostTag(tag._id);
     }
 
+    /*
+    <Button onClick = {() => this.handleDeleteTag(tag)}>X</Button>
+    */
     renderTags = () => {
         if (this.props.currentPost) {
             return this.props.currentPost.tags.map(tag => {
                 return (
-                    <div>
-                        <h4 key = {tag._id}>{tag.name}</h4>
-                        <Button onClick = {() => this.handleDeleteTag(tag)}>delete tag</Button>
-                    </div>
+                    <TagSubContainer>
+                        <Tag key = {tag._id}>{tag.name}</Tag>
+                        <Button width = "2.3rem" height = "2.3rem" onClick = {() => this.handleDeleteTag(tag)}>X</Button>
+                    </TagSubContainer>
                 )
             })
         }
@@ -205,19 +233,22 @@ class PostInfo extends React.Component {
                             <InputContainer marginTop = "2rem">
                                 <StyledInput  spellCheck = "false" defaultValue = {title}/>
                             </InputContainer>
-                            <LeftContainer>
-                                <AuthorContainer>
-                                    <i class="fas fa-user-circle"></i>
-                                    <Author>George Bumass</Author>
-                                </AuthorContainer>
-                                <CreateHeader>Description:</CreateHeader>
-                                <InputContainer marginTop = "0.5rem">
-                                    <StyledInput2 spellCheck = "false" type= "textarea" rows="1" cols="50" defaultValue = {body}/>
-                                </InputContainer>
-                                <Comment/>
-                            </LeftContainer>
-                            <RightContainer>
-                            </RightContainer>
+                            <SplitContainer>
+                                <LeftContainer>
+                                    <AuthorContainer>
+                                        <i class="fas fa-user-circle"></i>
+                                        <Author>George Bumass</Author>
+                                    </AuthorContainer>
+                                    <CreateHeader>Description:</CreateHeader>
+                                    <InputContainer marginTop = "0.5rem">
+                                        <StyledInput2 spellCheck = "false" type= "textarea" rows="1" cols="50" defaultValue = {body}/>
+                                    </InputContainer>
+                                    <Comment />
+                                </LeftContainer>
+                                <RightContainer>
+                                    {this.renderTags()}
+                                </RightContainer>
+                            </SplitContainer>
                         </Container>
                     </>
                 )

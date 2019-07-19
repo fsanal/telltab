@@ -32,7 +32,7 @@ export default (state = INITIAL_STATE, action) => {
         case DELETE_POST:
             currentPost = null;
             posts = _.omit(posts, action.payload._id);
-            selectedPosts = _.omit(posts, action.payload._id);
+            selectedPosts = _.omit(selectedPosts, action.payload._id);
             return { ...state, posts, currentPost, selectedPosts };
         case SELECT_POST:
             let post = action.payload;

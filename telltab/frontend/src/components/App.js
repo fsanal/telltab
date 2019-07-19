@@ -9,6 +9,7 @@ import CreateRequirement from './product/roadmap/CreateRequirement';
 import Login from './authentication/Login';
 import Logout from './authentication/Logout';
 import Signup from './authentication/Signup';
+import DropDown from './general/DropDown';
 
 import Comment from './Comment';
 
@@ -25,6 +26,7 @@ const App = () => {
                     <Route path = "/signup" exact component = {Signup} />
                     <Route path = "/logout" exact component = {Logout} />
                     <Route path = "/home" component = {Dashboard}/>
+                    <Route path = "/dropdown" component = {DropDown}/>
                 </Router>     
             </>)
 }

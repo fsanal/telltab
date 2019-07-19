@@ -23,7 +23,7 @@ const SearchBar = styled.input`
 const SearchBarContainer = styled.div`
     border: ${props => props.border};
     height: 6rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     margin-left: 25.75rem;
     width: 60rem;
     border-radius: 0.4rem;
@@ -40,7 +40,7 @@ class ForumUtility extends React.Component {
             border: "#DADCE0 solid 0.2rem",
             color: "#F1F3F4",
             className: "material-icons productdash__search",
-            placeholder: "Search for Feedback..."
+            placeholder: "Search for Feedback...",
         }
     }
 
@@ -55,11 +55,11 @@ class ForumUtility extends React.Component {
         this.setState({border: "#DADCE0 solid 0.2rem",
                         color:  "#F1F3F4",
                         className: "material-icons productdash__search",
-                        placeholder: "Search for Feedback..."})
+                        placeholder: "Search for feedback.."})
     }
 
     changeColor() {
-
+        
     }
     
     handleChange = ({target}) => {
@@ -69,12 +69,13 @@ class ForumUtility extends React.Component {
         }, 300);
     }
  
+
     render(){
         return(
             <SearchBarContainer color = {this.state.color} border = {this.state.border}>
                 <i className={this.state.className}>search</i>
-                <SearchBar placeholder = {this.state.placeholder} color = {this.state.color} 
-                onBlur = {() => this.onBlur()} onFocus = {() => this.onFocus()} onChange = {this.handleChange} type = "text" />
+                <SearchBar placeholder = {this.state.placeholder} color = {this.state.color} onBlur = {() => this.onBlur()} onFocus = {() => this.onFocus()} 
+                onChange = {this.handleChange} type = "text" />
             </SearchBarContainer>
         )
     }   

@@ -6,9 +6,9 @@ var customFieldSchema = new Schema({
     post: {type: ObjectId, ref: 'Post'},
     requirement: {type: ObjectId, ref: 'Requirement'},
     user: {type: ObjectId, ref: 'User'},
-    fieldname: String,
     type: {type: String, required: true},
-    data: Mixed
+    data: Mixed,
+    globalField: {type: ObjectId, ref: 'GlobalField'}
 });
 
 var CustomField = mongoose.model("CustomField", customFieldSchema);

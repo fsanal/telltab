@@ -7,6 +7,59 @@ import { getProductRoadmap } from '../../../actions/roadmap_actions/RoadMap_Acti
 import { retrieveTimeBlocks, createTimeblock } from '../../../actions/roadmap_actions/TimeBlock_Actions';
 import history from '../../../history';
 import Modal from '../../general/Modal';
+import TimeblockList from './TimeblockList';
+
+class Roadmap extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			showCreateTimeblockModal: false,
+		};
+	}
+
+	openCreateTimeblockModal = () => {
+		this.setState({ showCreateTimeblockModal: true })
+	}
+
+	closeCreateTimeblockModal = () => {
+		this.setState({ showCreateTimeblockModal: false })
+	}
+
+	renderCreateTimeblock() {
+		return (
+			<>
+				<CreateTimeblock onDismiss={() => this.closeCreateTimeblockModal()} />
+			</>
+		)
+	}
+
+	render() {
+		return (
+			<>
+				<RoadmapContainer>
+					<RoadmapSubContainer>
+						<UtilityBox>
+							<Utility>
+								<UtilitySection height="10rem">
+									<CreateContainer onClick={this.openCreateTimeblockModal}>
+										<CreateContent >Create Timeblock</CreateContent>
+									</CreateContainer>
+								</UtilitySection>
+							</Utility>
+						</UtilityBox>
+						<TimeblockContainer>
+							<TimeblockList />
+						</TimeblockContainer>
+					</RoadmapSubContainer>
+				</RoadmapContainer>
+				<Modal height="50rem" width="65rem" renderContent={this.renderCreateTimeblock()}
+					show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
+			</>
+		);
+	}
+}
+
+export default connect(null, { getProductRoadmap, retrieveTimeBlocks, createTimeblock })(Roadmap);
 
 const RoadmapContainer = styled.div`
 	display: flex;
@@ -28,20 +81,6 @@ const TimeblockContainer = styled.div`
     height: 80rem;
 	margin-top: 15rem;
 	margin-left: 30rem;
-`
-
-const TimeblockWrapper = styled.div`
-	background-color: #94EA78;
-    border-radius: 2rem;
-    border: "#94EA78 solid 1rem";
-	display: flex;
-	flex-direction: column;
-	width: 35rem;
-	height: 70rem;
-	margin-top: ${props => props.marginTop};
-	margin-left: ${props => props.marginLeft};
-	margin-bottom: ${props => props.marginBottom};
-	margin-right: ${props => props.marginRight};
 `
 
 const UtilityBox = styled.div`
@@ -96,58 +135,3 @@ const CreateContent = styled.div`
     margin-left: 0.2rem;
     font-weight: 600;
 `
-
-
-class Roadmap extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			showCreateTimeblockModal: false,
-		};
-	}
-
-	openCreateTimeblockModal = () => {
-		this.setState({ showCreateTimeblockModal: true })
-	}
-
-	closeCreateTimeblockModal = () => {
-		this.setState({ showCreateTimeblockModal: false })
-	}
-
-	renderCreateTimeblock() {
-		return (
-			<>
-				<CreateTimeblock onDismiss={() => this.closeCreateTimeblockModal()} />
-			</>
-		)
-	}
-
-	render() {
-		return (
-			<>
-				<RoadmapContainer>
-					<RoadmapSubContainer>
-						<UtilityBox>
-							<Utility>
-								<UtilitySection height="10rem">
-									<CreateContainer onClick={this.openCreateTimeblockModal}>
-										<CreateContent >Create Timeblock</CreateContent>
-									</CreateContainer>
-								</UtilitySection>
-							</Utility>
-						</UtilityBox>
-						<TimeblockContainer>
-							{/*<TimeblockList MAKE TIMEBLOCK ITS OWN CLASS AND MODEL CREATION AFTER POST and POSTLIST/>*/}
-							<TimeblockWrapper marginTop="5rem" marginLeft="5rem" />
-						</TimeblockContainer>
-					</RoadmapSubContainer>
-				</RoadmapContainer>
-				<Modal height="50rem" width="65rem" renderContent={this.renderCreateTimeblock()}
-					show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
-			</>
-		);
-	}
-}
-
-export default connect(null, { getProductRoadmap, retrieveTimeBlocks, createTimeblock })(Roadmap);
-

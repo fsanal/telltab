@@ -18,19 +18,20 @@ const App = () => {
                 <Router history = {history}>
                     <Route path = "/create_product" exact component = {CreateProduct}/>
 
+                    <Route path = "/roadmap" exact component = {Roadmap} />
+
                     <Route path = "/" component = {Dashboard} /> 
 
 
 
-                    <Route path = "/:productID/roadmap" exact component = {Roadmap} />
-                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />
+                    {/*<Route path = "/:productID/roadmap" exact component = {Roadmap} />
+                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />*/}
                     <Route path = "/login" exact component = {Login} />
                     <Route path = "/signup" exact component = {Signup} />
                     <Route path = "/logout" exact component = {Logout} />
 
                     <Route path = "/dropdown" component = {DropDown}/>
 
-                    <Route path = "/roadmap" exact component = {Roadmap} />
                 </Router>     
             </>)
 }

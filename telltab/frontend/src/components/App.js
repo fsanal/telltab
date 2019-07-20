@@ -10,12 +10,13 @@ import Login from './authentication/Login';
 import Logout from './authentication/Logout';
 import Signup from './authentication/Signup';
 import DropDown from './general/DropDown';
+import CreateBucket from './product/forum/bucketbox/CreateBucket';
 
 const App = () => {
     return (<>
                 <Router history = {history}>
                     <Route path = "/create_product" exact component = {CreateProduct}/>
-
+                    <Route path = "*/createBucket" exact component = {CreateBucket}/>
                     <Route path = "/" component = {Dashboard} /> 
 
 

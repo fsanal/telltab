@@ -17,7 +17,7 @@ export default ( state = INITIAL_STATE, action ) => {
     let {products, currentProduct} = state;
     switch (action.type) {
         case GET_PRODUCT:
-            products[action.payload._id] = action.payload;
+            if (action.payload) products[action.payload._id] = action.payload;
             return { ...state, products}
         case CREATE_PRODUCT:
             currentProduct = action.payload;

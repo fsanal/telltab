@@ -1,20 +1,11 @@
 import React from 'react';
 import Timeblock from './Timeblock'
-import EditTimeblock from './EditTimeblock';
 import { connect } from 'react-redux';
-import { createTimeblock, selectTimeblock, editTimeblock, deleteTimeblock, retrieveTimeBlocks } from '../../../actions/roadmap_actions/TimeBlock_Actions';
-import Modal from '../../general/Modal';
+import { createTimeblock, selectTimeblock, editTimeblock, deleteTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import styled from "styled-components";
 import { Field } from 'redux-form';
 
 class TimeblockList extends React.Component {
-
-    constructor() {
-        super();
-        this.state = {
-            showEditTimeblockModal: false,
-        };
-    }
 
     handleSelectTimeblock = (timeblock, e) => {
         e.preventDefault();
@@ -25,27 +16,11 @@ class TimeblockList extends React.Component {
         this.props.deleteTimeblock(timeblock._id);
     }
 
-    openEditTimeblockModal = () => {
-        this.setState({ showCreateTimeblockModal: true })
-    }
-
-    closeEditTimeblockModal = () => {
-        this.setState({ showCreateTimeblockModal: false })
-    }
-
-    renderEditTimeblock() {
-        return (
-            <>
-                <EditTimeblock onDismiss={() => this.closeEditTimeblockModal()} />
-            </>
-        )
-    }
-
     renderList() {
         return this.props.timeblocks.map(timeblock => {
             return <Timeblock timeblock={timeblock} onDelete={() => { this.props.selectTimeblock(timeblock); this.handleDeleteTimeblock(timeblock) }}
                 onSelect={(e) => { this.handleSelectTimeblock(timeblock, e) }}
-                onEdit={() => { this.props.selectTimeblock(timeblock); this.openEditTimeblockModal(); this.renderEditTimeblock() }}
+                onEdit={() => { this.props.selectTimeblock(timeblock); /*Edit shit*/}}
                 key={timeblock._id} id={timeblock._id} title={timeblock.title} beginDate={timeblock.beginDate}
                 endDate={timeblock.endDate} />
         })
@@ -57,8 +32,6 @@ class TimeblockList extends React.Component {
                 <List>
                     {this.renderList()}
                 </List>
-                <Modal height="50rem" width="65rem" renderContent={this.renderEditTimeblock()}
-                    show={this.state.showEditTimeblockModal} onDismiss={() => this.closeEditTimeblockModal()} />
             </>
         )
     }
@@ -73,21 +46,14 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     createTimeblock, selectTimeblock, editTimeblock,
-    deleteTimeblock, retrieveTimeBlocks
+    deleteTimeblock
 })(TimeblockList);
 
 const List = styled.div`
     display: flex;
-    width: 100%
+    width: 184rem;
     background-color: #F4F5F7;
     border-radius: 0.5rem;
-    > div:nth-of-type(1) {
-        margin-top: 2rem;
-    }
-
-    > div:last-of-type {
-        margin-bottom: 2rem;
-    }
 `
 
 const EditForm = styled.div`

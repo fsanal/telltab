@@ -14,7 +14,7 @@ var postSchema = new Schema({
     requirements: [{ type: ObjectId, index: true, ref: 'Requirement'}],
     assignments: [{type: ObjectId, index: true, ref: 'User'}],
     tags: [{ type: ObjectId, es_indexed: true, index: true, ref: 'Tag'}],
-    roadmap: {type: ObjectId, ref: 'RoadMap'},
+    roadmap: {type: ObjectId, ref: 'Roadnap'},
     created: Date,
     title:
         {

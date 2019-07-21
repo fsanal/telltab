@@ -1,18 +1,18 @@
-const TimeBlock = require('../../models/roadmap/TimeBlock');
+const Timeblock = require('../../models/roadmap/Timeblock');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
-getTimeBlock = (req, res) => {
+getTimeblock = (req, res) => {
     const id = req.params.id;
-    TimeBlock.findById(id).populate('roadmap').exec(function(err, timeblock) {
+    Timeblock.findById(id).populate('roadmap').exec(function(err, timeblock) {
         if (err) return res.json({success: false, error: err});
         return res.json(timeblock);
     });
 }
 
-createTimeBlock = (req, res) => {
+createTimeblock = (req, res) => {
     const { title, roadmapID, beginDate, endDate } = req.body;
-    let timeblock = new TimeBlock(
+    let timeblock = new Timeblock(
         {
             created: new Date(),
             title: title,
@@ -30,14 +30,14 @@ createTimeBlock = (req, res) => {
     });
 }
 
-editTimeBlock = (req, res) => {
+editTimeblock = (req, res) => {
     const { id } = req.params;
     const { title, beginDate, endDate } = req.body;
     let update = {};
     if (title) update.title = title; 
     if (beginDate) update.beginDate = beginDate;
     if (endDate) update.endDate = endDate;
-    TimeBlock.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, timeblock) => {
+    Timeblock.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, timeblock) => {
         if (err) return res.json({ success: false, error: err });
         timeblock.populate('roadmap', (err, timeblock) => {
             if (err) return res.json({success: false, error: err});
@@ -46,9 +46,9 @@ editTimeBlock = (req, res) => {
     });
 }
 
-deleteTimeBlock = (req, res) => {
+deleteTimeblock = (req, res) => {
     const id = req.params.id;
-    TimeBlock.findByIdAndRemove(id, (err, timeblock) => {
+    Timeblock.findByIdAndRemove(id, (err, timeblock) => {
         if (err) return res.send(err);
         timeblock.populate('roadmap', (err, timeblock) => {
             if (err) return res.json({success: false, error: err});
@@ -57,9 +57,9 @@ deleteTimeBlock = (req, res) => {
     });
 }
 
-retrieveTimeBlocks = (req, res) => {
+retrieveTimeblocks = (req, res) => {
     const { roadmapID, title, beginDate, endDate } = req.body;
-	let query = TimeBlock.find();
+	let query = Timeblock.find();
 	if (roadmapID) query.where('roadmap').equals(roadmapID);
 	query.populate('roadmap').exec((err, timeblocks) => {
 		if (err) return res.json({success: false, error: err });
@@ -67,4 +67,4 @@ retrieveTimeBlocks = (req, res) => {
 	});
 }
 
-module.exports = { getTimeBlock, createTimeBlock, editTimeBlock, deleteTimeBlock, retrieveTimeBlocks };
+module.exports = { getTimeblock, createTimeblock, editTimeblock, deleteTimeblock, retrieveTimeblocks };

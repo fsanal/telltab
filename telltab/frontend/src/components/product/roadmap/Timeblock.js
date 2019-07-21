@@ -8,8 +8,8 @@ class Timeblock extends React.Component {
     renderActions() {
         return(
             <>
-                <DropDownItem onClick = {this.props.onDelete}> Delete </DropDownItem>
                 <DropDownItem onClick = {this.props.onEdit}> Edit </DropDownItem>
+                <DropDownItem onClick = {this.props.onDelete}> Delete </DropDownItem>
             </>
         )
     }
@@ -18,7 +18,8 @@ class Timeblock extends React.Component {
         return (
             <div>
                 <TimeblockWrapper>
-                    <DropDown renderBody = {this.renderActions()} />
+                    {this.props.title}
+                    {this.renderActions()}
                 </TimeblockWrapper>
             </div>
         )
@@ -28,17 +29,23 @@ class Timeblock extends React.Component {
 export default Timeblock;
 
 const TimeblockWrapper = styled.div`
-	background-color: #94EA78;
-    border-radius: 2rem;
-    border: "#94EA78 solid 1rem";
-	display: flex;
-	flex-direction: column;
-	width: 35rem;
-	height: 70rem;
-	margin-top: ${props => props.marginTop};
-	margin-left: ${props => props.marginLeft};
-	margin-bottom: ${props => props.marginBottom};
-	margin-right: ${props => props.marginRight};
+    display: flex;
+    font-size: 4rem;
+    color: white;
+    background-color: #43a047;
+    height: 75rem;
+    border-radius: 0.5rem;
+    margin-top: 3rem;
+    margin-left: 3rem;
+    margin-right: auto;
+    margin-bottom: auto;
+    border: "#BFBFBF solid 0.03rem";
+    
+    /*
+    border: #DADCE0 solid 0.05rem;
+    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
+    */
+    width: 30rem;
 `
 
 const DropDownItem = styled.li`

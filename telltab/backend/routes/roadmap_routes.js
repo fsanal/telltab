@@ -25,19 +25,19 @@ router.put('/requirements/add_customfield/:id', requirement_controller.createCus
 router.put('/requirements/delete_customfield/:id', requirement_controller.deleteCustomField);
 router.post('/requirements/retrieve', requirement_controller.retrieveRequirements);
 
-const roadmap_controller = require('../controllers/roadmap_controllers/RoadMap_Controller');
-router.get('/roadmaps/get/:id', roadmap_controller.getRoadMap);
-router.post('/roadmaps/create', roadmap_controller.createRoadMap);
-router.put('/roadmaps/edit/:id', roadmap_controller.editRoadMap);
-router.delete('/roadmaps/delete/:id', roadmap_controller.deleteRoadMap);
-router.post('/roadmaps/get_product_roadmap', roadmap_controller.getProductRoadMap);
+const roadmap_controller = require('../controllers/roadmap_controllers/Roadmap_Controller');
+router.get('/roadmaps/get/:id', roadmap_controller.getRoadmap);
+router.post('/roadmaps/create', roadmap_controller.createRoadmap);
+router.put('/roadmaps/edit/:id', roadmap_controller.editRoadmap);
+router.delete('/roadmaps/delete/:id', roadmap_controller.deleteRoadmap);
+router.post('/roadmaps/get_product_roadmap', roadmap_controller.getProductRoadmap);
 
-const timeblock_controller = require('../controllers/roadmap_controllers/TimeBlock_Controller');
-router.get('/timeblocks/get/:id', timeblock_controller.getTimeBlock);
-router.post('/timeblocks/create', timeblock_controller.createTimeBlock);
-router.put('/timeblocks/edit/:id', timeblock_controller.editTimeBlock);
-router.delete('/timeblocks/delete/:id', timeblock_controller.deleteTimeBlock);
-router.get('/timeblocks/retrieve', timeblock_controller.retrieveTimeBlocks);
+const timeblock_controller = require('../controllers/roadmap_controllers/Timeblock_Controller');
+router.get('/timeblocks/get/:id', timeblock_controller.getTimeblock);
+router.post('/timeblocks/create', timeblock_controller.createTimeblock);
+router.put('/timeblocks/edit/:id', timeblock_controller.editTimeblock);
+router.delete('/timeblocks/delete/:id', timeblock_controller.deleteTimeblock);
+router.post('/timeblocks/retrieve', timeblock_controller.retrieveTimeblocks);
 
 // Export API routes
 module.exports = router;

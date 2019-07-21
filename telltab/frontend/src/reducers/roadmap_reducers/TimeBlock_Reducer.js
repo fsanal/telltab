@@ -9,7 +9,7 @@ import {
 import _ from 'lodash';
 
 const INITIAL_STATE = {
-    currentTimeblock: null,
+    currentTimeBlock: null,
     timeblocks: {}
 }
 

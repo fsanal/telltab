@@ -54,7 +54,7 @@ class PostInfo extends React.Component {
                         <LeftContainer>
                             <AuthorContainer>
                                 <i class="fas fa-user-circle"></i>
-                                <Author>George Bumass</Author>
+                                <Author>Faraz Sanal</Author>
                             </AuthorContainer>
                             <CreateHeader>Description:</CreateHeader>
                             <InputContainer marginTop = "0.5rem">

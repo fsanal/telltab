@@ -1,5 +1,5 @@
 import React from 'react';
-import { editTimeblock } from '../../../actions/roadmap_actions/TimeBlock_Actions';
+import { editTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import styled from "styled-components";

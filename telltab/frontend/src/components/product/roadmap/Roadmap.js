@@ -2,19 +2,35 @@ import React from 'react';
 import { Field, FieldArray, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import CreateTimeblock from './CreateTimeblock';
-import { getProductRoadmap } from '../../../actions/roadmap_actions/RoadMap_Actions';
-import { retrieveTimeBlocks, createTimeblock } from '../../../actions/roadmap_actions/TimeBlock_Actions';
+import { getProduct } from '../../../actions/global_actions/Product_Actions';
+import { getProductRoadmap } from '../../../actions/roadmap_actions/Roadmap_Actions';
+import { retrieveTimeblocks, createTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import history from '../../../history';
-import Modal from '../../general/Modal';
+import CreateTimeblock from './CreateTimeblock';
+import EditTimeblock from './EditTimeblock';
 import TimeblockList from './TimeblockList';
+import Req from './Req';
+import Modal from '../../general/Modal';
 
 class Roadmap extends React.Component {
+
 	constructor() {
 		super();
 		this.state = {
 			showCreateTimeblockModal: false,
+			showEditTimeblockModal: false
 		};
+	}
+
+	componentDidMount() {
+		this.props.getProduct(this.props.match.params.productID).then((result) => {
+			//console.log(this.props.product);
+			if (this.props.product) {
+				this.props.getProductRoadmap(this.props.product._id).then((result2) => {
+					this.props.retrieveTimeblocks();
+				});
+			}
+		})
 	}
 
 	openCreateTimeblockModal = () => {
@@ -25,6 +41,14 @@ class Roadmap extends React.Component {
 		this.setState({ showCreateTimeblockModal: false })
 	}
 
+	openEditTimeblockModal = () => {
+        this.setState({ showCreateTimeblockModal: true })
+    }
+
+    closeEditTimeblockModal = () => {
+        this.setState({ showCreateTimeblockModal: false })
+    }
+
 	renderCreateTimeblock() {
 		return (
 			<>
@@ -33,92 +57,89 @@ class Roadmap extends React.Component {
 		)
 	}
 
+	renderEditTimeblock() {
+        return (
+            <>
+                <EditTimeblock onDismiss={() => this.closeEditTimeblockModal()} />
+            </>
+        )
+    }
+
 	render() {
 		return (
 			<>
 				<RoadmapContainer>
+					<RoadmapHeader>
+						<CreateContainer onClick={this.openCreateTimeblockModal}>
+							<CreateContent >Create Timeblock</CreateContent>
+						</CreateContainer>
+						<Modal height="50rem" width="65rem" renderContent={this.renderCreateTimeblock()}
+							show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
+						<Modal height="50rem" width="65rem" renderContent={this.renderEditTimeblock()}
+									show={this.state.showEditTimeblockModal} onDismiss={() => this.closeEditTimeblockModal()} />
+					</RoadmapHeader>
 					<RoadmapSubContainer>
-						<UtilityBox>
-							<Utility>
-								<UtilitySection height="10rem">
-									<CreateContainer onClick={this.openCreateTimeblockModal}>
-										<CreateContent >Create Timeblock</CreateContent>
-									</CreateContainer>
-								</UtilitySection>
-							</Utility>
-						</UtilityBox>
+						<TimeblockContainer>
+							<TimeblockList />
+						</TimeblockContainer>
+					</RoadmapSubContainer>
+				</RoadmapContainer>
+				{/*<RoadmapContainer>
+					<RoadmapSubContainer>
+						<CreateContainer onClick={this.openCreateTimeblockModal}>
+							<CreateContent >Create Timeblock</CreateContent>
+						</CreateContainer>
 						<TimeblockContainer>
 							<TimeblockList />
 						</TimeblockContainer>
 					</RoadmapSubContainer>
 				</RoadmapContainer>
 				<Modal height="50rem" width="65rem" renderContent={this.renderCreateTimeblock()}
-				show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
+				show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />*/}
 			</>
 		);
 	}
 }
 
-export default connect(null, { getProductRoadmap, retrieveTimeBlocks, createTimeblock })(Roadmap);
+
+
+const mapStateToProps = (state, ownProps) => {
+	return {
+		product: state.productState.products[ownProps.match.params.productID],
+	}
+}
+
+export default connect(mapStateToProps, { getProductRoadmap, retrieveTimeblocks, createTimeblock, getProduct })(Roadmap);
+
+
 
 const RoadmapContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-    width: 100%;	
-    height: 100%;
+    width: 208rem;	
+    height: 103rem;
 `
 
 const RoadmapHeader = styled.div`
-	background-color: #32cc24;
+	background-color: #F0F0F0;
 	display: flex;
-    width: 100%;	
-    height: 100%;
+    width: 208rem;	
+    height: 12rem;
 `
 
 const RoadmapSubContainer = styled.div`
-	background-color: #5924cc;
 	display: flex;
-	width: 100%;
-	height: 78%;
-	margin-top: 25rem;
+	width: 208rem;
+	height: 91rem;
 `
 
 const TimeblockContainer = styled.div`
-	background-color: #EDE8E7;
+	background-color: #F4F5F7;
     display: flex;
-    width: 100%;
-	height: 80rem;
-	margin-top: 7rem;
-`
-
-const UtilityBox = styled.div`
-    background-color: #F4F5F7;    
-	width: 33rem;
-	height: 45rem;
-	margin-top: 30rem;
-    margin-left: 10rem;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    border-radius: 0.5rem;
-
-`
-const Utility = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-    height: 40rem;
-    width: 30rem;
-    background-color: white;
-    border-radius: 0.5rem;
-    border: "#BFBFBF solid 0.03rem";
-    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
-
-`
-
-const UtilitySection = styled.div`
-    height: ${props => props.height}
+    width: 184rem;
+	height: 81rem;
+	margin-top: 5rem;
+	margin-left: 4rem;
 `
 
 const CreateContainer = styled.div`
@@ -127,7 +148,7 @@ const CreateContainer = styled.div`
     box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
     cursor:pointer;
     margin-top: 2rem;
-    margin-left: auto;
+    margin-left: 162rem;
     margin-right: auto;
     height: 6rem;
     width: 17rem;

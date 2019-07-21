@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { retrieveProducts, editProduct, selectProduct, deleteProduct } from '../../actions/global_actions/Product_Actions';
 import { getProductForum } from '../../actions/feedback_forum_actions/Forum_Actions';
-import { getProductRoadmap } from '../../actions/roadmap_actions/RoadMap_Actions';
+import { getProductRoadmap } from '../../actions/roadmap_actions/Roadmap_Actions';
 import { Link } from 'react-router-dom';
 import api from '../../apis/api';
 

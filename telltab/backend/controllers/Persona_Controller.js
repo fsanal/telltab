@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 
 createPersona = (req, res) => {
 	const { flair, description, isPM, isAdmin, 
-		productID, tagIDs, roadMapConfig  } = req.body
+		productID, tagIDs, roadmapConfig  } = req.body
 	let persona = new Persona({
 		product: ObjectId(productID),
 		flair,
@@ -12,7 +12,7 @@ createPersona = (req, res) => {
 	})
 	if (description) persona.description = description;
 	if (tagIDs) persona.tags = tagIDs.map(tagID => ObjectId(tagID));
-	if (roadMapConfig) persona.roadMapConfig = roadMapConfig;
+	if (roadmapConfig) persona.roadmapConfig = roadmapConfig;
     isPM ? persona.isPM = isPM : persona.isPM = false;
     isAdmin ? persona.isAdmin = isAdmin : persona.isAdmin = false;
 	persona.save((err, persona) => {
@@ -34,12 +34,12 @@ getPersona = (req, res) => {
 
 editPersona = (req, res) => {
 	const { id } = req.params;
-	const { description, flair, isPM, roadMapConfig, isAdmin } = req.body;
+	const { description, flair, isPM, roadmapConfig, isAdmin } = req.body;
 	let update = {};
 	if (description) update.description = description;
 	if (flair) update.flair = flair;
 	if (isPM) update.isPM = isPM;
-	if (roadMapConfig) update.roadMapConfig = roadMapConfig;
+	if (roadmapConfig) update.roadmapConfig = roadmapConfig;
 	if (isAdmin) update.isAdmin = isAdmin;
 	Persona.findByIdAndUpdate ( id, { $set: update }, { new: true }, ( err, persona) => {
 		if (err) return res.json({success: false, error: err});
@@ -90,13 +90,13 @@ deleteTag = (req, res) => {
 
 
 retrievePersonas = (req, res) => {
-	const { tagIDs, isAdmin, productID, isPM, roadMapConfig, sort, limit, skip } = req.body;
+	const { tagIDs, isAdmin, productID, isPM, roadmapConfig, sort, limit, skip } = req.body;
 	let query = Persona.find()
 	if (tagIDs) query.where('tags').all(tagIDs);
 	if (productID) query.where('product').equals(productID);
 	if (isAdmin) query.where('isAdmin').equals(isAdmin);
 	if (isPM) query.where('isPM').equals(isPM);
-	if (roadMapConfig) query.where('roadMapConfig').equals(roadMapConfig);
+	if (roadmapConfig) query.where('roadmapConfig').equals(roadmapConfig);
 	if (limit) query.limit(Number(limit));
 	if (skip) query.skip(Number(skip));
 	query.populate('tags').populate('product').exec((err, personas) => {

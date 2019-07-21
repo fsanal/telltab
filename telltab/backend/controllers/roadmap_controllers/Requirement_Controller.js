@@ -223,7 +223,7 @@ deleteCustomField = (req, res) => {
 }
 
 retrieveRequirements = (req, res) => {
-    let { secret, roadmapID, authorID, search, purpose, initiativeID, timeBlockID,
+    let { secret, roadmapID, authorID, search, purpose, initiativeID, timeblockID,
         limit, skip, personaID, visibilityIDs, tagIDs, assignmentIDs, sort } = req.body;
     let query, aggregate;
 
@@ -260,7 +260,7 @@ retrieveRequirements = (req, res) => {
         if (visibilityIDs) body.query.bool.filter.push({ "terms": { "visibility": visibilityIDs }});
         if (tagIDs) body.query.bool.filter.push({  "terms": { "tags": tagIDs }});
         if (personaID) body.query.bool.filter.push({  "term": { "persona": personaID }});
-        if (timeBlockID) body.query.bool.filter.push({  "term": { "timeblock": timeBlockID }});
+        if (timeblockID) body.query.bool.filter.push({  "term": { "timeblock": timeblockID }});
         if (assignmentIDs) body.query.bool.filter.push({  "terms": { "assignments": assignmentIDs }});
         if (purpose) body.query.bool.filter.push({ "term": { "purpose": purpose }});
         if (skip) body.from = Number(skip);
@@ -292,7 +292,7 @@ retrieveRequirements = (req, res) => {
         if (visibilityIDs) query.where('visibility').all(visibilityIDs);
         if (tagIDs) query.where('tags').all(tagIDs);
         if (personaID) query.where('persona').equals(personaID);
-        if (timeBlockID) query.where('timeblock').equals(timeBlockID);
+        if (timeblockID) query.where('timeblock').equals(timeblockID);
         if (assignmentIDs) query.where('assignments').all(assignmentIDs);
         if (purpose) query.where('purpose').equals(purpose);
         if (limit) query.limit(Number(limit));

@@ -18,22 +18,20 @@ import api from '../../apis/api';
 import history from '../../history';
 
 
-export const createRequirement = (formValues) => async (dispatch, getState) => {
+export const createRequirement = (timeblockID, formValues) => async (dispatch, getState) => {
     //visibilityIDs, tagIDs, assignmentIDs (map()?)
-    const { purpose, priority, value, title, body, beginDate, endDate } = formValues;
+    let roadmapID; //, initiativeID;
     const { currentRoadmap } = getState().roadmapState;
-    const { currentInitiative } = getState().initiativeState;
     //const { currentAuthor } = getState().authorState;
     //const { currentPersona } = getState().personaState;
-    //const { currentTimeBlock } = getState().timeblockState;
-    let roadmapID, initiativeID, authorID, personaID, timeblockID;
+    //const { currentTimeblock } = getState().timeblockState;
     if (currentRoadmap) roadmapID = currentRoadmap._id;
-    if (currentInitiative) initiativeID = currentInitiative._id;
+    //if (currentInitiative) initiativeID = currentInitiative._id;
     //if (currentAuthor) authorID = currentAuthor._id;
     //if (currentPersona) personaID = currentPersona._id;
-    //if (currentTimeBlock) timeblockID = currentTimeBlock._id;
-    const response = await api.post('/requirements/create', { ...formValues, roadmapID, initiativeID,
-    timeblockID, authorID, personaID});
+    //if (currentTimeblock) timeblockID = currentTimeblock._id;
+    const response = await api.post('/requirements/create', { ...formValues, roadmapID,
+    timeblockID});
     dispatch({type: CREATE_REQUIREMENT, payload: response.data});
     history.goBack();
 }

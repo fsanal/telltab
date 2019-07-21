@@ -2,6 +2,7 @@ import React from 'react';
 import Timeblock from './Timeblock'
 import { connect } from 'react-redux';
 import { createTimeblock, selectTimeblock, editTimeblock, deleteTimeblock} from '../../../actions/roadmap_actions/TimeBlock_Actions';
+import { retrieveRequirements } from '../../../actions/roadmap_actions/Requirement_Actions'
 import styled from "styled-components";
 
 const List = styled.div`
@@ -29,9 +30,10 @@ class TimeblockList extends React.Component {
         this.props.deleteTimeblock(timeblock._id);
     }
 
+
     renderList() {
         return this.props.timeblocks.map(timeblock => {
-            return <Timeblock title = {timeblock.title}/>
+            return <Timeblock timeblock = {timeblock}  />
         })
     }
 
@@ -52,4 +54,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { createTimeblock, selectTimeblock, editTimeblock, 
-    deleteTimeblock })(TimeblockList);
+    deleteTimeblock, retrieveRequirements })(TimeblockList);

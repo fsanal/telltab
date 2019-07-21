@@ -6,7 +6,6 @@ import Forum from './forum/Forum';
 import PostInfo from './forum/PostInfo';
 import { Router, Route } from 'react-router-dom';
 import history from '../../history';
-import Req from './roadmap/Req';
 import Roadmap from './roadmap/Roadmap';
 //import Auth from './Auth';
 

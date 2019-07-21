@@ -1,61 +1,82 @@
 import React from 'react';
-import history from '../../../history';
-import { createRequirement } from '../../../actions/roadmap_actions/Requirement_Actions';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import styled, {keyframes} from "styled-components";
 
 class CreateRequirement extends React.Component {
-
-    renderError({ error, touched }) {
-        if (touched && error) {
-            return (
-                <div className = "ui error message">
-                    <div className = "header">{error}</div>
-                </div>
-            )
+    constructor() {
+        super();
+        this.createInput = React.createRef();
+        this.state = {
+            textAreaOpen: false
         }
     }
 
-    onSubmit = (formValues) => {
-        this.props.createRequirement(formValues);
+    setTextArea() {
+        this.setState(prevState => ({textAreaOpen: !prevState.textAreaOpen}));
     }
 
-    renderInput = ({input, label, meta}) => {
-        const className = `field ${meta.error && meta.touched ? 'error' : ''}`
-        return(
-            <div className = {className}>
-                <label>{label}</label>
-                <input {...input} />
-                {this.renderError(meta)}
-            </div>
-        )
+    createRequest(e) {
+        this.props.onCreateReq({title: e.target.value})/*{title: e.target.value})*/
     }
-
+    
 
     render(){
-        return(
-            <form onSubmit = {this.props.handleSubmit(this.onSubmit)} className = "ui form">
-                <Field name = "title" component = {this.renderInput} label = "Title" />
-                <Field name = "body" component = {this.renderInput} label = "Body" />
-                <Field name = "beginDate" component = {this.renderInput} label = "Start Date" />
-                <Field name = "endDate" component = {this.renderInput} label = "Due Date" />
-                <button className = "ui button primary">Create Requirement</button>
-            </form>
+        let elem;
+        if (this.state.textAreaOpen) {
+            elem = <ReqTextArea autoFocus onBlur = {() => this.setTextArea()}
+            onKeyPress = {(e) => {if (e.key === 'Enter') {this.createInput.current.blur(); this.createRequest(e)}}}
+            ref={this.createInput}/>
+        } else {
+            elem = <CreateCard onClick = {() => this.setTextArea()}>+</CreateCard>
+        }
+        return (
+            <>
+                {elem}
+            </>
         )
     }   
 }
 
-//Needs title string validation, start and end date logic validation
-/*const validate = (formValues) => {
-    const errors = {};
-    if (!formValues.name) {
-        errors.title = 'Name is invalid';
-    }
-    return errors;
-}*/
+export default CreateRequirement;
 
 
-export default reduxForm({
-    form: 'create_requirement_form',
-    //validate
-})(connect(null, { createRequirement })(CreateRequirement))
+const TimeBlock = styled.div`
+     display: flex;
+     background-color: black;
+     height: 60rem;
+     border-radius: 0.5rem;
+     margin-left: auto;
+     margin-right: auto;
+     margin-bottom: 2rem;
+     border: "#BFBFBF solid 0.03rem";
+    
+     /*
+     border: #DADCE0 solid 0.05rem;
+     box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
+     */
+     width: 30rem;
+`
+
+const CreateCard = styled.div`
+display: flex;
+background-color: white;
+height: 10rem;
+border-radius: 0.5rem;
+margin-top: 5rem
+margin-left: auto;
+margin-right: auto;
+border: "#BFBFBF solid 0.03rem";
+text-align: center;
+vertical-align: middle;
+line-height: 10rem;
+font-size: 10rem;
+/*
+border: #DADCE0 solid 0.05rem;
+box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
+*/
+width: 20rem;
+`
+
+const ReqTextArea = styled.textarea`
+    height: 20rem;
+    width: 20rem;
+`

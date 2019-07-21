@@ -32,8 +32,7 @@ export const createRequirement = (timeblockID, formValues) => async (dispatch, g
     //if (currentTimeBlock) timeblockID = currentTimeBlock._id;
     const response = await api.post('/requirements/create', { ...formValues, roadmapID,
     timeblockID});
-    dispatch({type: CREATE_REQUIREMENT, payload: response.data});
-    history.goBack();
+    return response.data;
 }
 
 export const selectRequirement = (requirement) => {
@@ -101,9 +100,9 @@ export const deleteRequirementCustomField = (id, fieldID) => async dispatch => {
     dispatch({type: DELETE_REQUIREMENT_CUSTOMFIELD, payload: response.data});
 }
 
-export const retrieveRequirements = () => async (dispatch, getState) => {
+export const retrieveRequirements = (timeblockID) => async () => {
     //const { secret } = getState().auth;
-    const response = await api.post('/requirements/retrieve');
-    dispatch({ type: RETRIEVE_REQUIREMENTS, payload: response.data });
+    const response = await api.post('/requirements/retrieve', {timeblockID});
+    return response.data;
 }
 

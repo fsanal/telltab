@@ -4,23 +4,12 @@ import { connect } from 'react-redux';
 import styled from "styled-components";
 import { getProduct } from '../../../actions/global_actions/Product_Actions';
 import { getProductRoadmap } from '../../../actions/roadmap_actions/Roadmap_Actions';
-import { retrieveTimeblocks, createTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
+import { retrieveTimeblocks } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import history from '../../../history';
-import CreateTimeblock from './CreateTimeblock';
-import EditTimeblock from './EditTimeblock';
 import TimeblockList from './TimeblockList';
 import Req from './Req';
-import Modal from '../../general/Modal';
 
 class Roadmap extends React.Component {
-
-	constructor() {
-		super();
-		this.state = {
-			showCreateTimeblockModal: false,
-			showEditTimeblockModal: false
-		};
-	}
 
 	componentDidMount() {
 		this.props.getProduct(this.props.match.params.productID).then((result) => {
@@ -33,50 +22,11 @@ class Roadmap extends React.Component {
 		})
 	}
 
-	openCreateTimeblockModal = () => {
-		this.setState({ showCreateTimeblockModal: true })
-	}
-
-	closeCreateTimeblockModal = () => {
-		this.setState({ showCreateTimeblockModal: false })
-	}
-
-	openEditTimeblockModal = () => {
-        this.setState({ showCreateTimeblockModal: true })
-    }
-
-    closeEditTimeblockModal = () => {
-        this.setState({ showCreateTimeblockModal: false })
-    }
-
-	renderCreateTimeblock() {
-		return (
-			<>
-				<CreateTimeblock onDismiss={() => this.closeCreateTimeblockModal()} />
-			</>
-		)
-	}
-
-	renderEditTimeblock() {
-        return (
-            <>
-                <EditTimeblock onDismiss={() => this.closeEditTimeblockModal()} />
-            </>
-        )
-    }
-
 	render() {
 		return (
 			<>
 				<RoadmapContainer>
 					<RoadmapHeader>
-						<CreateContainer onClick={this.openCreateTimeblockModal}>
-							<CreateContent >Create Timeblock</CreateContent>
-						</CreateContainer>
-						<Modal height="50rem" width="65rem" renderContent={this.renderCreateTimeblock()}
-							show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
-						<Modal height="50rem" width="65rem" renderContent={this.renderEditTimeblock()}
-									show={this.state.showEditTimeblockModal} onDismiss={() => this.closeEditTimeblockModal()} />
 					</RoadmapHeader>
 					<RoadmapSubContainer>
 						<TimeblockContainer>
@@ -109,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, { getProductRoadmap, retrieveTimeblocks, createTimeblock, getProduct })(Roadmap);
+export default connect(mapStateToProps, { getProductRoadmap, retrieveTimeblocks, getProduct })(Roadmap);
 
 
 
@@ -140,27 +90,4 @@ const TimeblockContainer = styled.div`
 	height: 81rem;
 	margin-top: 5rem;
 	margin-left: 4rem;
-`
-
-const CreateContainer = styled.div`
-    display: flex;
-    background-color: white
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
-    cursor:pointer;
-    margin-top: 2rem;
-    margin-left: 162rem;
-    margin-right: auto;
-    height: 6rem;
-    width: 17rem;
-    align-items:center;
-    border-radius: 3rem;
-    border: 1.5px solid #3c40c6;
-`
-
-const CreateContent = styled.div`
-    color: #3c40c6;
-    display: "inline-block";
-    font-size: 2rem;
-    margin-left: 0.2rem;
-    font-weight: 600;
 `

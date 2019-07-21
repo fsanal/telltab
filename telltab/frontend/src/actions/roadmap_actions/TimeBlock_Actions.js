@@ -30,8 +30,10 @@ export const retrieveTimeBlocks = () => async (dispatch, getState) => {
     dispatch({type: RETRIEVE_TIMEBLOCKS, payload: response.data});
 } 
 
-export const editTimeblock = (id, title, beginDate, endDate) => async dispatch => {
-    const response = await api.put(`/timeblocks/edit/${id}`, {title, beginDate, endDate});
+export const editTimeblock = (formValues) => async (dispatch, getState) => {
+    const { currentTimeblock } = getState().timeblockState;
+    let id = currentTimeblock._id;
+    const response = await api.put(`/timeblocks/edit/${id}`, { ...formValues });
     dispatch({type: EDIT_TIMEBLOCK, payload: response.data});
 }
 

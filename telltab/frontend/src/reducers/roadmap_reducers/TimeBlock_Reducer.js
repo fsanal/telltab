@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 }
 
 export default ( state = INITIAL_STATE, action ) => {
-    const {timeblocks, currentTimeblock} = state;
+    let {timeblocks, currentTimeblock} = state;
     switch (action.type) {
         case CREATE_TIMEBLOCK:
             timeblocks[action.payload._id] = action.payload;
@@ -29,7 +29,9 @@ export default ( state = INITIAL_STATE, action ) => {
             timeblocks[action.payload._id] = action.payload;
             return { ...state, timeblocks }
         case DELETE_TIMEBLOCK:
-            return { ...state }
+            currentTimeblock = null;
+            timeblocks = _.omit(timeblocks, action.payload._id);
+            return { ...state, timeblocks, currentTimeblock };
         default:
             return state;
     }

@@ -29,8 +29,8 @@ class Post extends React.Component {
     renderActions() {
         return(
             <>
-                <DropDownItem onClick = {this.props.onDelete} >Delete</DropDownItem>
-                <DropDownItem onClick = {this.props.addPostTag} >Add Tag</DropDownItem>
+                <DropDownItem onClick = {this.props.onDelete}>Delete</DropDownItem>
+                <DropDownItem onClick = {this.props.addPostTag}>Add Tag</DropDownItem>
                 <DropDownItem >Change Visibility</DropDownItem>
             </>
         )
@@ -71,8 +71,6 @@ class Post extends React.Component {
 
 export default withRouter(Post);
 
-
-
 const Feedback = styled.div`
     font-family: 'Lato', sans-serif;
     margin-left: 2rem
@@ -90,7 +88,6 @@ const Feedback = styled.div`
     
     
 `
-
 
 const VoteBox = styled.div` 
     width: 3rem;

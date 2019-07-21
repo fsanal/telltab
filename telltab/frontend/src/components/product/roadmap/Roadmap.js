@@ -53,7 +53,7 @@ class Roadmap extends React.Component {
 					</RoadmapSubContainer>
 				</RoadmapContainer>
 				<Modal height="50rem" width="65rem" renderContent={this.renderCreateTimeblock()}
-					show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
+				show={this.state.showCreateTimeblockModal} onDismiss={() => this.closeCreateTimeblockModal()} />
 			</>
 		);
 	}
@@ -68,19 +68,27 @@ const RoadmapContainer = styled.div`
     height: 100%;
 `
 
-const RoadmapSubContainer = styled.div`
+const RoadmapHeader = styled.div`
+	background-color: #32cc24;
 	display: flex;
-	width: 90%;
-	height: 80%;
+    width: 100%;	
+    height: 100%;
+`
+
+const RoadmapSubContainer = styled.div`
+	background-color: #5924cc;
+	display: flex;
+	width: 100%;
+	height: 78%;
+	margin-top: 25rem;
 `
 
 const TimeblockContainer = styled.div`
 	background-color: #EDE8E7;
     display: flex;
-    width: 180rem;
-    height: 80rem;
-	margin-top: 15rem;
-	margin-left: 30rem;
+    width: 100%;
+	height: 80rem;
+	margin-top: 7rem;
 `
 
 const UtilityBox = styled.div`

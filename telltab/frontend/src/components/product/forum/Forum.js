@@ -75,7 +75,7 @@ class Forum extends React.Component {
                 </ForumContainer>
                 <AddTag show = {this.state.showCreateTagModal} onDismiss = {() => this.closeCreateTagModal()}/>
                 <CreatePost show = {this.state.showCreatePostModal} onDismiss = {() => this.closeCreatePostModal()}/>
-           </>
+            </>
         )
     }
 }

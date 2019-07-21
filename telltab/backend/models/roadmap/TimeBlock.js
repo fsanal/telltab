@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 const { ObjectId } = Schema.Types
 
 var timeblockSchema = new Schema({
-    roadmap: {type: ObjectId, ref: 'RoadMap'},
+    roadmap: {type: ObjectId, ref: 'Roadmap'},
     created: {type: Date, required: true},
     title: {type: String, required: true},
     beginDate: String,
     endDate: String
 });
 
-var TimeBlock = mongoose.model("TimeBlock", timeblockSchema);
+var Timeblock = mongoose.model("Timeblock", timeblockSchema);
 
-module.exports = TimeBlock;
+module.exports = Timeblock;

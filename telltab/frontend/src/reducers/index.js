@@ -14,8 +14,8 @@ import voteReducer from './forum_reducers/Vote_Reducer';
 //roadmap reducers
 import initiativeReducer from './roadmap_reducers/Initiative_Reducer';
 import requirementReducer from './roadmap_reducers/Requirement__Reducer';
-import roadmapReducer from './roadmap_reducers/RoadMap_Reducer';
-import timeblockReducer from './roadmap_reducers/TimeBlock_Reducer';
+import roadmapReducer from './roadmap_reducers/Roadmap_Reducer';
+import timeblockReducer from './roadmap_reducers/Timeblock_Reducer';
 
 
 

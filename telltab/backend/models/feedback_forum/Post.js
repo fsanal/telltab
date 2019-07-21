@@ -14,7 +14,7 @@ var postSchema = new Schema({
     requirements: [{ type: ObjectId, index: true, ref: 'Requirement'}],
     assignments: [{type: ObjectId, index: true, ref: 'User'}],
     tags: [{ type: ObjectId, es_indexed: true, index: true, ref: 'Tag'}],
-    roadmap: {type: ObjectId, ref: 'RoadMap'},
+    roadmap: {type: ObjectId, ref: 'Roadnap'},
     created: Date,
     title:
         {
@@ -32,7 +32,7 @@ var postSchema = new Schema({
     numComments: Number,
     numVotes: Number,
     url: String,
-    customFields:{ type: [ObjectId], index: true, ref: 'CustomField'}
+    customFields: [{ type: ObjectId, index: true, ref: 'CustomField'}]
 });
 
 postSchema.plugin(mongoosastic, { esClient });

@@ -56,6 +56,12 @@ deleteUser = (req, res) => {
 	    if (err) return res.json({success: false, error: err});
 		user.populate('personas', (err, user) => {
 			if (err) return res.json({success: false, error: err});
+			fields = user.customFields;
+            for (const fieldID of fields) {
+                CustomField.findByIdAndRemove(fieldID, (err, field) => {
+                    if (err) return res.json({ success: false, error: err });
+                });
+            }
 			return res.json(user);
 		});
 	});
@@ -112,7 +118,10 @@ deleteCustomField = (req, res) => {
         if (err) return res.json({ success: false, error: err });
         user.populate('personas', (err, user) => {
 			if (err) return res.json({success: false, error: err});
-			return res.json(user);
+			CustomField.findByIdAndRemove(fieldID, (err, field) => {
+                if (err) return res.json({ success: false, error: err });
+                return res.json(user);
+            });
 		});
     });
 }

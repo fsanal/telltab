@@ -24,12 +24,12 @@ export const createRequirement = (timeblockID, formValues) => async (dispatch, g
     const { currentRoadmap } = getState().roadmapState;
     //const { currentAuthor } = getState().authorState;
     //const { currentPersona } = getState().personaState;
-    //const { currentTimeBlock } = getState().timeblockState;
+    //const { currentTimeblock } = getState().timeblockState;
     if (currentRoadmap) roadmapID = currentRoadmap._id;
     //if (currentInitiative) initiativeID = currentInitiative._id;
     //if (currentAuthor) authorID = currentAuthor._id;
     //if (currentPersona) personaID = currentPersona._id;
-    //if (currentTimeBlock) timeblockID = currentTimeBlock._id;
+    //if (currentTimeblock) timeblockID = currentTimeblock._id;
     const response = await api.post('/requirements/create', { ...formValues, roadmapID,
     timeblockID});
     return response.data;

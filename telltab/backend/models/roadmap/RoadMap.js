@@ -10,6 +10,6 @@ var roadmapSchema = new Schema({
     url: String
 });
 
-var RoadMap = mongoose.model("RoadMap", roadmapSchema);
+var Roadmap = mongoose.model("Roadmap", roadmapSchema);
 
-module.exports = RoadMap; 
+module.exports = Roadmap; 

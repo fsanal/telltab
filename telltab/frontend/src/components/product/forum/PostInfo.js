@@ -6,8 +6,6 @@ import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions
 import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
 import styled from "styled-components";
 
-
-
 class PostInfo extends React.Component {
     constructor(){
         super();

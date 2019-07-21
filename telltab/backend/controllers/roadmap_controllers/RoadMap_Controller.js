@@ -1,10 +1,10 @@
-const RoadMap = require('../../models/roadmap/RoadMap');
+const Roadmap = require('../../models/roadmap/Roadmap');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
-createRoadMap = (req, res) => {
+createRoadmap = (req, res) => {
     const { name, productID, url } = req.body;
-    let roadmap = new RoadMap(
+    let roadmap = new Roadmap(
         {
             created: new Date(),
             name: name,
@@ -22,17 +22,17 @@ createRoadMap = (req, res) => {
     });
 }
 
-getRoadMap = (req, res) => {
+getRoadmap = (req, res) => {
     const { id } = req.params;
-    RoadMap.findById(id).populate('product').exec(function(err, roadmap) {
+    Roadmap.findById(id).populate('product').exec(function(err, roadmap) {
         if (err) return res.json({success: false, error: err});
         return res.json(roadmap);
     });
 }
 
-getProductRoadMap = (req, res) => {
+getProductRoadmap = (req, res) => {
     const { productID } = req.body;
-    let query = RoadMap.find();
+    let query = Roadmap.find();
     query.where('product').equals(productID);
     query.populate('product').exec((err, roadmap) => {
 		if (err) return res.json({success: false, error: err });
@@ -40,14 +40,14 @@ getProductRoadMap = (req, res) => {
 	});
 }
 
-editRoadMap = (req, res) => {
+editRoadmap = (req, res) => {
     const { id } = req.params;
     const { name, productID, url } = req.body;
     let update = {};
     if (name) update.name = name; 
     if (url) update.url = url;
     if (productID) update.product = ObjectId(productID);
-    RoadMap.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, roadmap) => {
+    Roadmap.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, roadmap) => {
         if (err) return res.json({ success: false, error: err });
         roadmap.populate('product', (err, roadmap) => {
             if (err) return res.json({success: false, error: err});
@@ -56,9 +56,9 @@ editRoadMap = (req, res) => {
     });
 }
 
-deleteRoadMap = (req, res) => {
+deleteRoadmap = (req, res) => {
     const id = req.params.id;
-    RoadMap.findByIdAndRemove(id, (err, roadmap) => {
+    Roadmap.findByIdAndRemove(id, (err, roadmap) => {
         if (err) return res.send(err);
         roadmap.populate('product', (err, roadmap) => {
             if (err) return res.json({success: false, error: err});
@@ -67,4 +67,4 @@ deleteRoadMap = (req, res) => {
     });
 }
 
-module.exports = { getRoadMap, createRoadMap, getProductRoadMap, editRoadMap, deleteRoadMap };
+module.exports = { getRoadmap, createRoadmap, getProductRoadmap, editRoadmap, deleteRoadmap };

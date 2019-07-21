@@ -1,9 +1,10 @@
 import React from 'react';
-import { createTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
+import { editTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import styled from "styled-components";
 
+//does not need to be own class, refactor as part of timeblockinfo
 
 const CreateHeader = styled.div`
     font-size: 4rem;
@@ -62,7 +63,7 @@ const Button = styled.button`
 
 `
 
-class CreateTimeblock extends React.Component {
+class EditTimeblock extends React.Component {
 
     renderError({ error, touched }) {
         if (touched && error) {
@@ -76,7 +77,7 @@ class CreateTimeblock extends React.Component {
 
     onSubmit = (formValues) => {
         this.props.onDismiss();
-        this.props.createTimeblock(formValues);
+        this.props.editTimeblock(formValues);
     }
 
     renderInput = ({input, label, meta, marginTop, placeholder}) => {
@@ -92,19 +93,19 @@ class CreateTimeblock extends React.Component {
     renderForm = () => {
         return(
             <form onSubmit = {this.props.handleSubmit(this.onSubmit)}>
-                <Field marginTop = "4rem" name = "title" component = {this.renderInput} label = "Title" placeholder = "Timeblock Description" />
-                <Field marginTop = "2rem" name = "beginDate" component = {this.renderInput} label = "Start Date:" placeholder = "Beginning Time" />
-                <Field marginTop = "2rem" name = "endDate" component = {this.renderInput} label = "End Date:" placeholder = "Ending Time" />
-                <Button width = "10rem" marginTop = "3rem" marginLeft = "48rem" height = "4rem">Create</Button>
+                <Field marginTop = "4rem" name = "title" component = {this.renderInput} label = "Title" placeholder = "Edit title" />
+                <Field marginTop = "2rem" name = "beginDate" component = {this.renderInput} label = "Start Date" placeholder = "Edit start time" />
+                <Field marginTop = "2rem" name = "endDate" component = {this.renderInput} label = "End Date" placeholder = "Edit end time" />
+                <Button width = "10rem" marginTop = "3rem" marginLeft = "48rem" height = "4rem">Edit</Button>
             </form>
         )
     }
 
     render(){
-        console.log("in create");
+        console.log("entered!!!!!")
         return(
             <>  
-                <CreateHeader>Create a Timeblock</CreateHeader>
+                <CreateHeader>Edit Timeblock</CreateHeader>
                 {this.renderForm()}
             </>
         )
@@ -122,6 +123,6 @@ const validate = (formValues) => {
 
 
 export default reduxForm({
-    form: 'create_timeblock_form',
+    form: 'edit_timeblock_form',
     //validate
-})(connect(null, { createTimeblock })(CreateTimeblock))
+})(connect(null, { editTimeblock })(EditTimeblock))

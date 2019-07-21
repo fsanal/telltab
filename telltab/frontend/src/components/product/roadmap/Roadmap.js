@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, FieldArray, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import CreateTimeblock from './CreateTimeblock';
+import CreateTimeblock from '../roadmap/CreateTimeBlock';
 import { getProductRoadmap } from '../../../actions/roadmap_actions/RoadMap_Actions';
 import { retrieveTimeBlocks, createTimeblock } from '../../../actions/roadmap_actions/TimeBlock_Actions';
 import history from '../../../history';

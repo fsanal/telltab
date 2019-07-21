@@ -1,4 +1,5 @@
 const Requirement = require('../../models/roadmap/Requirement');
+const CustomField = require('../../models/CustomField');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
@@ -89,6 +90,12 @@ deleteRequirement = (req, res) => {
         .populate('persona').populate('author').populate('visibility').populate('tags')
         .populate('assignments', (err, requirement) => {
             if (err) res.json({success: false, error: err});
+            fields = requirement.customFields;
+            for (const fieldID of fields) {
+                CustomField.findByIdAndRemove(fieldID, (err, field) => {
+                    if (err) return res.json({ success: false, error: err });
+                });
+            }
             return res.json(requirement);
         });
     });
@@ -185,6 +192,7 @@ deleteAssignment = (req, res) => {
         .populate('persona').populate('author').populate('visibility').populate('tags')
         .populate('assignments', (err, requirement) => {
             if (err) res.json({success: false, error: err});
+
             return res.json(requirement);
         });
     });
@@ -217,7 +225,10 @@ deleteCustomField = (req, res) => {
         .populate('persona').populate('author').populate('visibility').populate('tags')
         .populate('assignments', (err, requirement) => {
             if (err) res.json({success: false, error: err});
-            return res.json(requirement);
+            CustomField.findByIdAndRemove(fieldID, (err, field) => {
+                if (err) return res.json({ success: false, error: err });
+                return res.json(requirement);
+            });
         });
     });
 }

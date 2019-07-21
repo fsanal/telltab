@@ -16,7 +16,7 @@ var userSchema = new Schema({
 	notificationPref: {type: [Boolean]},
 	url: String,
 	imageUrl: String,
-	customFields: { type: [ObjectId], index: true, ref: 'CustomField'},
+	customFields: [{ type: ObjectId, index: true, ref: 'CustomField'}],
 	facebook: {
 		id: String,
 		token: String,

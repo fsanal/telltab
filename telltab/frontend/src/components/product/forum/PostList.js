@@ -80,7 +80,7 @@ class PostList extends React.Component {
 
     renderList() {
         return this.props.posts.map(post => {
-            return <Post post = {post} tags = {this.renderTags(post)} numVotes = {post.numVotes} showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} 
+            return <Post key = {post._id} post = {post} tags = {this.renderTags(post)} numVotes = {post.numVotes} showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} 
             onDelete = {() => {this.handleDeletePost(post)}} onSelect = {(e) => {this.handleSelectPost(post, e)}} key = {post._id} votes = {post.numVotes}
             voteCls = {this.renderVoteClass(post)} onVote = {() => {this.handleVote(post)}}
             border = {this.renderBorder(post)} name = "Baiju" id = {post._id} title = {post.title} body = {post.body} 
@@ -96,7 +96,7 @@ class PostList extends React.Component {
         )
     }
 }
-
+/* {this.renderList()}*/
 const mapStateToProps = (state) => {
     return {
         posts: Object.values(state.postState.posts),

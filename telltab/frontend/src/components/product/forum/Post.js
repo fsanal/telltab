@@ -57,7 +57,7 @@ class Post extends React.Component {
                             <FeedbackDescription>
                                 {this.props.body}
                             </FeedbackDescription>
-                            {this.renderTags()}
+                                {this.renderTags()}
                         </FeedbackContent>
                     </StyledLink>
                     <DropDown renderBody = {this.renderChangeProgress()} />
@@ -67,7 +67,7 @@ class Post extends React.Component {
         )
     }
 }
-
+/**/
 
 export default withRouter(Post);
 

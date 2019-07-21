@@ -63,6 +63,7 @@ export default connect(null, { retrieveRequirements, createRequirement })(Timebl
 
 const TimeblockWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     font-size: 4rem;
     color: white;
     background-color: #43a047;

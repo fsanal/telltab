@@ -69,6 +69,7 @@ text-align: center;
 vertical-align: middle;
 line-height: 10rem;
 font-size: 10rem;
+color: red;
 /*
 border: #DADCE0 solid 0.05rem;
 box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;

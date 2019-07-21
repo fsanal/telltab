@@ -7,7 +7,6 @@ import { getProductRoadmap } from '../../../actions/roadmap_actions/Roadmap_Acti
 import { retrieveTimeblocks } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import history from '../../../history';
 import TimeblockList from './TimeblockList';
-import Req from './Req';
 
 class Roadmap extends React.Component {
 

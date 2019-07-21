@@ -23,8 +23,6 @@ const List = styled.div`
 `
 
 
-
-
 class PostList extends React.Component {
 
     renderBorder(post) {
@@ -80,8 +78,6 @@ class PostList extends React.Component {
         this.props.editPost(post._id, {progress})
     }
 
-
-   
     renderList() {
         return this.props.posts.map(post => {
             return <Post post = {post} tags = {this.renderTags(post)} numVotes = {post.numVotes} showPost = {() => {this.showPostModal(post)}} addPostTag = {() => {this.addPostTag(post)}} 

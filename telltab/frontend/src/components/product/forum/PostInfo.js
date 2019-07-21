@@ -6,8 +6,6 @@ import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions
 import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
 import styled from "styled-components";
 
-
-
 class PostInfo extends React.Component {
     constructor(){
         super();
@@ -56,7 +54,7 @@ class PostInfo extends React.Component {
                         <LeftContainer>
                             <AuthorContainer>
                                 <i class="fas fa-user-circle"></i>
-                                <Author>George Bumass</Author>
+                                <Author>Faraz Sanal</Author>
                             </AuthorContainer>
                             <CreateHeader>Description:</CreateHeader>
                             <InputContainer marginTop = "0.5rem">

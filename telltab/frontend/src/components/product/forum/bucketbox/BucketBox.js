@@ -21,7 +21,7 @@ class BucketBox extends React.Component {
     }
 
     openModal(){
-        let path = window.location.pathname + "/createBucket";
+        let path = "/createBucket";
         history.push(path);
     }
 

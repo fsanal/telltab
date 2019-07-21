@@ -73,7 +73,7 @@ retrieveNewReleases = (req, res) => {
     if (requirementIDs) query.where('requirement').in(requirementIDs);
     if (forumID) query.where('forum').equals(forumID);
 	if (authorID) query.where('author').equals(authorID);
-	if (roadMapConfig) query.where('roadMapConfig').equals(roadMapConfig);
+	if (roadmapConfig) query.where('roadmapConfig').equals(roadmapConfig);
 	if (limit) query.limit(Number(limit));
     if (skip) query.skip(Number(skip));
     query.populate('requirement').populate('forum').populate('author').populate('form')

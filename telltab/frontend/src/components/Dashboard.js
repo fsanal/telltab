@@ -11,7 +11,7 @@ const Dashboard = () => {
                 <TellTabSideNav/>
                 <Router history = {history}>
                     <Route path = "/" exact component = {Home2}/>
-                    <Route path = "/products" component = {ProductDash}/>
+                    <Route path = "/products/:productID" component = {ProductDash}/>
                 </Router>  
             </div>) 
 }

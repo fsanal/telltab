@@ -25,7 +25,6 @@ export const retrieveProducts = () => async (dispatch, getState) => {
 }
 
 export const getProduct = (id) => async (dispatch) => {
-    console.log(id);
     const response = await api.get(`/products/get/${id}`);
     dispatch({ type: GET_PRODUCT, payload: response.data });
     return response.data;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, {keyframes} from "styled-components";
+import {withRouter} from 'react-router'
 //import Auth from './Auth';
 
 
@@ -34,24 +35,23 @@ const StyledLink = styled(Link)`
     font-size: 3.5rem;
 `;
 
-const ProductSideNav = () => {
-    return (
-        <SideNav className = "rat">
-            <StyledLink margintop = "8rem" to = "/map">
-                <i className="fas fa-comments"></i>
-            </StyledLink>
-            <StyledLink margintop = "3rem" to = "/">
-                <i className="fas fa-map"></i>
-            </StyledLink>
-            <StyledLink margintop = "3rem" to = "/analytics">
-                <i className="fas fa-chart-pie"></i>
-            </StyledLink>
-            <StyledLink margintop = "3rem" to = "/actions">
-                <i className="fas fa-briefcase"></i>
-            </StyledLink>
-        </SideNav>
-    )
-
+const ProductSideNav = (props) => {
+        return (
+            <SideNav className = "rat">
+                <StyledLink margintop = "8rem" to = {`/products/${props.match.params.productID}/forum`}>
+                    <i className="fas fa-comments"></i>
+                </StyledLink>
+                <StyledLink margintop = "3rem" to = {`/products/${props.match.params.productID}/roadmap`}>
+                    <i className="fas fa-map"></i>
+                </StyledLink>
+                <StyledLink margintop = "3rem" to = "/analytics">
+                    <i className="fas fa-chart-pie"></i>
+                </StyledLink>
+                <StyledLink margintop = "3rem" to = "/actions">
+                    <i className="fas fa-briefcase"></i>
+                </StyledLink>
+            </SideNav>
+        )
 }
 
-export default ProductSideNav;
+export default withRouter(ProductSideNav);

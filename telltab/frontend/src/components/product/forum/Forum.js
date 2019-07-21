@@ -1,7 +1,7 @@
 import React from 'react';
 import PostList from './PostList';
 import Toolbar from './Toolbar';
-import BucketBox from './bucketbox/BucketBox';
+import BucketBox from './bucketbox/BucketBox'
 import CreatePost from './CreatePost';
 import AddTag from './AddTag';
 import PostInfo from './PostInfo';
@@ -27,11 +27,13 @@ class Forum extends React.Component {
 
     componentDidMount() {
         this.props.getProduct(this.props.match.params.productID).then((result) => {
-            this.props.getProductForum(this.props.product._id).then((result2) => {
+            if (this.props.product){
+                this.props.getProductForum(this.props.product._id).then((result2) => {
                     this.props.retrievePosts();
                     this.props.retrieveBuckets();
                     this.props.retrieveVotes();
-            });
+                });
+            }
         })
     }
 
@@ -53,6 +55,9 @@ class Forum extends React.Component {
     }
 
     render(){
+        if (!this.props.product){
+            return (<div></div>)
+        }
         return (
             <>
                 <ForumContainer>
@@ -65,6 +70,7 @@ class Forum extends React.Component {
                                         <i className="material-icons forum__createicon">add</i>
                                         <CreateContent >Create Post</CreateContent>
                                     </CreateContainer>
+                                    <BucketBox/>
                                 </UtilitySection>
                             </Utility>
                         </UtilityBox>
@@ -75,7 +81,7 @@ class Forum extends React.Component {
                 </ForumContainer>
                 <AddTag show = {this.state.showCreateTagModal} onDismiss = {() => this.closeCreateTagModal()}/>
                 <CreatePost show = {this.state.showCreatePostModal} onDismiss = {() => this.closeCreatePostModal()}/>
-           </>
+            </>
         )
     }
 }

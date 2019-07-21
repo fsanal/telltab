@@ -10,6 +10,7 @@ import Login from './authentication/Login';
 import Logout from './authentication/Logout';
 import Signup from './authentication/Signup';
 import DropDown from './general/DropDown';
+import CreateBucket from './product/forum/bucketbox/CreateBucket';
 
 import Comment from './Comment';
 
@@ -17,11 +18,8 @@ const App = () => {
     return (<>
                 <Router history = {history}>
                     <Route path = "/create_product" exact component = {CreateProduct}/>
-
-                    <Route path = "/roadmap" exact component = {Roadmap} />
-
+                    <Route path = "*/createBucket" exact component = {CreateBucket}/>
                     <Route path = "/" component = {Dashboard} /> 
-
 
 
                     {/*<Route path = "/:productID/roadmap" exact component = {Roadmap} />

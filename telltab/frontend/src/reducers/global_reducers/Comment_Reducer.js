@@ -3,8 +3,7 @@ import {
     SELECT_COMMENT,
     DELETE_COMMENT,
     EDIT_COMMENT,
-    RETRIEVE_COMMENTS,
-    CREATE_REPLY
+    RETRIEVE_COMMENTS
 } from '../../actions/types/global_types';
 import _ from 'lodash';
 
@@ -17,9 +16,6 @@ export default (state = INITIAL_STATE, action) => {
     let { currentComment, comments } = state;
     switch (action.type) {
         case CREATE_COMMENT:
-            comments[action.payload._id] = action.payload;
-            return { ...state, comments };
-        case CREATE_REPLY:
             comments[action.payload._id] = action.payload;
             return { ...state, comments };
         case RETRIEVE_COMMENTS:
@@ -39,5 +35,3 @@ export default (state = INITIAL_STATE, action) => {
             return state;
     }
 };
-
-//Do the organization here before setting state (helper)

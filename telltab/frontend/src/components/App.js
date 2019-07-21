@@ -12,6 +12,8 @@ import Signup from './authentication/Signup';
 import DropDown from './general/DropDown';
 import CreateBucket from './product/forum/bucketbox/CreateBucket';
 
+import Comment from './Comment';
+
 const App = () => {
     return (<>
                 <Router history = {history}>
@@ -20,14 +22,14 @@ const App = () => {
                     <Route path = "/" component = {Dashboard} /> 
 
 
-
-                    <Route path = "/:productID/roadmap" exact component = {Roadmap} />
-                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />
+                    {/*<Route path = "/:productID/roadmap" exact component = {Roadmap} />
+                    <Route path = "/:name/roadmap/createRequirement" exact component = {CreateRequirement} />*/}
                     <Route path = "/login" exact component = {Login} />
                     <Route path = "/signup" exact component = {Signup} />
                     <Route path = "/logout" exact component = {Logout} />
 
                     <Route path = "/dropdown" component = {DropDown}/>
+
                 </Router>     
             </>)
 }

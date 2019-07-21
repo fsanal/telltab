@@ -22,10 +22,7 @@ export const getRoadmap = (id) => async dispatch => {
     dispatch({type: GET_ROADMAP, payload: response.data});
 }
 
-export const getProductRoadmap = () => async (dispatch, getState) => {
-    const { currentProduct } = getState().productState;
-    let productID;
-    if (currentProduct) productID = currentProduct._id;
+export const getProductRoadmap = (productID) => async (dispatch) => {
     const response = await api.post(`/roadmaps/get_product_roadmap`, {productID});
     dispatch({type: SELECT_PRODUCT_ROADMAP, payload: response.data});
 } 

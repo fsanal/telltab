@@ -57,4 +57,14 @@ deleteTimeBlock = (req, res) => {
     });
 }
 
-module.exports = { getTimeBlock, createTimeBlock, editTimeBlock, deleteTimeBlock };
+retrieveTimeBlocks = (req, res) => {
+    const { roadmapID, title, beginDate, endDate } = req.body;
+	let query = TimeBlock.find();
+	if (roadmapID) query.where('roadmap').equals(roadmapID);
+	query.populate('roadmap').exec((err, timeblocks) => {
+		if (err) return res.json({success: false, error: err });
+		return res.json(timeblocks);
+	});
+}
+
+module.exports = { getTimeBlock, createTimeBlock, editTimeBlock, deleteTimeBlock, retrieveTimeBlocks };

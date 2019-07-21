@@ -3,8 +3,7 @@ import {
     RETRIEVE_COMMENTS,
     SELECT_COMMENT,
     EDIT_COMMENT,
-    DELETE_COMMENT,
-    CREATE_REPLY
+    DELETE_COMMENT
 } from '../types/global_types';
 import api from '../../apis/api';
 import history from '../../history';
@@ -25,7 +24,6 @@ export const retrieveComments = () => async (dispatch, getState) => {
     dispatch({type: RETRIEVE_COMMENTS, payload: response.data});
 }
 
-
 export const createComment= (formValues) => async (dispatch, getState) => {
     const { currentPost } = getState().postState;
     const { currentComment } = getState().commentState;
@@ -34,7 +32,10 @@ export const createComment= (formValues) => async (dispatch, getState) => {
     if (currentAuthor) authorID = currentAuthor.userId; //change later
     if (currentPost) postID = currentPost._id;
     if (currentComment) {
-        if (currentComment.parent) {
+        delete Object.assign(formValues, {['content']: formValues['replyContent'] })['replyContent'];
+        if (!currentComment.parent) {
+            parentID = currentComment._id;
+        } else {
             parentID = currentComment.parent._id;
         }
     }
@@ -51,7 +52,7 @@ export const editComment = (formValues) => async (dispatch, getState) => {
     dispatch({ type: EDIT_COMMENT, payload: response.data });
 }
 
-export const deleteComment = (comment) => async (dispatch, getState) => {
+export const deleteComment = (comment) => async (dispatch) => {
     let id = comment._id;
     const response = await api.delete(`/comments/delete/${id}`);
     dispatch({ type: DELETE_COMMENT, payload: response.data });

@@ -3,14 +3,20 @@ import {
     SELECT_TIMEBLOCK,
     DELETE_TIMEBLOCK,
     EDIT_TIMEBLOCK,
-    GET_TIMEBLOCK
-} from './roadmap_types';
+    GET_TIMEBLOCK,
+    RETRIEVE_TIMEBLOCKS
+} from '../types/roadmap_types';
 import api from '../../apis/api';
 import history from '../../history';
 
 
-export const createTimeblock = (title, roadmapID, beginDate, endDate) => async dispatch => {
-    const response = await api.post('/timeblocks/create', {title, roadmapID, beginDate, endDate});
+export const createTimeblock = (formValues) => async (dispatch, getState) => {
+    const { roadmapState } = getState();
+    let roadmapID;
+    if (!roadmapState.currentRoadmap) return;
+    roadmapID = roadmapState.currentRoadmap._id;
+    console.log("Created " + roadmapID);
+    const response = await api.post('/timeblocks/create', {...formValues, roadmapID});
     dispatch({type: CREATE_TIMEBLOCK, payload: response.data});
 }
 
@@ -18,6 +24,16 @@ export const getTimeBlock = (id) => async (dispatch) => {
     const response = await api.post(`/timeblocks/get/${id}`);
     dispatch({ type: GET_TIMEBLOCK, payload: response.data });
 }
+
+export const retrieveTimeblocks = () => async (dispatch, getState) => {
+    const { roadmapState } = getState();
+    let roadmapID;
+    if (!roadmapState.currentRoadmap) return;
+    roadmapID = roadmapState.currentRoadmap._id;
+    console.log(roadmapID);
+    const response = await api.post('/timeblocks/retrieve', {roadmapID});
+    dispatch({type: RETRIEVE_TIMEBLOCKS, payload: response.data});
+} 
 
 export const editTimeblock = (id, title, beginDate, endDate) => async dispatch => {
     const response = await api.put(`/timeblocks/edit/${id}`, {title, beginDate, endDate});

@@ -11,98 +11,6 @@ import CreateProduct from './CreateProduct';
 //import Auth from './Auth';
 
 
-const Background = styled.div` 
-    background-color: white;
-    width: 100%;
-    position: relative;
-    overflow: auto;
-`;
-
-const BoxContainer = styled.div`
-    background-color: #F1F3F4;
-    width: 100rem;
-    margin-bottom: 5rem;
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    margin-left: -50rem;
-    border-radius: 0.5rem;
-`
-
-
-const Box = styled.div`
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-    background-color: white;
-    width: 80rem;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    border-radius: 0.5rem;
-    border: #DADCE0 solid 0.05rem;
-    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
-    :last-child {
-        border: none;
-    }
-`
-
-
-const Button = styled.button`
-    background-color:#3c40c6;
-    color: white;
-    margin-left: ${props => props.marginLeft};
-    margin-top: ${props => props.marginTop};
-    width: ${props => props.width};
-    height: ${props => props.height};
-    font-size: 2rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-
-    :hover {
-        background-color:#575fcf;
-    }
-    :focus {
-        outline: 0;
-        box-shadow: none!important;
-    }
-
-`
-
-const Card = styled.div`
-    height: ${props => props.height} 
-    border-bottom: 0px solid #DADCE0;
-    display: flex;
-    :hover {
-        background-color: ${props => props.hoverColor};
-    }
-`
-
-const Header = styled.div`
-    color: #3c40c6;
-    font-size: 5rem;
-    font-weight: bold;
-    vertical-align: middle;
-    line-height: 10rem;
-    margin-left: 3rem;
-`
-const StyledLink = styled(Link)`
-    text-decoration: none;
-`;
-
-const CardProductName = styled.div`
-    width: 40rem;
-    color: black;
-    font-size: 2.5rem;
-    vertical-align: middle;
-    line-height: 6rem;
-    margin-left: 5rem;
-    
-`
-
-
-
 class Home2 extends React.Component {
     constructor(){
         super();
@@ -195,4 +103,96 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, { retrieveProducts, editProduct, 
     selectProduct, deleteProduct, getProductForum, getProductRoadmap })(Home2);
+
+
+    
+const Background = styled.div` 
+    background-color: white;
+    width: 100%;
+    position: relative;
+    overflow: auto;
+`;
+
+const BoxContainer = styled.div`
+    background-color: #F1F3F4;
+    width: 100rem;
+    margin-bottom: 5rem;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-left: -50rem;
+    border-radius: 0.5rem;
+`
+
+
+const Box = styled.div`
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    background-color: white;
+    width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    border: #DADCE0 solid 0.05rem;
+    box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
+    :last-child {
+        border: none;
+    }
+`
+
+
+const Button = styled.button`
+    background-color:#3c40c6;
+    color: white;
+    margin-left: ${props => props.marginLeft};
+    margin-top: ${props => props.marginTop};
+    width: ${props => props.width};
+    height: ${props => props.height};
+    font-size: 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    :hover {
+        background-color:#575fcf;
+    }
+    :focus {
+        outline: 0;
+        box-shadow: none!important;
+    }
+
+`
+
+const Card = styled.div`
+    height: ${props => props.height} 
+    border-bottom: 0px solid #DADCE0;
+    display: flex;
+    :hover {
+        background-color: ${props => props.hoverColor};
+    }
+`
+
+const Header = styled.div`
+    color: #3c40c6;
+    font-size: 5rem;
+    font-weight: bold;
+    vertical-align: middle;
+    line-height: 10rem;
+    margin-left: 3rem;
+`
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
+
+const CardProductName = styled.div`
+    width: 40rem;
+    color: black;
+    font-size: 2.5rem;
+    vertical-align: middle;
+    line-height: 6rem;
+    margin-left: 5rem;
+    
+`
 

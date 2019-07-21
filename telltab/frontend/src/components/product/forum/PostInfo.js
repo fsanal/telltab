@@ -199,7 +199,6 @@ const Container = styled.div`
     margin-right: 3rem;
 `
 
-
 const LeftContainer = styled.div`
     width: 65rem;
     margin-top: 2rem;

@@ -37,6 +37,7 @@ router.get('/timeblocks/get/:id', timeblock_controller.getTimeBlock);
 router.post('/timeblocks/create', timeblock_controller.createTimeBlock);
 router.put('/timeblocks/edit/:id', timeblock_controller.editTimeBlock);
 router.delete('/timeblocks/delete/:id', timeblock_controller.deleteTimeBlock);
+router.post('/timeblocks/retrieve', timeblock_controller.retrieveTimeBlocks);
 
 // Export API routes
 module.exports = router;

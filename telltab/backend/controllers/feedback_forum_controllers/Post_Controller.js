@@ -3,6 +3,7 @@ const Comment = require('../../models/Comment');
 const Vote = require('../../models/feedback_forum/Vote');
 const Tag = require('../../models/Tag');
 const Requirement = require('../../models/roadmap/Requirement');
+const CustomField = require('../../models/CustomField');
 var mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const mongoosastic = require('mongoosastic');
@@ -90,6 +91,12 @@ deletePost = (req, res) => {
         .populate('visibility').populate('requirements').populate('assignments').populate('tags')
         .populate('roadmap', (err, post) => {
             if (err) return res.json({ success: false, error: err });
+            fields = post.customFields;
+            for (const fieldID of fields) {
+                CustomField.findByIdAndRemove(fieldID, (err, field) => {
+                    if (err) return res.json({ success: false, error: err });
+                });
+            }
             return res.json(post);
         });
     });
@@ -368,7 +375,10 @@ deleteCustomField = (req, res) => {
         .populate('visibility').populate('requirements').populate('assignments').populate('tags')
         .populate('roadmap', (err, post) => {
             if (err) return res.json({ success: false, error: err });
-            return res.json(post);
+            CustomField.findByIdAndRemove(fieldID, (err, field) => {
+                if (err) return res.json({ success: false, error: err });
+                return res.json(post);
+            });
         });
     });
 }

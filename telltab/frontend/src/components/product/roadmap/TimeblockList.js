@@ -108,7 +108,6 @@ export default connect(mapStateToProps, {
 
 const List = styled.div`
     display: flex;
-    width: 184rem;
     background-color: #F4F5F7;
     border-radius: 0.5rem;
 `

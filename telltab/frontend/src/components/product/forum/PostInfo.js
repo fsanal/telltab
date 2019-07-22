@@ -5,6 +5,7 @@ import Modal from '../../general/Modal';
 import { editPost, deletePostTag } from '../../../actions/feedback_forum_actions/Post_Actions';
 import { deleteTag} from '../../../actions/global_actions/Tag_Actions';
 import styled from "styled-components";
+import Comments from '../../Comment';
 
 class PostInfo extends React.Component {
     constructor(){
@@ -66,6 +67,7 @@ class PostInfo extends React.Component {
                             {this.renderTags(tags)}
                         </RightContainer>
                     </SplitContainer>
+                    <Comments/>
                 </Container>
             </>
         )

@@ -25,8 +25,6 @@ class Roadmap extends React.Component {
 		return (
 			<>
 				<RoadmapContainer>
-					<RoadmapHeader>
-					</RoadmapHeader>
 					<RoadmapSubContainer>
 						<TimeblockContainer>
 							<TimeblockList />
@@ -85,8 +83,6 @@ const RoadmapSubContainer = styled.div`
 const TimeblockContainer = styled.div`
 	background-color: #F4F5F7;
     display: flex;
-    width: 184rem;
-	height: 81rem;
 	margin-top: 5rem;
 	margin-left: 4rem;
 `

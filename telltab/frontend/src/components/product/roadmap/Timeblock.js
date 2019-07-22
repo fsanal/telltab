@@ -5,6 +5,7 @@ import CreateRequirement from './CreateRequirement';
 import {retrieveRequirements, createRequirement} from '../../../actions/roadmap_actions/Requirement_Actions';
 import { connect } from 'react-redux';
 import DropDown from '../../general/DropDown';
+import Requirement from './Requirement';
 
 class Timeblock extends React.Component {
     constructor(){
@@ -16,21 +17,18 @@ class Timeblock extends React.Component {
 
     componentDidMount(){
         this.props.retrieveRequirements(this.props.timeblock._id).then((result) => {
-            console.log(result);
             this.setState({requirements: result})
         })
     }
 
     renderRequirements(){
-        if (this.state.requirements) return(this.state.requirements.map(requirement => {
-            return <div key = {requirement._id}>{requirement.title}</div>
-        }))
+        if (this.state.requirements) return (this.state.requirements.map(requirement => {
+        return <Requirement id = {requirement._id} key = {requirement._id} title = {requirement.title} tags = {["bloobus"]} /> } ))
     }
 
     onCreateReq(formValues) {
         this.props.createRequirement(this.props.timeblock._id, formValues).then((result) => {
             let newReqs = this.state.requirements;
-            console.log(newReqs);
             newReqs.push(result);
             this.setState({requirements: newReqs})
         })
@@ -51,7 +49,9 @@ class Timeblock extends React.Component {
                 <TimeblockWrapper>
                     {this.props.title}
                     {this.renderActions()}
-                    {this.renderRequirements()}
+                    <RequirementContainer>
+                        {this.renderRequirements()}
+                    </RequirementContainer>
                     <CreateRequirement onCreateReq = {(formValues) => this.onCreateReq(formValues)} timeblock = {this.props.timeblock} />
                 </TimeblockWrapper>
             </div>
@@ -93,4 +93,9 @@ const DropDownItem = styled.li`
         color: black;
     }
     font-size: 0.3rem;
+`
+
+
+const RequirementContainer = styled.div`
+    margin-top: 3rem;
 `

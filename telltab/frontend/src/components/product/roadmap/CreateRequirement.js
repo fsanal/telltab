@@ -39,45 +39,30 @@ class CreateRequirement extends React.Component {
 export default CreateRequirement;
 
 
-const TimeBlock = styled.div`
-     display: flex;
-     background-color: black;
-     height: 60rem;
-     border-radius: 0.5rem;
-     margin-left: auto;
-     margin-right: auto;
-     margin-bottom: 2rem;
-     border: "#BFBFBF solid 0.03rem";
-    
-     /*
-     border: #DADCE0 solid 0.05rem;
-     box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
-     */
-     width: 30rem;
-`
-
 const CreateCard = styled.div`
 display: flex;
 background-color: white;
-height: 10rem;
+height: 3rem;
 border-radius: 0.5rem;
-margin-top: 5rem
 margin-left: auto;
 margin-right: auto;
 border: "#BFBFBF solid 0.03rem";
-text-align: center;
+justify-content: center;
 vertical-align: middle;
-line-height: 10rem;
-font-size: 10rem;
-color: red;
-/*
+line-height: 3rem;
+font-size: 5rem;
+color: black;
 border: #DADCE0 solid 0.05rem;
 box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
-*/
-width: 20rem;
+
+width: 26rem;
 `
 
 const ReqTextArea = styled.textarea`
-    height: 20rem;
-    width: 20rem;
+    height: 13rem;
+    width: 26rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-top: 2rem;
 `

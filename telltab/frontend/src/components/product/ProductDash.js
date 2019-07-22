@@ -14,7 +14,7 @@ const ProductContainer = styled.div`
     display: flex;
     flex-direction: column;
    /* background-color: #F4F5F7;*/
-    overflow-y: scroll;
+    overflow-y: auto;
 `
 
 

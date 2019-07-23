@@ -3,6 +3,7 @@ import styled, {keyframes} from "styled-components";
 import DropDown from '../../general/DropDown';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
+import { Draggable } from 'react-beautiful-dnd';
 
 class Requirement extends React.Component {
 
@@ -30,19 +31,42 @@ class Requirement extends React.Component {
         return `/products/${this.props.match.params.productID}/roadmap/r/${this.props.id}`
     }
 
-    render(){
-        return (
-            <>
-                <StyledLink to = {this.renderPathName()} >
-                    <Req border = {this.props.border}>
+    /*<StyledLink to = {this.renderPathName()} >*/
+
+    renderBody(provided){
+        return(
+                
+                    <Req  InnerRef= {provided.innerRef} 
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          border = {this.props.border}>
                             <ReqContent onContextMenu = {this.props.onSelect}>
                                 {this.props.title}
                                 {this.renderTags()}
                             </ReqContent>
                         <DropDown renderBody = {this.renderActions()} />
                     </Req>
-                </StyledLink>
-            </>
+        )
+    }
+
+    render(){
+        return (
+            <Draggable draggableId={this.props.id} 
+            index={this.props.index}>
+                {provided => (
+                    <Req
+                        ref = {provided.innerRef} 
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        border = {this.props.border}
+                    >
+                        <ReqContent onContextMenu = {this.props.onSelect}>
+                            {this.props.title}
+                            {this.renderTags()}
+                        </ReqContent>
+                    </Req>
+                )}
+            </Draggable>
         )
     }
 }
@@ -50,17 +74,23 @@ class Requirement extends React.Component {
 
 export default withRouter(Requirement);
 
+const Container = styled.div`
+    border: 1px solid lightgrey;
+    border-radius; 2px;
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: white;
+`
+
 const Req = styled.div`
     font-family: 'Lato', sans-serif;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 0.7rem
+    margin-left: 2rem;
     text-decoration: none;
-    margin-bottom: 0.7rem; 
     cursor:pointer;
     border: ${props => props.border};
     border-radius: 0.3rem;
     background-color: white;
-    display: flex;
     color: black;
     min-height: 10rem;
     width: 26rem;
@@ -72,8 +102,7 @@ const Req = styled.div`
 const ReqContent = styled.div` 
     margin-left: 2rem;
     width: 100%;
-    margin-top: 0.8rem;
-    margin-bottom: 0.6rem;
+    padding-top: 0.8rem;
     position: relative;
     color: black;
 

@@ -7,6 +7,7 @@ import PostInfo from './forum/PostInfo';
 import { Router, Route } from 'react-router-dom';
 import history from '../../history';
 import Roadmap from './roadmap/Roadmap';
+import RequirementInfo from './roadmap/RequirementInfo';
 //import Auth from './Auth';
 
 const ProductContainer = styled.div`
@@ -27,6 +28,7 @@ const ProductDash = () => {
                 <ProductNavBar/>
                 <Router history = {history}>
                     <Route path = "/products/:productID/roadmap" component = {Roadmap}/>
+                    <Route path = "/products/:productID/roadmap/r/:requirementID" component = {RequirementInfo}/>
                     <Route path = "/products/:productID/forum" component = {Forum}/>
                     <Route path = "/products/:productID/forum/p/:postID" component = {PostInfo}/>
                 </Router>

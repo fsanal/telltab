@@ -9,6 +9,7 @@
     "history": "^4.9.0",
     "lodash": "^4.17.14",
     "react": "^16.8.6",
+    "react-beautiful-dnd": "^11.0.5",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",

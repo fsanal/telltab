@@ -67,4 +67,20 @@ retrieveTimeblocks = (req, res) => {
 	});
 }
 
-module.exports = { getTimeblock, createTimeblock, editTimeblock, deleteTimeblock, retrieveTimeblocks };
+
+changeRequirements = (req, res) => {
+    const { id } = req.params;
+    const { requirementIDs } = req.body;
+    let update = {};
+    if (requirementIDs) update.requirements = requirementIDs.map(reqID => ObjectId(reqID))
+    Timeblock.findByIdAndUpdate(id, {$set: update}, {new: true}, (err, timeblock) => {
+        if (err) return res.send(err);
+        timeblock.populate('roadmap', (err, timeblock) => {
+            if (err) return res.json({success: false, error: err});
+            return res.json(timeblock);
+        });
+    });
+}
+
+
+module.exports = { getTimeblock, createTimeblock, editTimeblock, deleteTimeblock, retrieveTimeblocks, changeRequirements};

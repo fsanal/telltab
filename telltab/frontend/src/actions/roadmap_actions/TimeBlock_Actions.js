@@ -4,7 +4,8 @@ import {
     DELETE_TIMEBLOCK,
     EDIT_TIMEBLOCK,
     GET_TIMEBLOCK,
-    RETRIEVE_TIMEBLOCKS
+    RETRIEVE_TIMEBLOCKS,
+    CHANGE_TIMEBLOCK_REQUIREMENTS
 } from '../types/roadmap_types';
 import api from '../../apis/api';
 import history from '../../history';
@@ -52,4 +53,9 @@ export const selectTimeblock = (timeblock) => {
         type: SELECT_TIMEBLOCK,
         payload: timeblock
     }
+}
+
+export const changeTimeblockRequirements = (id, formValues) => async dispatch => {
+    const response = await api.post(`/timeblocks/change_requirements/${id}`, formValues);
+    dispatch({type: CHANGE_TIMEBLOCK_REQUIREMENTS, payload: response.data});
 }

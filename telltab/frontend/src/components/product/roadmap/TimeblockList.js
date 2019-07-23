@@ -1,13 +1,15 @@
 import React from 'react';
 import Timeblock from './Timeblock'
+import {DragDropContext} from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { retrieveRequirements } from '../../../actions/roadmap_actions/Requirement_Actions'
-import { createTimeblock, selectTimeblock, editTimeblock, deleteTimeblock } from '../../../actions/roadmap_actions/Timeblock_Actions';
+import { createTimeblock, selectTimeblock, editTimeblock, deleteTimeblock, changeTimeblockRequirements } from '../../../actions/roadmap_actions/Timeblock_Actions';
 import CreateTimeblock from './CreateTimeblock';
 import EditTimeblock from './EditTimeblock';
 import styled from "styled-components";
 import { Field } from 'redux-form';
 import Modal from '../../general/Modal';
+import Requirement from './Requirement';
 
 class TimeblockList extends React.Component {
 
@@ -60,12 +62,30 @@ class TimeblockList extends React.Component {
         this.props.deleteTimeblock(timeblock._id);
     }
 
+    renderRequirements(timeblock, provided) {
+        if (timeblock.requirements) return(
+            <div  
+                ref = {provided.innerRef} 
+                {...provided.droppableProps}
+            >
+                   <RequirementContainer >
+                        {timeblock.requirements.map((reqID, index) => {
+                            let requirement = this.props.requirements[reqID];
+                            if (requirement) return <Requirement index = {index} id = {requirement._id} key = {requirement._id} title = {requirement.title} tags = {requirement.tags} />})
+                        }
+                        {provided.placeholder}
+                    </RequirementContainer>
+            </div>
+        )
+       /* return (this.props.requirements.map(requirement => {
+        return <Requirement id = {requirement._id} key = {requirement._id} title = {requirement.title} tags = {requirement.tags} /> } ))*/
+    }
 
     renderList() {
-        return this.props.timeblocks.map(timeblock => {
+        return this.props.timeblocks2.map(timeblock => {
             return (
                 <>
-                    <Timeblock timeblock={timeblock} onDelete={() => { this.props.selectTimeblock(timeblock); this.handleDeleteTimeblock(timeblock) }}
+                    <Timeblock renderRequirements = {(provided) => this.renderRequirements(timeblock, provided)} timeblock={timeblock} onDelete={() => { this.props.selectTimeblock(timeblock); this.handleDeleteTimeblock(timeblock) }}
                         onSelect={(e) => { this.handleSelectTimeblock(timeblock, e) }}
                         onEdit={() => { this.props.selectTimeblock(timeblock); /*Edit shit*/ }}
                         key={timeblock._id} id={timeblock._id} title={timeblock.title} beginDate={timeblock.beginDate}
@@ -74,12 +94,33 @@ class TimeblockList extends React.Component {
             );
         })
     }
+//
+    onDragEnd = result => {
+        const {destination, source, draggableId} = result;
+        if (!destination) {
+          return;
+        }
+        if (
+          destination.droppableId === source.droppableId &&
+          destination.index === source.index
+        ) {
+          return;
+        }
+        const timeblock = this.props.timeblocks[source.droppableId];
+        const newReqs = Array.from(timeblock.requirements);
+        newReqs.splice(source.index, 1);
+        newReqs.splice(destination.index, 0, draggableId);
+        this.props.changeTimeblockRequirements(timeblock._id, {requirementIDs: newReqs});
+     //   
+    };
 
     render() {
         return (
             <>
                 <List>
-                    {this.renderList()}
+                    <DragDropContext onDragEnd = {this.onDragEnd}>
+                        {this.renderList()}
+                    </DragDropContext>
                     <CreateContainer onClick={this.openCreateTimeblockModal}>
                         <CreateContent >Create Timeblock</CreateContent>
                     </CreateContainer>
@@ -94,16 +135,18 @@ class TimeblockList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.timeblockState.timeblocks)
     return {
-        timeblocks: Object.values(state.timeblockState.timeblocks),
-        currentTimeblock: state.timeblockState.currentTimeblock,
+        timeblocks: state.timeblockState.timeblocks,
+        timeblocks2: Object.values(state.timeblockState.timeblocks),
+        requirements: state.requirementState.requirements
     }
 }
 
 
 export default connect(mapStateToProps, {
     createTimeblock, selectTimeblock, editTimeblock,
-    deleteTimeblock, retrieveRequirements
+    deleteTimeblock, retrieveRequirements, changeTimeblockRequirements
 })(TimeblockList);
 
 const List = styled.div`
@@ -162,4 +205,9 @@ const CreateContent = styled.div`
     font-size: 2rem;
     margin-left: 0.2rem;
     font-weight: 600;
+`
+
+
+const RequirementContainer = styled.div`
+    margin-top: 3rem;
 `

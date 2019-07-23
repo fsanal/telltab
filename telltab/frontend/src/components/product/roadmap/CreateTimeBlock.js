@@ -101,7 +101,6 @@ class CreateTimeblock extends React.Component {
     }
 
     render(){
-        console.log("in create");
         return(
             <>  
                 <CreateHeader>Create a Timeblock</CreateHeader>

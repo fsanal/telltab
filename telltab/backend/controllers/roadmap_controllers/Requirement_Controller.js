@@ -42,7 +42,6 @@ createRequirement = (req, res) => {
     if (assignmentIDs) {
         requirement.assignments = assignmentIDs.map(assignmentID => ObjectId(assignmentID));
     }
-    console.log("1: " + requirement);
     requirement.save((err, requirement) => {
         if (err) res.json({success: false, error: err});
         requirement.populate('roadmap').populate('initiative').populate('timeblock')

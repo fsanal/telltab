@@ -4,7 +4,8 @@ import {
     DELETE_TIMEBLOCK,
     EDIT_TIMEBLOCK,
     GET_TIMEBLOCK,
-    RETRIEVE_TIMEBLOCKS
+    RETRIEVE_TIMEBLOCKS,
+    CHANGE_TIMEBLOCK_REQUIREMENTS
 } from '../../actions/types/roadmap_types';
 import _ from 'lodash';
 
@@ -17,6 +18,7 @@ export default ( state = INITIAL_STATE, action ) => {
     let {timeblocks, currentTimeblock} = state;
     switch (action.type) {
         case CREATE_TIMEBLOCK:
+            console.log(action.payload);
             timeblocks[action.payload._id] = action.payload;
             return { ...state, timeblocks }
         case GET_TIMEBLOCK:
@@ -32,6 +34,10 @@ export default ( state = INITIAL_STATE, action ) => {
             currentTimeblock = null;
             timeblocks = _.omit(timeblocks, action.payload._id);
             return { ...state, timeblocks, currentTimeblock };
+        case CHANGE_TIMEBLOCK_REQUIREMENTS:
+            console.log(action.payload);
+            timeblocks[action.payload._id] = action.payload;
+            return { ...state, timeblocks }
         default:
             return state;
     }

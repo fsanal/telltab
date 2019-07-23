@@ -32,6 +32,7 @@ export const createRequirement = (timeblockID, formValues) => async (dispatch, g
     //if (currentTimeblock) timeblockID = currentTimeblock._id;
     const response = await api.post('/requirements/create', { ...formValues, roadmapID,
     timeblockID});
+    dispatch({type: CREATE_REQUIREMENT, payload: response.data});
     return response.data;
 }
 
@@ -43,15 +44,12 @@ export const selectRequirement = (requirement) => {
 }
 
 export const getRequirement = (id) => async (dispatch) => {
-    const response = await api.post(`/requirements/get/${id}`);
-    dispatch({ type: GET_REQUIREMENT, payload: response.data });
+    const response = await api.get(`/requirements/get/${id}`);
+    return response.data;
 }
 
-export const editRequirement = (id, roadmapID, initiativeID, beginDate, endDate, purpose, timeblockID, priority, value, personaID,
-    title, body, authorID) => async dispatch => {
-    const response = await api.put(`/requirements/edit/${id}`, {roadmapID, initiativeID, beginDate,
-        endDate, purpose, timeblockID, priority, value, personaID,
-        title, body, authorID});
+export const editRequirement = (id, formValues) => async dispatch => {
+    const response = await api.put(`/requirements/edit/${id}`, formValues);
     dispatch({type: EDIT_REQUIREMENT, payload: response.data});
 }
 
@@ -106,3 +104,11 @@ export const retrieveRequirements = (timeblockID) => async () => {
     return response.data;
 }
 
+export const retrieveRequirements2 = () => async (dispatch, getState) => {
+    //const { secret } = getState().auth;
+    let roadmapID;
+    const {currentRoadmap} = getState().roadmapState;
+    if (currentRoadmap) roadmapID = currentRoadmap._id;
+    const response = await api.post('/requirements/retrieve', {roadmapID});
+    dispatch({type: RETRIEVE_REQUIREMENTS, payload: response.data});
+}

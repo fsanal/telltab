@@ -21,7 +21,7 @@
     "jquery": "^3.4.1",
     "jsdom": "^15.1.1",
     "mongoosastic": "^4.5.0",
-    "mongoose": "^5.5.14",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
